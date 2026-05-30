@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Pwof Ou – Platfòm Edikasyon Ayisyen</title>
+  <meta name="description" content="Pwof Ou – AI tutor pou elèv ayisyen soti 1ère AF rive NS4" />
+  <!-- PWA meta tags -->
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Pwof Ou" />
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <!-- Favicon - use smaller icon if available -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+  <style>
+    /* ===== CSS THEME VARIABLES ===== */
+    :root,
+    [data-theme="light"] {
+      --bg-main: #f0f4ff;
+      --sidebar-bg: #ffffff;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --accent-main: #2563eb;
+      --accent-dark: #1d4ed8;
+      --accent-light: #eff6ff;
+    }
+
+    [data-theme="dark"] {
+      --bg-main: #0a0e1a;
+      --sidebar-bg: #0f1629;
+      --card-bg: #161d33;
+      --border-color: #1e2d4a;
+      --text-main: #e8ecf4;
+      --text-muted: #7a8baa;
+      --accent-main: #818cf8;
+      --accent-dark: #6366f1;
+      --accent-light: #1a1d3d;
+    }
+
+    /* Optional: Custom scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* Adjust main content height for fixed sidebar/header if needed */
+    .h-screen-minus-padding {
+      height: calc(100vh - 2rem);
+    }
+  </style>
+
+  <link rel="stylesheet" href="/index.css">
+  <!-- KaTeX for Math Rendering - deferred -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+  <!-- Load KaTeX after page load for better performance -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ht"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kaye - Pwof Ou</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Shared Components Logic & Theme -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#0f131f",
+                    "surface-tint": "#c3c0ff",
+                    "on-error": "#690005",
+                    "on-background": "#dfe2f3",
+                    "surface-container": "#1b1f2c",
+                    "tertiary-fixed": "#ffd9e2",
+                    "surface-container-high": "#262a37",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "tertiary": "#ffb1c7",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#313442",
+                    "inverse-surface": "#dfe2f3",
+                    "on-surface-variant": "#c7c4d8",
+                    "surface-dim": "#0f131f",
+                    "outline-variant": "#464555",
+                    "surface-container-lowest": "#0a0e1a",
+                    "primary": "#c3c0ff",
+                    "primary-container": "#4f46e5",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "inverse-on-surface": "#2c303d",
+                    "tertiary-container": "#bd0062",
+                    "on-secondary": "#3f008e",
+                    "on-tertiary-fixed": "#3f001c",
+                    "surface-container-low": "#171b28",
+                    "secondary": "#d2bbff",
+                    "tertiary-fixed-dim": "#ffb1c7",
+                    "secondary-container": "#6001d1",
+                    "background": "#0f131f",
+                    "on-tertiary": "#650031",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "on-primary-fixed": "#0f0069",
+                    "surface-bright": "#353946",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "surface-container-highest": "#313442",
+                    "on-primary-container": "#dad7ff",
+                    "on-primary": "#1d00a5",
+                    "on-secondary-container": "#c9aeff",
+                    "on-surface": "#dfe2f3",
+                    "inverse-primary": "#4d44e3",
+                    "outline": "#918fa1",
+                    "secondary-fixed": "#eaddff",
+                    "on-secondary-fixed": "#25005a",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#8e0048",
+                    "on-tertiary-container": "#ffcfdb",
+                    "primary-fixed": "#e2dfff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "md": "24px",
+                    "container-margin": "20px",
+                    "xs": "4px",
+                    "xl": "64px",
+                    "gutter": "16px",
+                    "sm": "12px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-base": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(22, 29, 51, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ambient-glow {
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);
+        }
+        .active-ripple:active {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 10px;
+        }
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-base min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl dark:bg-surface/85 border-b border-white/10 dark:border-white/5 shadow-[0_8px_32px_0_rgba(124,58,237,0.1)]">
+<div class="flex justify-between items-center h-16 px-container-margin w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="A stylized 3D avatar of a young Haitian student with a friendly expression, wearing a modern tech-inspired hoodie. The character is set against a vibrant background of purple and pink gradients, reflecting a high-energy educational environment. The lighting is soft and professional, emphasizing a modern corporate and glassmorphism aesthetic consistent with a premium AI learning app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2sLejiDd9MhtlCFCdv1JIx8hDMwEPyNck8PktjULSVyExa6mHRPER6HcFPVwPuCd-bHQ7MHGWkZCZGjI9Ix6SSfVtr0umscau4BiWWbDm4YhVc7cokRIkuRz2Js6gjKSesKlfuWNZ9TATI1l7Ud-9CMrBlcLL-m5UcqvEKUFO8HKLph8O5UKurYeN2ecO9arIzGlb4Y_125l257_Z7ruLiZW6NKPe68AZ7xDQzbUHK35hbSOOkWwMqS83pdAPNeBQYrLxHCkAi_G3"/>
+</div>
+<h1 class="text-headline-md font-headline-md bg-gradient-to-r from-primary to-tertiary bg-clip-text text-transparent">Pwof Ou</h1>
+</div>
+<button class="material-symbols-outlined text-primary hover:scale-105 transition-transform duration-200 active:scale-95">local_fire_department</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-container-margin">
+<header class="mb-md">
+<h2 class="text-display-lg-mobile font-display-lg-mobile text-on-surface mb-xs">Kaye Nòt Mwen</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Tout lide ou ak sa ou aprann yo nan yon sèl plas.</p>
+</header>
+<!-- Search & Filter Chips -->
+<div class="flex gap-sm overflow-x-auto pb-4 mb-md no-scrollbar">
+<button class="px-md py-xs rounded-full bg-primary-container text-on-primary-container text-label-caps font-label-caps flex-shrink-0">Tout</button>
+<button class="px-md py-xs rounded-full glass-card text-on-surface-variant text-label-caps font-label-caps flex-shrink-0">Matematik</button>
+<button class="px-md py-xs rounded-full glass-card text-on-surface-variant text-label-caps font-label-caps flex-shrink-0">Istwa</button>
+<button class="px-md py-xs rounded-full glass-card text-on-surface-variant text-label-caps font-label-caps flex-shrink-0">Syans</button>
+<button class="px-md py-xs rounded-full glass-card text-on-surface-variant text-label-caps font-label-caps flex-shrink-0">Lòt</button>
+</div>
+<!-- Notes Grid -->
+<div class="masonry-grid">
+<!-- Note Card 1 -->
+<div class="glass-card p-md rounded-[16px] flex flex-col gap-sm hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="text-xl">📐</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant uppercase bg-white/5 px-2 py-0.5 rounded-full">Matematik</span>
+</div>
+<p class="text-body-base font-title-lg text-primary leading-tight">Teorèm Pitagò</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant line-clamp-3">Nan yon triyang rektang, kare ipoteniz la egal ak som kare de lòt kote yo...</p>
+<p class="text-[10px] font-body-sm text-outline mt-xs">Jodi a, 10:30 AM</p>
+</div>
+<!-- Note Card 2 -->
+<div class="glass-card p-md rounded-[16px] flex flex-col gap-sm hover:scale-[1.02] transition-transform duration-300 cursor-pointer border-l-4 border-tertiary">
+<div class="flex justify-between items-start">
+<span class="text-xl">🔥</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant uppercase bg-white/5 px-2 py-0.5 rounded-full">Rapèl</span>
+</div>
+<p class="text-body-base font-title-lg text-tertiary leading-tight">Egzamen Istwa</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Pa bliye revize dat 1804 la ak tout gwo chèf revolisyon yo.</p>
+<p class="text-[10px] font-body-sm text-outline mt-xs">Jodi a, 08:15 AM</p>
+</div>
+<!-- Note Card 3 -->
+<div class="glass-card p-md rounded-[16px] flex flex-col gap-sm hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="text-xl">🧬</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant uppercase bg-white/5 px-2 py-0.5 rounded-full">Syans</span>
+</div>
+<p class="text-body-base font-title-lg text-primary leading-tight">Fotosentèz</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant line-clamp-2">Pwosesis kote plant yo itilize limyè solèy pou fè manje.</p>
+<p class="text-[10px] font-body-sm text-outline mt-xs">Yè, 04:45 PM</p>
+</div>
+<!-- Note Card 4 -->
+<div class="glass-card p-md rounded-[16px] flex flex-col gap-sm hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="text-xl">✍️</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant uppercase bg-white/5 px-2 py-0.5 rounded-full">Draft</span>
+</div>
+<p class="text-body-base font-title-lg text-primary leading-tight">Ide Redaksyon</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant line-clamp-4">Mwen vle ekri sou enpòtans teknoloji nan edikasyon Ayiti. Kijan nou ka itilize AI pou ede elèv yo pi byen...</p>
+<p class="text-[10px] font-body-sm text-outline mt-xs">2 jou de sa</p>
+</div>
+<!-- Note Card 5 -->
+<div class="glass-card p-md rounded-[16px] flex flex-col gap-sm hover:scale-[1.02] transition-transform duration-300 cursor-pointer border-t-2 border-secondary/30">
+<div class="flex justify-between items-start">
+<span class="text-xl">💡</span>
+<span class="text-[10px] font-label-caps text-on-surface-variant uppercase bg-white/5 px-2 py-0.5 rounded-full">Lòt</span>
+</div>
+<p class="text-body-base font-title-lg text-secondary leading-tight">Lis Vokabilè</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">- Entelijans Atifisyèl<br/>- Algorit<br/>- Done</p>
+<p class="text-[10px] font-body-sm text-outline mt-xs">3 jou de sa</p>
+</div>
+</div>
+</main>
+<!-- FAB: Floating Action Button -->
+<button class="fixed bottom-24 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-primary-container to-secondary-container text-on-primary-container flex items-center justify-center shadow-[0_0_25px_rgba(79,70,229,0.5)] z-50 hover:scale-110 active:scale-95 transition-all duration-300 group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-end pb-4 px-2 bg-surface-container/90 backdrop-blur-lg dark:bg-surface-container-low/90 border-t border-white/10 z-50 shadow-[0_-4px_24px_rgba(0,0,0,0.2)]">
+<!-- Aprann -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-label-caps font-label-caps">Aprann</span>
+</a>
+<!-- AI Chat -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-caps font-label-caps">AI Chat</span>
+</a>
+<!-- Bibliyotèk -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="text-label-caps font-label-caps">Bibliyotèk</span>
+</a>
+<!-- Kaye (ACTIVE) -->
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-primary-container to-secondary-container text-on-primary-container rounded-full w-14 h-14 -mt-4 shadow-[0_0_20px_rgba(79,70,229,0.4)] active:scale-110 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-[10px] font-label-caps leading-none">Kaye</span>
+</a>
+<!-- Pwofil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-label-caps font-label-caps">Pwofil</span>
+</a>
+</nav>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple scale effect for cards on scroll and hover simulation
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1.02)';
+            });
+        });
+
+        // FAB ripple effect logic could be added here
+        const fab = document.querySelector('button.fixed');
+        fab.addEventListener('click', (e) => {
+            let x = e.clientX - e.target.offsetLeft;
+            let y = e.clientY - e.target.offsetTop;
+            let ripple = document.createElement('span');
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            // Custom ripple styling can be injected via JS
+        });
+    </script>
+</body></html>

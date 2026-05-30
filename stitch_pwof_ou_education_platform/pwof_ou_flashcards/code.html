@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ht"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-card {
+            background: rgba(22, 29, 51, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .flip-card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .stack-card-1 { transform: translateZ(-20px) translateY(-10px) scale(0.95); opacity: 0.6; }
+        .stack-card-2 { transform: translateZ(-40px) translateY(-20px) scale(0.9); opacity: 0.3; }
+        
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#0f131f",
+                        "surface-tint": "#c3c0ff",
+                        "on-error": "#690005",
+                        "on-background": "#dfe2f3",
+                        "surface-container": "#1b1f2c",
+                        "tertiary-fixed": "#ffd9e2",
+                        "surface-container-high": "#262a37",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "tertiary": "#ffb1c7",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#313442",
+                        "inverse-surface": "#dfe2f3",
+                        "on-surface-variant": "#c7c4d8",
+                        "surface-dim": "#0f131f",
+                        "outline-variant": "#464555",
+                        "surface-container-lowest": "#0a0e1a",
+                        "primary": "#c3c0ff",
+                        "primary-container": "#4f46e5",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "inverse-on-surface": "#2c303d",
+                        "tertiary-container": "#bd0062",
+                        "on-secondary": "#3f008e",
+                        "on-tertiary-fixed": "#3f001c",
+                        "surface-container-low": "#171b28",
+                        "secondary": "#d2bbff",
+                        "tertiary-fixed-dim": "#ffb1c7",
+                        "secondary-container": "#6001d1",
+                        "background": "#0f131f",
+                        "on-tertiary": "#650031",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-bright": "#353946",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface-container-highest": "#313442",
+                        "on-primary-container": "#dad7ff",
+                        "on-primary": "#1d00a5",
+                        "on-secondary-container": "#c9aeff",
+                        "on-surface": "#dfe2f3",
+                        "inverse-primary": "#4d44e3",
+                        "outline": "#918fa1",
+                        "secondary-fixed": "#eaddff",
+                        "on-secondary-fixed": "#25005a",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#8e0048",
+                        "on-tertiary-container": "#ffcfdb",
+                        "primary-fixed": "#e2dfff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "md": "24px",
+                        "container-margin": "20px",
+                        "xs": "4px",
+                        "xl": "64px",
+                        "gutter": "16px",
+                        "sm": "12px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-base": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-base min-h-screen pb-24">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_32px_0_rgba(124,58,237,0.1)] flex justify-between items-center h-16 px-container-margin">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container shadow-lg shadow-primary-container/20">
+<img alt="Student Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGxmnsiKJNvorslGKyR6CUGVcaWQajzngpZe58wlVb7Rp4oPEYKDbbDmvshJbT_R5BI3g8DR_VJz72EGL4HHJCQZFa4OYmYkncc5rdBw2GsHh9v5AuTVLHSbqdzEfIG7wb_36zTEuor77uIE7YLYVdQNtuCiRPl84xYLmoYCzB5Maoa3JEboY2OQt1x6oG7hmMwDFFrSMQnCZ1uDYBm8tO0gyirqhouhhliRb0NL-ucD5aC42C2mL2sAtj4AKxQbUoik36-M3zN2NS"/>
+</div>
+<h1 class="text-headline-md font-headline-md bg-gradient-to-r from-primary to-tertiary bg-clip-text text-transparent">Pwof Ou</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 bg-surface-container-high px-3 py-1 rounded-full border border-white/5">
+<span class="material-symbols-outlined text-orange-500 text-[20px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-bold text-on-surface">12</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-container-margin max-w-lg mx-auto">
+<!-- Progress Header -->
+<header class="mb-md">
+<div class="flex justify-between items-end mb-2">
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Biyoloji: Selil yo</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kat 8 sou 12</p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Metriz: 65%</span>
+</div>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-[66%] bg-gradient-to-r from-primary-container to-secondary-container shadow-[0_0_8px_rgba(79,70,229,0.5)] transition-all duration-500"></div>
+</div>
+</header>
+<!-- Flashcard Stack Container -->
+<div class="relative h-[420px] w-full perspective-1000 mt-lg">
+<!-- Stack Decoration (Background Cards) -->
+<div class="absolute inset-0 glass-card rounded-3xl stack-card-2"></div>
+<div class="absolute inset-0 glass-card rounded-3xl stack-card-1"></div>
+<!-- Active Card -->
+<div class="relative inset-0 w-full h-full cursor-pointer preserve-3d flip-card-inner" id="flashcard" onclick="this.parentElement.classList.toggle('flipped')">
+<!-- Front Side -->
+<div class="absolute inset-0 glass-card rounded-3xl backface-hidden p-md flex flex-col items-center justify-center text-center shadow-2xl">
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-[10px] border border-primary/20">DI FISIL</span>
+</div>
+<div class="w-20 h-20 mb-md bg-surface-container-highest rounded-2xl flex items-center justify-center text-4xl shadow-inner">
+                        🧬
+                    </div>
+<p class="font-display-lg-mobile text-display-lg-mobile leading-tight text-on-surface">
+                        Kisa ki "Mitochondrie" a nan yon selil?
+                    </p>
+<div class="mt-lg flex items-center gap-2 text-on-surface-variant opacity-60">
+<span class="material-symbols-outlined">touch_app</span>
+<span class="font-body-sm text-body-sm">Tape pou wè repons lan</span>
+</div>
+</div>
+<!-- Back Side -->
+<div class="absolute inset-0 glass-card rounded-3xl backface-hidden rotate-y-180 p-md flex flex-col items-center justify-center text-center bg-gradient-to-b from-surface-container-high/50 to-surface/90 shadow-2xl border-primary/30">
+<div class="w-16 h-16 mb-sm bg-primary-container/20 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]">lightbulb</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary mb-2">Repons</h3>
+<p class="font-body-base text-body-base text-on-surface leading-relaxed">
+                        Mitochondrie a se "izin enèji" selil la. Li transfòme eleman nitritif yo an ATP pou pèmèt selil la fonksyone.
+                    </p>
+<div class="mt-md pt-md border-t border-white/5 w-full">
+<p class="font-body-sm text-body-sm italic text-on-surface-variant opacity-80">
+                            Pwen kle: Enèji, Respirasyon selilè.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Hint Gestures -->
+<div class="flex justify-center gap-12 mt-md opacity-40">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">keyboard_double_arrow_left</span>
+<span class="font-label-caps text-[10px]">REFE</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">keyboard_double_arrow_right</span>
+<span class="font-label-caps text-[10px]">KONEKTE</span>
+</div>
+</div>
+<!-- Action Controls -->
+<div class="grid grid-cols-2 gap-gutter mt-lg">
+<button class="group relative overflow-hidden flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-surface-container-high border border-error/20 hover:border-error transition-all duration-300" onclick="animateAction('refè')">
+<div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center text-error group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">refresh</span>
+</div>
+<span class="font-label-caps text-label-caps text-error">Refè</span>
+</button>
+<button class="group relative overflow-hidden flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-br from-primary-container to-secondary-container shadow-[0_8px_20px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-95 transition-all duration-300" onclick="animateAction('konekte')">
+<div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">check_circle</span>
+</div>
+<span class="font-label-caps text-label-caps text-white">Konekte</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-end pb-4 px-2 bg-surface-container/90 backdrop-blur-lg border-t border-white/10 shadow-[0_-4px_24px_rgba(0,0,0,0.2)] z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-label-caps text-label-caps">Aprann</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-caps text-label-caps">AI Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-primary-container to-secondary-container text-on-primary-container rounded-full w-14 h-14 -mt-4 shadow-[0_0_20px_rgba(79,70,229,0.4)] scale-110 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-label-caps text-[10px] uppercase">Bibliyotèk</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-caps text-label-caps">Kaye</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 p-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-caps text-label-caps">Pwofil</span>
+</a>
+</nav>
+<script>
+        function animateAction(type) {
+            const card = document.getElementById('flashcard').parentElement;
+            const direction = type === 'konekte' ? 'translateX(500px) rotate(20deg)' : 'translateX(-500px) rotate(-20deg)';
+            
+            card.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            card.style.transform = direction;
+            card.style.opacity = '0';
+
+            setTimeout(() => {
+                card.style.transition = 'none';
+                card.style.transform = 'translateX(0) rotate(0) scale(0.9)';
+                card.classList.remove('flipped');
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    card.style.transform = 'scale(1)';
+                    card.style.opacity = '1';
+                }, 50);
+            }, 500);
+
+            // Add ripple effect to buttons
+            const btn = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+            const radius = diameter / 2;
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - btn.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - btn.offsetTop - radius}px`;
+            circle.classList.add("ripple");
+            const ripple = btn.getElementsByClassName("ripple")[0];
+            if (ripple) ripple.remove();
+            btn.appendChild(circle);
+        }
+    </script>
+</body></html>
