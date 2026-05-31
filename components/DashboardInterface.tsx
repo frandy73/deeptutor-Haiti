@@ -102,8 +102,8 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
                 </button>
               )}
               <div>
-                <p className="text-white/60 text-[11px] font-bold uppercase tracking-widest mb-1">{greeting}, Elèv! 👋</p>
-                <h2 className="text-2xl sm:text-3xl font-black text-white leading-none">
+                <p className="text-white/60 text-[11px] font-bold uppercase tracking-widest mb-1 animate-fade-in">{greeting}, Elèv! 👋</p>
+                <h2 className="text-2xl sm:text-3xl font-black text-white leading-none animate-slide-up" style={{ animationDelay: '0.1s' }}>
                   Tablodbo w 🏠
                 </h2>
               </div>
@@ -141,8 +141,8 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
               { icon: '🔥', val: `${progress.streak}j`, label: 'Streak' },
               { icon: '🏆', val: earnedBadges.length, label: 'Badge' },
               { icon: '📝', val: progress.totalMessages, label: 'Mesaj' },
-            ].map(s => (
-              <div key={s.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 border border-white/10 backdrop-blur-sm">
+            ].map((s, si) => (
+              <div key={s.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 border border-white/10 backdrop-blur-sm animate-fade-in" style={{ animationDelay: `${0.2 + si * 0.08}s` }}>
                 <span className="text-sm">{s.icon}</span>
                 <span className="text-white text-xs font-black">{s.val}</span>
                 <span className="text-white/50 text-[9px] font-bold uppercase tracking-wider">{s.label}</span>
@@ -157,17 +157,25 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
 
         {/* ── Quick Stats Grid ──────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
           <StatPill icon="⭐" value={progress.xp} label="Total XP" color="#6366f1" />
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <StatPill icon="🔥" value={`${progress.streak}j`} label="Streak" color="#f97316" />
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
           <StatPill icon="📝" value={progress.totalMessages} label="Mesaj" color="#10b981" />
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <StatPill icon="🏆" value={progress.totalQuizzes} label="Quiz" color="#a855f7" />
+          </div>
         </div>
 
         {/* ── Next Badge CTA ──────────────────────────────── */}
         {nextBadge && (
           <div
-            className="flex items-center gap-4 p-4 rounded-2xl border-2 transition-all hover:shadow-md"
-            style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'var(--primary)', borderStyle: 'dashed' }}
+            className="flex items-center gap-4 p-4 rounded-2xl border-2 transition-all hover:shadow-md animate-slide-up"
+            style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'var(--primary)', borderStyle: 'dashed', animationDelay: '0.15s' }}
           >
             <div className="text-3xl shrink-0 opacity-40 grayscale">{nextBadge.icon}</div>
             <div className="min-w-0">
@@ -182,27 +190,28 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
 
         {/* ── Quick Actions ────────────────────────────────── */}
         <div>
-          <h3 className="text-sm font-black uppercase tracking-widest mb-3" style={{ color: 'var(--text-muted)' }}>
+          <h3 className="text-sm font-black uppercase tracking-widest mb-3 animate-fade-in" style={{ color: 'var(--text-muted)' }}>
             ⚡ Aksyon Rapid
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {quickActions.map(qa => (
+            {quickActions.map((qa, idx) => (
+              <div key={qa.title} className="animate-slide-up" style={{ animationDelay: `${idx * 0.06}s` }}>
               <QuickCard
-                key={qa.title}
                 icon={qa.icon}
                 title={qa.title}
                 desc={qa.desc}
                 gradient={qa.gradient}
                 onClick={() => onSelectModule && onSelectModule(qa.module)}
               />
+              </div>
             ))}
           </div>
         </div>
 
         {/* ── Badges ────────────────────────────────────────── */}
         <div
-          className="rounded-2xl p-5 shadow-sm"
-          style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)' }}
+          className="rounded-2xl p-5 shadow-sm animate-slide-up"
+          style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)', animationDelay: '0.2s' }}
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="m-0 font-black text-base" style={{ color: 'var(--text-main)' }}>🏅 Meday ou yo</h3>
@@ -240,16 +249,16 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {/* ── Recent Activity ───────────────────────────────── */}
         {chatHistory.length > 0 && (
           <div
-            className="rounded-2xl p-5 shadow-sm"
-            style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)' }}
+            className="rounded-2xl p-5 shadow-sm animate-slide-up"
+            style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)', animationDelay: '0.25s' }}
           >
             <h3 className="m-0 font-black text-base mb-4" style={{ color: 'var(--text-main)' }}>🕐 Dènye Aktivite</h3>
             <div className="space-y-2">
               {chatHistory.slice(0, 5).map((item, idx) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-150 hover:scale-[1.01]"
-                  style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'var(--surface-container-lowest)' }}
+                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-150 hover:scale-[1.01] animate-fade-in"
+                  style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'var(--surface-container-lowest)', animationDelay: `${0.3 + idx * 0.05}s` }}
                 >
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-sm shrink-0 font-black" style={{ color: 'var(--primary)' }}>
                     {idx + 1}

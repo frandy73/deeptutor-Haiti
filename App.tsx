@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from './components/Sidebar';
+import SplashScreen from './components/SplashScreen';
 import LoginInterface from './components/LoginInterface';
 import ChatInterface from './components/ChatInterface';
 import KnowledgeBaseInterface from './components/KnowledgeBaseInterface';
@@ -62,6 +63,7 @@ const App: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [selectedMasteryPDFText, setSelectedMasteryPDFText] = useState<string | undefined>(undefined);
   const [selectedMasteryPDFName, setSelectedMasteryPDFName] = useState<string | undefined>(undefined);
+  const [showSplash, setShowSplash] = useState(true);
 
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
@@ -568,6 +570,7 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
+      {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
     <div
       style={{
         display: 'flex',
@@ -583,10 +586,13 @@ const App: React.FC = () => {
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
+          className="mobile-backdrop"
           style={{
             position: 'fixed', inset: 0,
-            background: 'rgba(0,0,0,0.5)',
+            background: 'rgba(0,0,0,0.6)',
             zIndex: 40,
+            WebkitBackdropFilter: 'blur(4px)',
+            backdropFilter: 'blur(4px)',
           }}
         />
       )}
@@ -636,7 +642,7 @@ const App: React.FC = () => {
           </div>
         )}
 
-        <div className="relative flex-1 flex flex-col overflow-hidden">
+        <div key={selectedModule} className="relative flex-1 flex flex-col overflow-hidden page-enter">
         {selectedModule === ModuleType.DASHBOARD ? (
           <DashboardInterface chatHistory={chatHistory} onMenuClick={() => setIsSidebarOpen(true)} onSelectModule={handleSelectModule} />
         ) : selectedModule === ModuleType.NOTEBOOK ? (
