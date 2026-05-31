@@ -124,7 +124,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onMenuClick, onClose }) => {
                       </div>
                       
                       <h3 className="text-lg font-bold" style={{ color: 'var(--text-main)' }}>
-                        {request.lastName} {request.firstName}
+                        +509{request.phone}
                       </h3>
                       
                       <div className="grid grid-cols-2 gap-4 text-sm">
@@ -141,8 +141,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onMenuClick, onClose }) => {
                           <p className="font-bold">+509{request.phone}</p>
                         </div>
                         <div>
-                          <p className="opacity-60">Foto</p>
-                          <p className="font-bold">{request.photoName}</p>
+                          <p className="opacity-60">ID Peman</p>
+                          <p className="font-bold font-mono text-xs">{request.paymentId}</p>
                         </div>
                       </div>
                     </div>

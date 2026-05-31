@@ -67,7 +67,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
 
   const quickActions = [
     { icon: '🧠', title: 'Kòmanse Aprann', desc: 'Gid Aprantisaj pèsonalize', gradient: 'from-indigo-500 to-purple-600', module: ModuleType.GUIDED_LEARNING },
-    { icon: '🧪', title: 'Rezoud Pwoblèm', desc: 'Entwodwi devoir ou pou solisyon', gradient: 'from-emerald-500 to-teal-600', module: ModuleType.SMART_SOLVER },
+    { icon: '🧪', title: 'Rezoud Pwoblèm', desc: 'Entwodwi devwa ou pou solisyon', gradient: 'from-emerald-500 to-teal-600', module: ModuleType.SMART_SOLVER },
     { icon: '🎓', title: 'Egzamen Leta', desc: 'Pratike egzamen ofisyèl MENFP', gradient: 'from-orange-500 to-red-600', module: ModuleType.BAC_EXAMS },
     { icon: '🃏', title: 'Flashcards', desc: 'Retann ak kat memwa rapide', gradient: 'from-pink-500 to-rose-600', module: ModuleType.FLASHCARDS },
     { icon: '📚', title: 'Baz Konesans', desc: 'Chaje dokiman ak liv ou yo', gradient: 'from-blue-500 to-cyan-600', module: ModuleType.KNOWLEDGE_BASE },

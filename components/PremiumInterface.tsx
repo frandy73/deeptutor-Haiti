@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { savePremiumRequest } from '../services/paymentService';
+import { createKobaraPayment, verifyKobaraPayment, savePremiumRequest } from '../services/paymentService';
 
 interface PremiumInterfaceProps {
   onMenuClick?: () => void;
@@ -67,31 +67,54 @@ const pricingTiers = [
 
 const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick }) => {
   const [selectedTier, setSelectedTier] = useState('Plan Konpè');
-  const [formData, setFormData] = useState({ lastName: '', firstName: '', phone: '', transactionPhoto: null as File | null });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [paymentState, setPaymentState] = useState<'idle' | 'loading' | 'paid' | 'verifying' | 'error'>('idle');
+  const [paymentId, setPaymentId] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) setFormData({ ...formData, transactionPhoto: e.target.files[0] });
+  const handlePay = async () => {
+    if (!phone) return;
+    setPaymentState('loading');
+    setErrorMsg('');
+    const tier = pricingTiers.find(t => t.name === selectedTier);
+    if (!tier || tier.priceNum === 0) { setPaymentState('idle'); return; }
+    const res = await createKobaraPayment(tier.priceNum, phone, selectedTier);
+    if (res.success && res.checkoutUrl) {
+      setPaymentId(res.paymentId || '');
+      setPaymentState('paid');
+      savePremiumRequest({
+        phone, tier: selectedTier,
+        amount: tier.price, paymentId: res.paymentId || '', status: 'pending',
+      });
+      window.open(res.checkoutUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      setPaymentState('error');
+      setErrorMsg(res.error || 'Peyman an pa mache. Tcheke enfòmasyon ou epi eseye ankò.');
+    }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    const tier = pricingTiers.find(t => t.name === selectedTier);
-    savePremiumRequest({
-      lastName: formData.lastName,
-      firstName: formData.firstName,
-      phone: formData.phone,
-      tier: selectedTier,
-      amount: tier?.price || '500 HTG',
-      photoName: formData.transactionPhoto?.name || 'screenshot.jpg',
-    });
-    setTimeout(() => { setIsSubmitting(false); setShowSuccess(true); }, 2000);
+  const handleVerify = async () => {
+    if (!paymentId) return;
+    setPaymentState('verifying');
+    const res = await verifyKobaraPayment(paymentId);
+    if (res.success) {
+      savePremiumRequest({
+        phone, tier: selectedTier,
+        amount: pricingTiers.find(t => t.name === selectedTier)?.price || '',
+        paymentId, status: 'approved',
+      });
+      setPaymentState('paid');
+    } else {
+      setPaymentState('error');
+      setErrorMsg('Nou poko wè peman an. Tcheke si ou konfime transaksyon an, epi eseye ankò.');
+    }
   };
 
   const handleSelectTier = (name: string) => {
     setSelectedTier(name);
+    setPaymentState('idle');
+    setErrorMsg('');
+    setPhone('');
     document.getElementById('payment-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -264,130 +287,104 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick }) => {
               </div>
             </div>
 
-            {/* Form */}
+            {/* Payment Card */}
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-3xl opacity-10 blur-2xl" />
-              <div className={`relative p-6 lg:p-8 rounded-3xl shadow-xl border transition-all duration-500 ${showSuccess ? 'bg-green-50 dark:bg-green-950/20 border-green-500' : 'border-black/5 dark:border-white/5'}`}
-                style={{ background: showSuccess ? '' : 'rgba(22, 29, 51, 0.85)' }}>
+              <div className="relative p-6 lg:p-8 rounded-3xl shadow-xl border border-black/5 dark:border-white/5"
+                style={{ background: 'rgba(22, 29, 51, 0.85)' }}>
 
-                {showSuccess ? (
-                  <div className="text-center space-y-6 py-8">
-                    <div className="relative inline-block">
-                      <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-2xl shadow-green-500/40 animate-bounce">✅</div>
-                      <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl animate-pulse" />
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-black" style={{ color: 'var(--text-main)' }}>MÈSI!</h3>
-                      <p className="text-sm font-medium mt-1" style={{ color: 'var(--text-muted)' }}>Enfòmasyon ou voye ak sukse.</p>
-                    </div>
-                    <p className="p-4 rounded-2xl bg-green-100 dark:bg-green-800/20 text-green-700 dark:text-green-300 text-sm font-bold">
-                      🎉 Mèsi <strong>{formData.firstName}</strong>! Ekip nou an ap aktive kont ou nan mwens pase 30 minit.
-                    </p>
-                    <button onClick={() => setShowSuccess(false)} className="w-full py-4 rounded-2xl font-black text-sm bg-gradient-to-r from-slate-900 to-slate-800 dark:from-white dark:to-slate-200 text-white dark:text-slate-900 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg">
-                      Ok, Mwen dAPRè ✓
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xl">✨</span>
-                        <h3 className="text-xl font-black" style={{ color: 'var(--text-main)' }}>Fòm Konfimasyon VIP</h3>
+                {/* Selected Plan Badge */}
+                {selectedTier && (() => {
+                  const t = pricingTiers.find(x => x.name === selectedTier);
+                  return (
+                    <div className="flex items-center gap-3 p-3 mb-5 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${t?.color} flex items-center justify-center text-lg shadow-md`}>{t?.icon}</div>
+                      <div className="flex-grow">
+                        <p className="text-[10px] font-black text-blue-500 uppercase">Plan Chwazi</p>
+                        <p className="text-sm font-black" style={{ color: 'var(--text-main)' }}>{selectedTier}</p>
                       </div>
-                      <p className="text-xs font-medium opacity-60" style={{ color: 'var(--text-muted)' }}>
-                        Ranpli sa pou n debloke <strong>Pwof Ou Premium</strong> pou ou.
+                      <span className="text-base font-black text-blue-600">{t?.price}</span>
+                    </div>
+                  );
+                })()}
+
+                <div className="space-y-5">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xl">💳</span>
+                      <h3 className="text-xl font-black" style={{ color: 'var(--text-main)' }}>
+                        Peye ak MonCash via Kobara
+                      </h3>
+                    </div>
+                    <p className="text-xs font-medium opacity-60" style={{ color: 'var(--text-muted)' }}>
+                      Antre nimewo MonCash ou pou peye <strong>{selectedTier}</strong>.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-[2px] opacity-60" style={{ color: 'var(--text-muted)' }}>Nimewo MonCash</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-400 font-medium">+509</span>
+                      <input
+                        required type="tel" placeholder="00 00 00 00"
+                        className="w-full pl-14 pr-4 py-3 rounded-xl text-sm font-medium border outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
+                        style={{ color: 'var(--text-main)' }}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        disabled={paymentState === 'loading' || paymentState === 'verifying'}
+                      />
+                    </div>
+                  </div>
+
+                  {paymentState === 'error' && (
+                    <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-bold">
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  {paymentState === 'idle' || paymentState === 'error' ? (
+                    <>
+                      <button
+                        onClick={handlePay}
+                        className="w-full py-4 rounded-2xl font-black text-sm bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 hover:scale-[1.01] active:scale-[0.98] transition-all"
+                      >
+                        Peye {pricingTiers.find(t => t.name === selectedTier)?.price} ak MonCash →
+                      </button>
+                      <p className="text-center text-[10px] font-medium opacity-50" style={{ color: 'var(--text-muted)' }}>
+                        ✓ Peman an sekirize pa Kobara &nbsp;•&nbsp; ✓ Aktivasyon rapid
+                      </p>
+                    </>
+                  ) : paymentState === 'loading' ? (
+                    <div className="flex items-center justify-center gap-3 py-6">
+                      <span className="w-5 h-5 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" />
+                      <span className="text-sm font-bold" style={{ color: 'var(--text-muted)' }}>Kreye peman an...</span>
+                    </div>
+                  ) : paymentState === 'paid' ? (
+                    <div className="space-y-5">
+                      <div className="p-5 rounded-2xl bg-green-500/10 border border-green-500/20 text-center">
+                        <div className="text-4xl mb-2">✅</div>
+                        <p className="text-sm font-black text-green-400">Peman an voye!</p>
+                        <p className="text-xs font-medium opacity-60 mt-1" style={{ color: 'var(--text-muted)' }}>
+                          Ou dwe fini transaksyon an nan fenèt Kobara ki louvri a.
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleVerify}
+                        className="w-full py-4 rounded-2xl font-black text-sm bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 hover:scale-[1.01] active:scale-[0.98] transition-all"
+                      >
+                        Mwen fin peye — Verifye kounye a →
+                      </button>
+                      <p className="text-center text-[10px] font-medium opacity-50" style={{ color: 'var(--text-muted)' }}>
+                        Si fenèt la pa louvri, tcheke spam ou.
                       </p>
                     </div>
-
-                    {/* Selected Plan Badge */}
-                    {selectedTier && (() => {
-                      const t = pricingTiers.find(x => x.name === selectedTier);
-                      return (
-                        <div className="flex items-center gap-3 p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20">
-                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${t?.color} flex items-center justify-center text-lg shadow-md`}>{t?.icon}</div>
-                          <div className="flex-grow">
-                            <p className="text-[10px] font-black text-blue-500 uppercase">Plan Chwazi</p>
-                            <p className="text-sm font-black" style={{ color: 'var(--text-main)' }}>{selectedTier}</p>
-                          </div>
-                          <span className="text-base font-black text-blue-600">{t?.price}</span>
-                        </div>
-                      );
-                    })()}
-
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { label: 'Non Fanmi', key: 'lastName', placeholder: 'Ex: Jean' },
-                        { label: 'Prenon', key: 'firstName', placeholder: 'Ex: Pierre' },
-                      ].map(({ label, key, placeholder }) => (
-                        <div key={key} className="space-y-1.5">
-                          <label className="text-[10px] font-black uppercase tracking-[2px] opacity-60" style={{ color: 'var(--text-muted)' }}>{label}</label>
-                          <input
-                            required type="text" placeholder={placeholder}
-                            className="w-full px-4 py-3 rounded-xl text-sm font-medium border outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
-                            style={{ color: 'var(--text-main)' }}
-                            value={formData[key as 'lastName' | 'firstName']}
-                            onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
-                          />
-                        </div>
-                      ))}
+                  ) : paymentState === 'verifying' ? (
+                    <div className="flex items-center justify-center gap-3 py-6">
+                      <span className="w-5 h-5 border-2 border-green-400/30 border-t-green-400 rounded-full animate-spin" />
+                      <span className="text-sm font-bold" style={{ color: 'var(--text-muted)' }}>Verifye peman an...</span>
                     </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-black uppercase tracking-[2px] opacity-60" style={{ color: 'var(--text-muted)' }}>Nimewo Telefòn</label>
-                      <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-400 font-medium">+509</span>
-                        <input
-                          required type="tel" placeholder="00 00 00 00"
-                          className="w-full pl-14 pr-4 py-3 rounded-xl text-sm font-medium border outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
-                          style={{ color: 'var(--text-main)' }}
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-black uppercase tracking-[2px] opacity-60" style={{ color: 'var(--text-muted)' }}>Foto Tranzaksyon an</label>
-                      <div className="relative group">
-                        <input required type="file" accept="image/*" onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
-                        <div className={`w-full p-6 border-2 border-dashed rounded-2xl flex flex-col items-center gap-3 transition-all duration-200
-                          ${formData.transactionPhoto ? 'border-green-500 bg-green-500/5' : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/30 group-hover:border-blue-500 group-hover:bg-blue-500/5'}`}>
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-md transition-transform group-hover:scale-110
-                            ${formData.transactionPhoto ? 'bg-green-500 text-white' : 'bg-white dark:bg-slate-700 text-slate-400'}`}>
-                            {formData.transactionPhoto ? '✓' : '📷'}
-                          </div>
-                          <div className="text-center">
-                            <p className="text-sm font-black" style={{ color: 'var(--text-main)' }}>
-                              {formData.transactionPhoto ? 'Foto Chwazi!' : 'Klike pou moute Screenshot'}
-                            </p>
-                            <p className="text-[10px] font-bold text-slate-400 mt-0.5 uppercase">
-                              {formData.transactionPhoto ? formData.transactionPhoto.name : 'PNG, JPG jiska 5MB'}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit" disabled={isSubmitting}
-                      className={`w-full py-4 rounded-2xl font-black text-sm transition-all hover:scale-[1.01] active:scale-[0.98]
-                        ${isSubmitting ? 'bg-slate-400 cursor-not-allowed text-white' : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30'}`}
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Y ap valide...
-                        </span>
-                      ) : (
-                        <span className="flex items-center justify-center gap-2">Konfime Aksè Premium →</span>
-                      )}
-                    </button>
-
-                    <p className="text-center text-[10px] font-medium opacity-50" style={{ color: 'var(--text-muted)' }}>
-                      ✓ Verifikasyon rapid &nbsp;•&nbsp; ✓ Sipo Dedikase &nbsp;•&nbsp; ✓ 100% Sekirite
-                    </p>
-                  </form>
-                )}
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

@@ -39,6 +39,12 @@ const NAV_GROUPS = [
       { icon: '📷', label: ModuleType.DEVOIR_PHOTO },
     ],
   },
+  {
+    label: 'Abònman',
+    items: [
+      { icon: '💎', label: ModuleType.PREMIUM },
+    ],
+  },
 ];
 
 interface SidebarProps {
@@ -210,21 +216,22 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* Premium CTA */}
         {!isPremium && (
           <div className="px-0.5 mt-2 mb-3">
-            <div
-              className="relative rounded-2xl overflow-hidden"
+            <button
+              onClick={() => handleSelect(ModuleType.PREMIUM)}
+              className="w-full relative rounded-2xl overflow-hidden text-left cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
               style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #6001d1 100%)' }}
             >
               <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/20 blur-2xl rounded-full" />
               <div className="relative z-10 p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg">🎉</span>
-                  <span className="text-[11px] font-black text-white uppercase tracking-widest">Gratis!</span>
+                  <span className="text-lg">💎</span>
+                  <span className="text-[11px] font-black text-white uppercase tracking-widest">Premium</span>
                 </div>
                 <p className="text-[10px] font-medium text-white/80 leading-relaxed">
-                  Tout modil yo disponib gratis — Gen ladan Egzamen Leta ak Foto Devwa!
+                  Debloke tout fonksyonalite ak plan Premium!
                 </p>
               </div>
-            </div>
+            </button>
           </div>
         )}
 

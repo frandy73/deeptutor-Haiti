@@ -1,7 +1,7 @@
 export enum ModuleType {
   DASHBOARD = 'Tablodbo / Akèy',
   GUIDED_LEARNING = 'Gid Aprantisaj',
-  SMART_SOLVER = 'Rezoud Devoir',
+  SMART_SOLVER = 'Rezoud Devwa',
   QUESTION_GENERATOR = 'Jeneratè Kesyon',
   CO_WRITER = 'Asistan Redaktè',
   DEEP_RESEARCH = 'Rechèch Pwofon',
