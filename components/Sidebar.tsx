@@ -59,12 +59,13 @@ interface SidebarProps {
   onToggleTheme: () => void;
   onClose?: () => void;
   isPremium?: boolean;
+  onLogout?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   selectedModule, onSelectModule, config, onConfigChange,
   chatHistory, onLoadChatHistory, onDeleteChatHistory,
-  isDark, onToggleTheme, onClose, isPremium = false,
+  isDark, onToggleTheme, onClose, isPremium = false, onLogout,
 }) => {
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -470,7 +471,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="h-4" /> {/* bottom spacer */}
 
         {/* Keyboard shortcut hint */}
-        <div className="px-3 py-3">
+        <div className="px-3 py-2">
           <div className="rounded-xl p-3 text-center glass-card">
             <p className="m-0 text-[9px] font-bold tracking-wider" style={{ color: 'var(--text-muted)' }}>
               <kbd className="px-1.5 py-0.5 rounded text-[9px] font-black font-mono" style={{ background: 'var(--surface-container)', color: 'var(--primary)' }}>?</kbd>
@@ -478,6 +479,19 @@ const Sidebar: React.FC<SidebarProps> = ({
             </p>
           </div>
         </div>
+
+        {/* Logout */}
+        {onLogout && (
+          <div className="px-3 pb-3">
+            <button
+              onClick={() => { if (window.confirm('Ou vreman vle dekonekte?')) { onLogout(); if (onClose) onClose(); } }}
+              className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all duration-200 hover:bg-red-500/10"
+              style={{ color: '#ef4444' }}
+            >
+              <span className="text-sm">🚪</span> Dekonekte
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

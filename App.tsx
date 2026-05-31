@@ -619,6 +619,7 @@ const App: React.FC = () => {
           onToggleTheme={toggleTheme}
           onClose={() => setIsSidebarOpen(false)}
           isPremium={userProfile?.isPremium || false}
+          onLogout={handleLogout}
         />
       </div>
 
