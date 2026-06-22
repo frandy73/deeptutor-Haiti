@@ -18,6 +18,7 @@ const GlossaryInterface = lazy(() => import('./components/GlossaryInterface'));
 const PremiumInterface = lazy(() => import('./components/PremiumInterface'));
 const HomeworkUploadInterface = lazy(() => import('./components/HomeworkUploadInterface'));
 const MasteryInterface = lazy(() => import('./components/MasteryInterface'));
+const ProfileInterface = lazy(() => import('./components/ProfileInterface'));
 import { prefetchBacExamsForOffline, cleanupOldCache } from './services/offlineCacheService';
 import { showUnseenNotifications } from './services/updateService';
 import { onNotification, notifySuccess } from './services/notificationService';
@@ -678,6 +679,16 @@ const App: React.FC = () => {
           />
 ) : selectedModule === ModuleType.PREMIUM ? (
           <PremiumInterface 
+            onMenuClick={() => setIsSidebarOpen(true)}
+          />
+        ) : selectedModule === ModuleType.PROFILE ? (
+          <ProfileInterface
+            userProfile={userProfile}
+            currentUser={currentUser}
+            isDark={isDark}
+            onToggleTheme={toggleTheme}
+            onSelectModule={handleSelectModule}
+            onLogout={handleLogout}
             onMenuClick={() => setIsSidebarOpen(true)}
           />
         ) : selectedModule === ModuleType.DEVOIR_PHOTO ? (

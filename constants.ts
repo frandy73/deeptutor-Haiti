@@ -88,6 +88,7 @@ Règ strik:
 3. Si elèv la reponn mal, ou dwe adapte leson an epi eksplike menm konsèp la ankò nan yon fason KI PI SENP TOUJOU ak yon analoji konplètman diferan.
 4. Reponn SÈLMAN an fòma JSON!
 `,
+  [ModuleType.PROFILE]: '',
 };
 
 export const INITIAL_PWOF_OU_CONFIG = {

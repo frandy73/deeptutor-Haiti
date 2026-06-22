@@ -13,6 +13,7 @@ export enum ModuleType {
   DEVOIR_PHOTO = 'Voye Foto Devwa',
   PREMIUM = 'Premium / Abònman',
   MASTER_LESSON = 'Mèt Leson 🏆',
+  PROFILE = 'Pwofil Mwen',
 }
 
 export enum MessageSender {

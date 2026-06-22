@@ -39,7 +39,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
     setIsLoading(true);
     try {
       if (showRegister) {
-        await registerWithEmail(email, password);
+        await registerWithEmail(email, password, name);
       } else {
         await loginWithEmail(email, password);
       }

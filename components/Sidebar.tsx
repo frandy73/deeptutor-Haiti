@@ -40,6 +40,12 @@ const NAV_GROUPS = [
     ],
   },
   {
+    label: 'Pwofil',
+    items: [
+      { icon: '👤', label: ModuleType.PROFILE },
+    ],
+  },
+  {
     label: 'Abònman',
     items: [
       { icon: '💎', label: ModuleType.PREMIUM },

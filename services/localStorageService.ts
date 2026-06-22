@@ -162,6 +162,7 @@ export const updateStreakAndXP = (xpToAdd: number): StudentProgress => {
     xp: progress.xp + xpToAdd,
     streak: newStreak,
     lastActiveDate: today,
+    totalMessages: progress.totalMessages + 1,
   };
 
   const prevBadges = updated.badges.length;

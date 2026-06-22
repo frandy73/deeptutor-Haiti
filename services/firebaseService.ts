@@ -14,6 +14,17 @@ export type UserProfile = {
   isPremium: boolean;
   dailyMessagesCount: number;
   lastMessageDate: string; // YYYY-MM-DD
+  displayName?: string;
+  photoURL?: string;
+  email?: string;
+  createdAt?: string; // ISO
+  lastLoginAt?: string; // ISO
+  totalMessages?: number;
+  totalQuizzes?: number;
+  xp?: number;
+  streak?: number;
+  badges?: string[];
+  masteredTopics?: string[];
 };
 
 const firebaseConfig = {
@@ -40,19 +51,29 @@ export const loginWithEmail = async (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const registerWithEmail = async (email: string, password: string) => {
+export const registerWithEmail = async (email: string, password: string, displayName?: string) => {
   if (!auth) throw new Error('Firebase not initialized');
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  
-  // Create default free profile in Firestore
-  const today = new Date().toISOString().split('T')[0];
+
+  const now = new Date().toISOString();
+  const today = now.split('T')[0];
   const userProfile: UserProfile = {
     uid: userCredential.user.uid,
     isPremium: false,
     dailyMessagesCount: 0,
-    lastMessageDate: today
+    lastMessageDate: today,
+    displayName: displayName || email.split('@')[0],
+    email,
+    createdAt: now,
+    lastLoginAt: now,
+    totalMessages: 0,
+    totalQuizzes: 0,
+    xp: 0,
+    streak: 0,
+    badges: ['first_step'],
+    masteredTopics: [],
   };
-  
+
   await setDoc(doc(db, 'users', userCredential.user.uid), userProfile);
   return userCredential;
 };
@@ -110,6 +131,24 @@ export const checkAndIncrementMessageLimit = async (uid: string, isPremium: bool
   } catch {
     // Offline - allow message to pass through
     return true;
+  }
+};
+
+export const updateUserProfile = async (uid: string, data: Partial<UserProfile>): Promise<void> => {
+  try {
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, data);
+  } catch {
+    // Offline - silently ignore
+  }
+};
+
+export const updateUserProgress = async (uid: string, progress: { xp: number; streak: number; totalMessages: number; totalQuizzes: number; badges: string[]; masteredTopics: string[] }): Promise<void> => {
+  try {
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, progress);
+  } catch {
+    // Offline - silently ignore
   }
 };
 
