@@ -24,6 +24,7 @@ import { showUnseenNotifications } from './services/updateService';
 import { onNotification, notifySuccess } from './services/notificationService';
 import { useKeyboardShortcuts, ShortcutsHelpModal } from './hooks/useKeyboardShortcuts';
 import { setSyncUid, pushProgressToFirebase, pullProgressFromFirebase } from './services/syncService';
+import { enqueueMessage, processQueue, getQueueLength } from './services/offlineQueueService';
 import {
   ChatMessage,
   MessageSender,
@@ -87,6 +88,29 @@ const App: React.FC = () => {
   useEffect(() => {
     prefetchBacExamsForOffline();
     cleanupOldCache();
+
+    const handleOnline = async () => {
+      const count = await getQueueLength();
+      if (count === 0) return;
+      notifySuccess('📨 ' + count + ' mesaj ap trete...', 'Rezo a retounen, map voye mesaj ou yo.');
+      const result = await processQueue(
+        (current, total) => {},
+        (text, response) => {
+          const now = Date.now();
+          const userMsg: ChatMessage = { id: now.toString(), sender: MessageSender.USER, text };
+          const botMsg: ChatMessage = { id: (now + 1).toString(), sender: MessageSender.BOT, text: response };
+          const chat = { id: 'q_' + now.toString(), moduleType: ModuleType.GUIDED_LEARNING, timestamp: new Date().toISOString(), messages: [userMsg, botMsg], title: text.slice(0, 30) };
+          const history = loadChatHistory();
+          saveChatHistory([chat, ...history]);
+        },
+      );
+      if (result.processed > 0) {
+        notifySuccess('✅ ' + result.processed + ' mesaj voye!', result.failed > 0 ? result.failed + ' pa t ka voye.' : 'Tout mesaj yo te resevwa repons.');
+      }
+    };
+
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
   }, []);
 
   useEffect(() => {
@@ -191,6 +215,27 @@ const App: React.FC = () => {
         setSelectedModule(ModuleType.PREMIUM);
         return; // Block message
       }
+    }
+
+    // If offline, queue the message
+    if (!navigator.onLine) {
+      await enqueueMessage(text, selectedModule, config, knowledgeContext?.text);
+      const queueLen = await getQueueLength();
+      notifySuccess('📨 Mesaj an ke!', queueLen + ' mesaj ap tann rezo a.');
+      const userMessage: ChatMessage = {
+        id: Date.now().toString(),
+        sender: MessageSender.USER,
+        text,
+      };
+      const queuedBotMsg: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: MessageSender.BOT,
+        text: '📨 Mesaj ou an ke. Lè entènèt la retounen, m ap reponn ou otomatikman!',
+      };
+      const newMessages = [...messages, userMessage, queuedBotMsg];
+      setMessages(newMessages);
+      saveCurrentChat(newMessages);
+      return;
     }
 
     const userMessage: ChatMessage = {
