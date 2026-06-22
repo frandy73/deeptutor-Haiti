@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import Sidebar from './components/Sidebar';
 import SplashScreen from './components/SplashScreen';
 import LoginInterface from './components/LoginInterface';
-import ChatInterface from './components/ChatInterface';
-import KnowledgeBaseInterface from './components/KnowledgeBaseInterface';
-import FlashcardsInterface from './components/FlashcardsInterface';
-import DashboardInterface from './components/DashboardInterface';
-import NotebookInterface from './components/NotebookInterface';
-import BacExamsInterface from './components/BacExamsInterface';
-import GlossaryInterface from './components/GlossaryInterface';
-import PremiumInterface from './components/PremiumInterface';
-import HomeworkUploadInterface from './components/HomeworkUploadInterface';
 import ErrorBoundary from './components/ErrorBoundary';
-import ToastContainer from './components/Toast';
-import { ToastData } from './components/Toast';
-import { onNotification } from './services/notificationService';
-import { notifySuccess } from './services/notificationService';
-import { useKeyboardShortcuts, ShortcutsHelpModal } from './hooks/useKeyboardShortcuts';
-import MasteryInterface from './components/MasteryInterface';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 import NetworkStatusManager from './components/NetworkStatusManager';
+import ModuleSkeleton from './components/ModuleSkeleton';
+import ToastContainer, { ToastData } from './components/Toast';
+
+const ChatInterface = lazy(() => import('./components/ChatInterface'));
+const KnowledgeBaseInterface = lazy(() => import('./components/KnowledgeBaseInterface'));
+const FlashcardsInterface = lazy(() => import('./components/FlashcardsInterface'));
+const DashboardInterface = lazy(() => import('./components/DashboardInterface'));
+const NotebookInterface = lazy(() => import('./components/NotebookInterface'));
+const BacExamsInterface = lazy(() => import('./components/BacExamsInterface'));
+const GlossaryInterface = lazy(() => import('./components/GlossaryInterface'));
+const PremiumInterface = lazy(() => import('./components/PremiumInterface'));
+const HomeworkUploadInterface = lazy(() => import('./components/HomeworkUploadInterface'));
+const MasteryInterface = lazy(() => import('./components/MasteryInterface'));
 import { prefetchBacExamsForOffline, cleanupOldCache } from './services/offlineCacheService';
 import { showUnseenNotifications } from './services/updateService';
+import { onNotification, notifySuccess } from './services/notificationService';
+import { useKeyboardShortcuts, ShortcutsHelpModal } from './hooks/useKeyboardShortcuts';
 import {
   ChatMessage,
   MessageSender,
@@ -36,7 +36,6 @@ import {
   INITIAL_PWOF_OU_CONFIG,
   XP_REWARDS
 } from './constants';
-import { EXAM_DATABASE, getQuizFromDatabase } from './bacQuizzes';
 import { getAIResponse } from './services/aiService';
 import { initFirebase, onAuthChange, logoutUser, getUserProfile, checkAndIncrementMessageLimit, UserProfile } from './services/firebaseService';
 import {
@@ -470,6 +469,7 @@ const App: React.FC = () => {
   const handleGenerateBacQuiz = async (level: string, subject: string, year: string) => {
     setSelectedModule(ModuleType.BAC_EXAMS);
 
+    const { getQuizFromDatabase } = await import('./bacQuizzes');
     const quizData = getQuizFromDatabase(level, subject, year);
     if (quizData) {
       const botMessage: ChatMessage = {
@@ -632,6 +632,7 @@ const App: React.FC = () => {
         {/* Network Status Banner */}
         <NetworkStatusManager />
 
+        <Suspense fallback={<ModuleSkeleton />}>
         <div key={selectedModule} className="relative flex-1 flex flex-col overflow-hidden page-enter">
         {selectedModule === ModuleType.DASHBOARD ? (
           <DashboardInterface chatHistory={chatHistory} onMenuClick={() => setIsSidebarOpen(true)} onSelectModule={handleSelectModule} />
@@ -702,6 +703,7 @@ const App: React.FC = () => {
           />
         )}
         </div>
+        </Suspense>
       </main>
     </div>
     <ToastContainer toasts={toasts} onRemove={removeToast} />
