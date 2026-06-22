@@ -21,6 +21,7 @@ import MasteryInterface from './components/MasteryInterface';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 import NetworkStatusManager from './components/NetworkStatusManager';
 import { prefetchBacExamsForOffline, cleanupOldCache } from './services/offlineCacheService';
+import { showUnseenNotifications } from './services/updateService';
 import {
   ChatMessage,
   MessageSender,
@@ -152,6 +153,7 @@ const App: React.FC = () => {
     setCurrentUser(user);
     const profile = await getUserProfile(user.uid);
     setUserProfile(profile);
+    setTimeout(() => showUnseenNotifications(), 1500);
   };
 
   const handleLogout = async () => {
@@ -189,14 +191,22 @@ const App: React.FC = () => {
     setMessages(newMessages);
     setIsLoading(true);
 
+    const botMsgId = (Date.now() + 1).toString();
+    const placeholderBot: ChatMessage = { id: botMsgId, sender: MessageSender.BOT, text: '' };
+    setMessages(prev => [...prev, placeholderBot]);
+
     try {
+      let streamedText = '';
       const response = await getAIResponse({
         prompt: text,
         selectedModule,
         studentLevel: config.studentLevel,
         responseLanguage: config.responseLanguage,
-        onChunk: () => {},
-        chatHistoryContext: newMessages.slice(0, -1),
+        onChunk: (chunk) => {
+          streamedText += chunk;
+          setMessages(prev => prev.map(m => m.id === botMsgId ? { ...m, text: streamedText } : m));
+        },
+        chatHistoryContext: newMessages,
         knowledgeContext: knowledgeContext?.text,
         officialContextEnabled: config.officialContextEnabled,
         aiProvider: config.aiProvider,
@@ -204,20 +214,14 @@ const App: React.FC = () => {
         selectedSubject: config.selectedSubject
       });
 
-      const botMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        sender: MessageSender.BOT,
-        text: response,
-      };
-
-      const finalMessages = [...newMessages, botMessage];
+      const finalMessages = [...newMessages, { id: botMsgId, sender: MessageSender.BOT, text: response }];
       setMessages(finalMessages);
       updateStreakAndXP(XP_REWARDS.MESSAGE_SENT);
       saveCurrentChat(finalMessages);
 
     } catch (error) {
       setMessages([...newMessages, {
-        id: (Date.now() + 1).toString(),
+        id: botMsgId,
         sender: MessageSender.BOT,
         text: "Mwen regrèt, mwen gen yon ti pwoblèm teknik. Tanpri eseye ankò!",
       }]);
