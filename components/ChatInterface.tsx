@@ -275,15 +275,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           onSubmit={handleSubmit}
           className="max-w-4xl mx-auto"
         >
-          <div
-            className="relative flex items-end gap-2 sm:gap-3 p-2 sm:p-3 rounded-3xl shadow-2xl transition-all duration-300 focus-within:shadow-indigo-500/20"
-            style={{
-              background: 'rgba(22, 29, 51, 0.95)',
-              border: '2px solid rgba(255,255,255,0.12)',
-              backdropFilter: 'blur(16px)',
-            }}
-          >
-            {/* Textarea — agrandi, plis espas pou ekri */}
+          <div className="relative flex items-end gap-2 sm:gap-3 p-2 sm:p-3 rounded-3xl shadow-2xl transition-all duration-300 focus-within:shadow-indigo-500/20 bg-white/90 dark:bg-[rgba(22,29,51,0.95)] border-2 border-gray-200/80 dark:border-white/10 backdrop-blur-[16px]">
             <textarea
               ref={textareaRef}
               value={input}
@@ -295,11 +287,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 : 'Poze kesyon ou an isit la... Tape yon pwoblèm, mande yon eksplikasyon, oswa diskite yon sijè.'
               }
               disabled={isDisabled}
-              className="flex-1 resize-none px-4 sm:px-5 py-3 sm:py-4 rounded-2xl text-base font-medium outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed leading-relaxed"
+              className="flex-1 resize-none px-4 sm:px-5 py-3 sm:py-4 rounded-2xl text-base font-medium outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed leading-relaxed bg-gray-100 dark:bg-black/30 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               style={{
-                background: 'rgba(0,0,0,0.3)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                color: 'var(--text-main)',
                 minHeight: '80px',
                 maxHeight: '200px',
                 overflowY: 'auto',
