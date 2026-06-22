@@ -23,6 +23,7 @@ import { prefetchBacExamsForOffline, cleanupOldCache } from './services/offlineC
 import { showUnseenNotifications } from './services/updateService';
 import { onNotification, notifySuccess } from './services/notificationService';
 import { useKeyboardShortcuts, ShortcutsHelpModal } from './hooks/useKeyboardShortcuts';
+import { setSyncUid, pushProgressToFirebase, pullProgressFromFirebase } from './services/syncService';
 import {
   ChatMessage,
   MessageSender,
@@ -153,12 +154,15 @@ const App: React.FC = () => {
     setCurrentUser(user);
     const profile = await getUserProfile(user.uid);
     setUserProfile(profile);
+    setSyncUid(user.uid);
+    pullProgressFromFirebase();
     setTimeout(() => showUnseenNotifications(), 1500);
   };
 
   const handleLogout = async () => {
     try {
       await logoutUser();
+      setSyncUid(null);
       setIsAuthenticated(false);
       setCurrentUser(null);
       setUserProfile(null);
@@ -217,6 +221,7 @@ const App: React.FC = () => {
       const finalMessages = [...newMessages, { id: botMsgId, sender: MessageSender.BOT, text: response }];
       setMessages(finalMessages);
       updateStreakAndXP(XP_REWARDS.MESSAGE_SENT);
+      pushProgressToFirebase();
       saveCurrentChat(finalMessages);
 
     } catch (error) {
@@ -414,6 +419,7 @@ const App: React.FC = () => {
       const finalMessages = [...newMessages, botMessage];
       setMessages(finalMessages);
       updateStreakAndXP(XP_REWARDS.MESSAGE_SENT);
+      pushProgressToFirebase();
       
       // We don't save immediately here to avoid dependency cycle with saveCurrentChat, 
       // but it will be saved naturally on next interaction or we can force a save.
