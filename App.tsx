@@ -15,9 +15,12 @@ import ErrorBoundary from './components/ErrorBoundary';
 import ToastContainer from './components/Toast';
 import { ToastData } from './components/Toast';
 import { onNotification } from './services/notificationService';
-import { notifyWarning, notifySuccess } from './services/notificationService';
+import { notifySuccess } from './services/notificationService';
 import { useKeyboardShortcuts, ShortcutsHelpModal } from './hooks/useKeyboardShortcuts';
 import MasteryInterface from './components/MasteryInterface';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
+import NetworkStatusManager from './components/NetworkStatusManager';
+import { prefetchBacExamsForOffline, cleanupOldCache } from './services/offlineCacheService';
 import {
   ChatMessage,
   MessageSender,
@@ -56,7 +59,7 @@ const App: React.FC = () => {
   });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [knowledgeContext, setKnowledgeContext] = useState<{ text: string; fileName: string } | null>(null);
-  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const isOffline = !navigator.onLine;
   const [activeChatId, setActiveChatIdState] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -78,22 +81,10 @@ const App: React.FC = () => {
     setToasts(prev => prev.filter(t => t.id !== id));
   };
 
+  // Prefetch Bac exams for offline use & clean old cached data
   useEffect(() => {
-    const handleOnline = () => {
-      setIsOffline(false);
-      notifySuccess('📶 Koneksyon Retounen!', 'Pwof Ou ap travay ankò.');
-    };
-    const handleOffline = () => {
-      setIsOffline(true);
-      notifyWarning('📶 Pa gen Entènèt', 'Pwof Ou sou poz. Ou ka gade Flashcards ak Nòt ou yo.');
-    };
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
+    prefetchBacExamsForOffline();
+    cleanupOldCache();
   }, []);
 
   useEffect(() => {
@@ -634,14 +625,8 @@ const App: React.FC = () => {
           minWidth: 0,
         }}
       >
-        {/* Offline Warning Banner */}
-        {isOffline && (
-          <div style={{
-            background: '#fee2e2', color: '#b91c1c', padding: '8px 16px', textAlign: 'center', fontSize: '13px', fontWeight: 600, borderBottom: '1px solid #fca5a5', zIndex: 40
-          }}>
-            ⚠️ Ou pèdi koneksyon entènèt! Pwof Ou AI sou poz. Ou ka toujou gade Flashcards, Nòt ou yo oswa Egzamen Leta (si ou te deja chaje yo).
-          </div>
-        )}
+        {/* Network Status Banner */}
+        <NetworkStatusManager />
 
         <div key={selectedModule} className="relative flex-1 flex flex-col overflow-hidden page-enter">
         {selectedModule === ModuleType.DASHBOARD ? (
@@ -717,6 +702,7 @@ const App: React.FC = () => {
     </div>
     <ToastContainer toasts={toasts} onRemove={removeToast} />
     <ShortcutsHelpModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
+    <PWAInstallPrompt />
     </ErrorBoundary>
   );
 };

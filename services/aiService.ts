@@ -3,6 +3,7 @@ import { GoogleGenAI, GenerateContentResponse, Type, Content } from "@google/gen
 import { PWOF_OU_SYSTEM_INSTRUCTION_BASE, MODULE_INSTRUCTIONS } from '../constants';
 import { Language, ModuleType, Quiz, ChatMessage, MessageSender, AIProvider, Subject } from '../types';
 import { getOfficialContextForLevel } from './ministryData';
+import { cacheAIResponse, getCachedAIResponse } from './offlineCacheService';
 
 interface GetAIResponseParams {
     prompt: string;
@@ -299,10 +300,39 @@ async function callOllama(params: GetAIResponseParams): Promise<string> {
 
 // ---- MAIN EXPORT ----
 export async function getAIResponse(params: GetAIResponseParams): Promise<string> {
-    if (params.aiProvider === AIProvider.OLLAMA) {
-        return callOllama(params);
+    const isOffline = typeof navigator !== 'undefined' && !navigator.onLine;
+    if (isOffline) {
+        const cached = await getCachedAIResponse(params.prompt);
+        if (cached) {
+            if (params.onChunk) {
+                params.onChunk(cached);
+            }
+            return cached;
+        }
     }
-    return callGemini(params);
+
+    try {
+        let response: string;
+        if (params.aiProvider === AIProvider.OLLAMA) {
+            response = await callOllama(params);
+        } else {
+            response = await callGemini(params);
+        }
+
+        // Cache successful response for offline use
+        await cacheAIResponse(params.prompt, response, params.selectedModule);
+        return response;
+    } catch (error) {
+        // Fallback to cache on error if available
+        const cached = await getCachedAIResponse(params.prompt);
+        if (cached) {
+            if (params.onChunk) {
+                params.onChunk(cached);
+            }
+            return cached;
+        }
+        throw error;
+    }
 }
 
 // Keep old name as alias for backward compat
