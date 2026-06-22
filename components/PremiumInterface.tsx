@@ -3,6 +3,7 @@ import { createKobaraPayment, verifyKobaraPayment, savePremiumRequest } from '..
 
 interface PremiumInterfaceProps {
   onMenuClick?: () => void;
+  onPaymentSuccess?: () => void;
 }
 
 const pricingTiers = [
@@ -65,7 +66,7 @@ const pricingTiers = [
   },
 ];
 
-const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick }) => {
+const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaymentSuccess }) => {
   const [selectedTier, setSelectedTier] = useState('Plan Konpè');
   const [phone, setPhone] = useState('');
   const [paymentState, setPaymentState] = useState<'idle' | 'loading' | 'paid' | 'verifying' | 'error'>('idle');
@@ -104,6 +105,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick }) => {
         paymentId, status: 'approved',
       });
       setPaymentState('paid');
+      if (onPaymentSuccess) onPaymentSuccess();
     } else {
       setPaymentState('error');
       setErrorMsg('Nou poko wè peman an. Tcheke si ou konfime transaksyon an, epi eseye ankò.');

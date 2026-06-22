@@ -39,7 +39,7 @@ import {
   XP_REWARDS
 } from './constants';
 import { getAIResponse } from './services/aiService';
-import { initFirebase, onAuthChange, logoutUser, getUserProfile, checkAndIncrementMessageLimit, UserProfile } from './services/firebaseService';
+import { initFirebase, onAuthChange, logoutUser, getUserProfile, checkAndIncrementMessageLimit, updateUserProfile, UserProfile } from './services/firebaseService';
 import {
   loadChatHistory,
   saveChatHistory,
@@ -157,6 +157,14 @@ const App: React.FC = () => {
     setSyncUid(user.uid);
     pullProgressFromFirebase();
     setTimeout(() => showUnseenNotifications(), 1500);
+  };
+
+  const handlePaymentSuccess = async () => {
+    if (!currentUser) return;
+    await updateUserProfile(currentUser.uid, { isPremium: true });
+    const refreshed = await getUserProfile(currentUser.uid);
+    setUserProfile(refreshed);
+    notifySuccess('💎 Premium Aktive!', 'Ou gen tout aksè kounye a!');
   };
 
   const handleLogout = async () => {
@@ -686,6 +694,7 @@ const App: React.FC = () => {
 ) : selectedModule === ModuleType.PREMIUM ? (
           <PremiumInterface 
             onMenuClick={() => setIsSidebarOpen(true)}
+            onPaymentSuccess={handlePaymentSuccess}
           />
         ) : selectedModule === ModuleType.PROFILE ? (
           <ProfileInterface
