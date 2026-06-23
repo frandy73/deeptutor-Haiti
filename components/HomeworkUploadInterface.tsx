@@ -118,7 +118,7 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
   return (
     <div className="flex flex-col h-full overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
       {/* Header */}
-      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}>
+      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 blur-3xl -translate-y-1/2 translate-x-1/4" />
 
@@ -177,7 +177,7 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <button onClick={() => fileInputRef.current?.click()}
                 className="px-8 py-4 rounded-2xl font-black text-base text-white shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 flex-1 sm:flex-none"
-                style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', boxShadow: '0 10px 25px -5px rgba(79,70,229,0.4)' }}>
+                style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', boxShadow: '0 10px 25px -5px rgba(79,70,229,0.4)' }}>
                 <span className="text-xl">📁</span> Chwazi Foto
               </button>
               <button onClick={() => cameraInputRef.current?.click()}
@@ -242,7 +242,7 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
                 <button onClick={analyzeHomework} disabled={isAnalyzing}
                   className={`px-8 py-4 rounded-2xl font-black text-base transition-all flex items-center justify-center gap-3 w-full sm:w-auto mx-auto shadow-lg
                     ${isAnalyzing ? 'bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed opacity-70' : 'text-white hover:scale-[1.02] active:scale-95'}`}
-                  style={{ background: isAnalyzing ? '' : 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}>
+                  style={{ background: isAnalyzing ? '' : 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
                   {isAnalyzing ? (
                     <><span className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" /> Ap analize devwa w la...</>
                   ) : (

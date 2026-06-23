@@ -122,7 +122,7 @@ class ErrorBoundary extends Component<Props, State> {
                 onClick={this.handleRetry}
                 className="px-6 py-3 rounded-xl font-black text-sm text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
                 style={{
-                  background: 'linear-gradient(135deg, #4f46e5, #7c3aed)',
+                  background: 'linear-gradient(135deg, #2563eb, #0891b2)',
                 }}
               >
                 🔄 Eseye Ankò

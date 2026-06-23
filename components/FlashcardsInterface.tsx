@@ -200,7 +200,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
   return (
     <div className="flex flex-col h-full overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
       {/* Header */}
-      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}>
+      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 blur-3xl -translate-y-1/2 translate-x-1/4" />
         
@@ -238,7 +238,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
             />
             <button onClick={handleGenerate} disabled={isGenerating || !topic.trim()}
               className="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-black text-sm text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center min-w-[120px] sm:min-w-[140px]"
-              style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}>
+              style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
               {isGenerating ? <span className="animate-pulse">⏳ Ap jenere...</span> : 'Jenere Pake'}
             </button>
           </div>

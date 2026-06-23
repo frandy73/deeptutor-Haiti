@@ -59,7 +59,7 @@ const ProfileInterface: React.FC<ProfileInterfaceProps> = ({
     if (confirmed && onLogout) onLogout();
   };
 
-  const levelColors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#f97316', '#eab308'];
+  const levelColors = ['#2563eb', '#0891b2', '#059669', '#d97706', '#0d9488', '#dc2626', '#0891b2', '#059669'];
   const levelColor = levelColors[(level - 1) % levelColors.length];
   const hoursStudied = Math.round(progress.totalMessages * 0.08 * 10) / 10;
 
@@ -122,7 +122,7 @@ const ProfileInterface: React.FC<ProfileInterfaceProps> = ({
                 Nivo {level}
               </span>
               {userProfile?.isPremium && (
-                <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white" style={{ background: 'linear-gradient(135deg, #4f46e5, #6001d1)' }}>
+                <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white" style={{ background: 'linear-gradient(135deg, #2563eb, #0d9488)' }}>
                   💎 Premium
                 </span>
               )}

@@ -128,7 +128,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ variant = 'text', count
             <div className="flex justify-end">
               <div
                 className="px-4 py-3 rounded-2xl rounded-tr-sm max-w-[70%] space-y-2"
-                style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #ffb1c7 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #2563eb 0%, #34d399 100%)' }}
               >
                 <SkeletonPulse className="h-4 w-full bg-white/20" />
                 <SkeletonPulse className="h-4 w-3/5 bg-white/20" />
@@ -172,7 +172,7 @@ export default SkeletonLoader;
 export const DashboardSkeleton: React.FC = () => (
   <div className="flex flex-col h-full overflow-y-auto custom-scrollbar" style={{ background: 'var(--surface-container-lowest)' }}>
     {/* Hero Header Skeleton */}
-    <div className="relative shrink-0 overflow-hidden" style={{ background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 60%, #a21caf 100%)' }}>
+    <div className="relative shrink-0 overflow-hidden" style={{ background: 'linear-gradient(135deg, #2563eb 0%, #0891b2 60%, #0891b2 100%)' }}>
       <div className="relative z-10 p-5 sm:p-6 max-w-5xl mx-auto w-full">
         <div className="flex items-start justify-between mb-5">
           <div className="flex items-center gap-3">
@@ -273,7 +273,7 @@ export const ChatSkeleton: React.FC = () => (
 export const FlashcardsSkeleton: React.FC = () => (
   <div className="flex flex-col h-full" style={{ background: 'var(--surface-container-lowest)' }}>
     {/* Header Skeleton */}
-    <div className="shrink-0 p-4 flex items-center gap-4" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}>
+    <div className="shrink-0 p-4 flex items-center gap-4" style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
       <SkeletonPulse className="w-14 h-14 rounded-2xl bg-white/20" />
       <div className="space-y-2">
         <SkeletonPulse className="h-6 w-32 bg-white/30" />

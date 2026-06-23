@@ -186,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       style={
                         active
                           ? {
-                              background: 'linear-gradient(135deg, #4f46e5 0%, #ffb1c7 100%)',
+                              background: 'linear-gradient(135deg, #2563eb 0%, #34d399 100%)',
                               color: '#fff',
                               boxShadow: '0 8px 32px 0 rgba(124,58,237,0.25)',
                             }
@@ -226,7 +226,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={() => handleSelect(ModuleType.PREMIUM)}
               className="w-full relative rounded-2xl overflow-hidden text-left cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
-              style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #6001d1 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #2563eb 0%, #0d9488 100%)' }}
             >
               <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/20 blur-2xl rounded-full" />
               <div className="relative z-10 p-4">
@@ -334,7 +334,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         className="flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wide transition-all duration-200 border"
                         style={
                           isActive
-                            ? { background: 'linear-gradient(135deg,#4f46e5,#7c3aed)', color: '#fff', borderColor: 'transparent', boxShadow: '0 2px 8px rgba(99,60,237,.3)' }
+                            ? { background: 'linear-gradient(135deg,#2563eb,#0891b2)', color: '#fff', borderColor: 'transparent', boxShadow: '0 2px 8px rgba(99,60,237,.3)' }
                             : { background: 'var(--surface-container)', color: 'var(--text-muted)', borderColor: 'rgba(255,255,255,0.1)' }
                         }
                       >
@@ -362,7 +362,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   onClick={() => downloadBackup()}
                   className="w-full py-2 rounded-xl text-[11px] font-black text-white mb-2 transition-all duration-300 hover:scale-[1.02] btn-lift"
-                  style={{ background: 'linear-gradient(135deg,#4f46e5,#7c3aed)', boxShadow: '0 2px 8px rgba(99,60,237,.25)' }}
+                  style={{ background: 'linear-gradient(135deg,#2563eb,#0891b2)', boxShadow: '0 2px 8px rgba(99,60,237,.25)' }}
                 >
                   Ekspòte Tout
                 </button>

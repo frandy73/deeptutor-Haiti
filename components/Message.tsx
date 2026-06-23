@@ -74,7 +74,7 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
         maxWidth: '82%',
         padding: '12px 16px',
         borderRadius: isUser ? '20px 20px 6px 20px' : '20px 20px 20px 6px',
-        background: isUser ? 'linear-gradient(135deg, #4f46e5 0%, #ffb1c7 100%)' : 'rgba(22, 29, 51, 0.85)',
+        background: isUser ? 'linear-gradient(135deg, #2563eb 0%, #34d399 100%)' : 'rgba(22, 29, 51, 0.85)',
         color: isUser ? '#fff' : 'var(--on-surface)',
         border: isUser ? 'none' : '1px solid rgba(255,255,255,0.1)',
         backdropFilter: isUser ? 'none' : 'blur(12px)',

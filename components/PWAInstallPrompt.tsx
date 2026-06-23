@@ -150,7 +150,7 @@ const PWAInstallPrompt: React.FC = () => {
               width: '48px',
               height: '48px',
               borderRadius: '14px',
-              background: 'linear-gradient(135deg, #2563eb, #7c3aed)',
+              background: 'linear-gradient(135deg, #2563eb, #0891b2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -225,7 +225,7 @@ const PWAInstallPrompt: React.FC = () => {
             border: 'none',
             background: isInstalling
               ? 'rgba(99, 102, 241, 0.3)'
-              : 'linear-gradient(135deg, #2563eb, #7c3aed)',
+              : 'linear-gradient(135deg, #2563eb, #0891b2)',
             color: 'white',
             fontSize: '14px',
             fontWeight: 800,

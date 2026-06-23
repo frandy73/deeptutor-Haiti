@@ -231,7 +231,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                   <div
                     className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
                     style={{
-                      background: 'linear-gradient(135deg, #4f46e5, #7c3aed, #db2777)',
+                      background: 'linear-gradient(135deg, #2563eb, #0891b2, #059669)',
                       boxShadow: '0 4px 12px rgba(79,70,229,0.3)',
                       animation: 'glow-pulse 1.5s ease-in-out infinite',
                     }}
@@ -306,7 +306,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 title="Jenere Egzèsis"
                 aria-label="Jenere Egzèsis"
                 className="w-12 h-12 rounded-2xl font-black text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center btn-ripple"
-                style={{ background: 'linear-gradient(135deg, #ec4899, #f43f5e)', boxShadow: '0 4px 16px rgba(236,72,153,0.35)' }}
+                style={{ background: 'linear-gradient(135deg, #0d9488, #dc2626)', boxShadow: '0 4px 16px rgba(236,72,153,0.35)' }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -325,7 +325,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 className="w-12 h-12 rounded-2xl font-black text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center btn-ripple"
                 style={{
                   background: input.trim() && !isDisabled
-                    ? 'linear-gradient(135deg, #4f46e5, #7c3aed)'
+                    ? 'linear-gradient(135deg, #2563eb, #0891b2)'
                     : 'rgba(255,255,255,0.08)',
                   boxShadow: input.trim() && !isDisabled
                     ? '0 4px 20px rgba(79,70,229,0.4)'

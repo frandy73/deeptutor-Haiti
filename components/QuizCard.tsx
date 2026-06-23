@@ -77,7 +77,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quizData, onRegenerateQuiz }) => {
               type="button"
               onClick={handleSubmitQuiz}
               className="px-6 py-3 rounded-xl font-black text-sm text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
-              style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}
+              style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}
             >
               Soumèt Repons
             </button>
@@ -96,7 +96,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quizData, onRegenerateQuiz }) => {
                 type="button"
                 onClick={handleDownload}
                 className="px-6 py-3 rounded-xl font-black text-sm text-white transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-2"
-                style={{ background: 'linear-gradient(135deg, #a855f7, #7c3aed)' }}
+                style={{ background: 'linear-gradient(135deg, #0891b2, #059669)' }}
               >
                 <span>📥</span> Telechaje (PDF/HTML)
               </button>

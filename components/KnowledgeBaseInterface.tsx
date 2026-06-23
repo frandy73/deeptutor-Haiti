@@ -105,7 +105,7 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
   return (
     <div className="flex flex-col h-full overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
       {/* Header */}
-      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)' }}>
+      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 blur-3xl -translate-y-1/2 translate-x-1/4" />
         

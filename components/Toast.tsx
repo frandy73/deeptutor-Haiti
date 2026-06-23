@@ -27,8 +27,8 @@ const ICONS: Record<ToastType, string> = {
 const COLORS: Record<ToastType, { bg: string; border: string; text: string }> = {
   success: { bg: '#ecfdf5', border: '#10b981', text: '#065f46' },
   error: { bg: '#fef2f2', border: '#ef4444', text: '#991b1b' },
-  info: { bg: '#eff6ff', border: '#3b82f6', text: '#1e40af' },
-  achievement: { bg: '#f5f3ff', border: '#8b5cf6', text: '#5b21b6' },
+  info: { bg: '#eff6ff', border: '#2563eb', text: '#1e40af' },
+  achievement: { bg: '#f0fdfa', border: '#0891b2', text: '#115e59' },
   warning: { bg: '#fffbeb', border: '#f59e0b', text: '#92400e' },
 };
 

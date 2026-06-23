@@ -80,7 +80,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
       {/* ── Hero Header ─────────────────────────────────────────── */}
       <div
         className="relative shrink-0 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 60%, #a21caf 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #2563eb 0%, #0891b2 60%, #0891b2 100%)' }}
       >
         {/* bg decorations */}
         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '28px 28px' }} />
@@ -158,16 +158,13 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {/* ── Quick Stats Grid ──────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
-          <StatPill icon="⭐" value={progress.xp} label="Total XP" color="#6366f1" />
-          </div>
-          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <StatPill icon="🔥" value={`${progress.streak}j`} label="Streak" color="#f97316" />
-          </div>
-          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
-          <StatPill icon="📝" value={progress.totalMessages} label="Mesaj" color="#10b981" />
-          </div>
-          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <StatPill icon="🏆" value={progress.totalQuizzes} label="Quiz" color="#a855f7" />
+          <StatPill icon="⭐" value={progress.xp} label="Total XP" color="#2563eb" />
+
+          <StatPill icon="🔥" value={`${progress.streak}j`} label="Streak" color="#d97706" />
+
+          <StatPill icon="📝" value={progress.totalMessages} label="Mesaj" color="#059669" />
+
+          <StatPill icon="🏆" value={progress.totalQuizzes} label="Quiz" color="#0891b2" />
           </div>
         </div>
 

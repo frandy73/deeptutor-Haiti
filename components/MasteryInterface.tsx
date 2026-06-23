@@ -213,7 +213,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
             const left = Math.random() * 100;
             const delay = Math.random() * 5;
             const duration = Math.random() * 3 + 2;
-            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+            const colors = ['#dc2626', '#2563eb', '#059669', '#d97706', '#0891b2', '#0d9488'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             return (
               <div
@@ -242,7 +242,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
       )}
 
       {/* Header */}
-      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #4f46e5, #8b5cf6)' }}>
+      <div className="relative overflow-hidden shrink-0" style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 blur-3xl -translate-y-1/2 translate-x-1/4" />
         
@@ -544,8 +544,8 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                       if (isSelected) {
                         cardStyle = {
                           background: 'rgba(79, 70, 229, 0.05)',
-                          borderColor: '#4f46e5',
-                          color: '#4f46e5',
+                          borderColor: '#2563eb',
+                          color: '#2563eb',
                         };
                       }
 

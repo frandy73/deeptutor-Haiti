@@ -19,7 +19,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        background: 'linear-gradient(135deg, #0a0e1a 0%, #1a1040 40%, #2d1b69 70%, #4f46e5 100%)',
+        background: 'linear-gradient(135deg, #0a0e1a 0%, #1a1040 40%, #2d1b69 70%, #2563eb 100%)',
         transition: 'opacity 0.5s ease, transform 0.5s ease',
         opacity: phase === 'exit' ? 0 : 1,
         transform: phase === 'exit' ? 'scale(1.05)' : 'scale(1)',
@@ -33,7 +33,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
       </div>
       <h1 style={{
         fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', fontWeight: 900,
-        background: 'linear-gradient(135deg, #c3c0ff 0%, #ffb1c7 100%)',
+        background: 'linear-gradient(135deg, #c3c0ff 0%, #34d399 100%)',
         WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
         margin: 0, letterSpacing: '-0.02em',
       }}>
@@ -51,7 +51,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
       }}>
         <div className="splash-loader-bar" style={{
           height: '100%', width: '100%',
-          background: 'linear-gradient(90deg, #4f46e5, #ffb1c7)',
+          background: 'linear-gradient(90deg, #2563eb, #34d399)',
           animation: 'splash-load 1.5s ease-in-out forwards',
           transformOrigin: 'left',
         }} />

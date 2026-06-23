@@ -63,7 +63,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
       {/* Left decorative panel — hidden on mobile */}
       <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #ec4899 100%)' }}>
+        style={{ background: 'linear-gradient(135deg, #2563eb 0%, #0891b2 60%, #0d9488 100%)' }}>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
         <div className="absolute top-0 left-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -175,7 +175,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
               type="submit"
               disabled={isLoading}
               className="w-full py-4 rounded-2xl font-black text-sm text-white transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-              style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', boxShadow: '0 8px 25px -5px rgba(79,70,229,0.4)' }}
+              style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', boxShadow: '0 8px 25px -5px rgba(79,70,229,0.4)' }}
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
