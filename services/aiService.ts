@@ -217,7 +217,7 @@ const contents: Content[] = [];
     else if (params.isGlossaryRequest) schema = glossaryResponseSchema;
     else if (params.isMasteryRequest) schema = masteryLessonResponseSchema;
 
-    const models = ['gemini-3.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-lite'];
+    const models = ['gemini-3.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
 
     for (const modelName of models) {
         try {
@@ -242,8 +242,12 @@ const contents: Content[] = [];
             }
             return fullResponse;
         } catch (e: any) {
+            const isQuotaError = e?.message?.includes('429') || e?.message?.includes('quota') || e?.message?.includes('RESOURCE_EXHAUSTED');
             if (modelName === models[models.length - 1]) {
-                throw new Error('API Gemini pa reponn: ' + (e?.message || 'modèl pa disponib'));
+                const msg = isQuotaError
+                    ? 'Kota API Gemini fini. Ale nan https://aistudio.google.com/apikey pou kreye yon nouvo kle, oswa tann 1 minit.'
+                    : 'API Gemini pa reponn: ' + (e?.message || 'modèl pa disponib');
+                throw new Error(msg);
             }
             console.warn('Model ' + modelName + ' echwe, ap eseye pwochen an:', e?.message);
         }
