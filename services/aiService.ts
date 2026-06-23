@@ -217,43 +217,28 @@ const contents: Content[] = [];
     else if (params.isGlossaryRequest) schema = glossaryResponseSchema;
     else if (params.isMasteryRequest) schema = masteryLessonResponseSchema;
 
-    const models = ['gemini-3.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+    const modelName = 'gemini-2.0-flash';
 
-    for (const modelName of models) {
-        try {
-            const responseStream = await ai.models.generateContentStream({
-                model: modelName,
-                contents,
-                config: {
-                    systemInstruction,
-                    temperature: 0.8,
-                    responseMimeType: isStructured ? 'application/json' : undefined,
-                    responseSchema: isStructured ? schema : undefined,
-                },
-            });
+    const responseStream = await ai.models.generateContentStream({
+        model: modelName,
+        contents,
+        config: {
+            systemInstruction,
+            temperature: 0.8,
+            responseMimeType: isStructured ? 'application/json' : undefined,
+            responseSchema: isStructured ? schema : undefined,
+        },
+    });
 
-            let fullResponse = '';
-            for await (const chunk of responseStream) {
-                const text = (chunk as GenerateContentResponse).text;
-                if (text) {
-                    fullResponse += text;
-                    if (!isStructured) params.onChunk(text);
-                }
-            }
-            return fullResponse;
-        } catch (e: any) {
-            const isQuotaError = e?.message?.includes('429') || e?.message?.includes('quota') || e?.message?.includes('RESOURCE_EXHAUSTED');
-            if (modelName === models[models.length - 1]) {
-                const msg = isQuotaError
-                    ? 'Kota API Gemini fini. Ale nan https://aistudio.google.com/apikey pou kreye yon nouvo kle, oswa tann 1 minit.'
-                    : 'API Gemini pa reponn: ' + (e?.message || 'modèl pa disponib');
-                throw new Error(msg);
-            }
-            console.warn('Model ' + modelName + ' echwe, ap eseye pwochen an:', e?.message);
+    let fullResponse = '';
+    for await (const chunk of responseStream) {
+        const text = (chunk as GenerateContentResponse).text;
+        if (text) {
+            fullResponse += text;
+            if (!isStructured) params.onChunk(text);
         }
     }
-
-    throw new Error('API Gemini pa disponib');
+    return fullResponse;
 }
 
 // ---- OLLAMA ----
