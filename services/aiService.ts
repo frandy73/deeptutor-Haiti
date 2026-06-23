@@ -217,30 +217,39 @@ const contents: Content[] = [];
     else if (params.isGlossaryRequest) schema = glossaryResponseSchema;
     else if (params.isMasteryRequest) schema = masteryLessonResponseSchema;
 
-    try {
-        const responseStream = await ai.models.generateContentStream({
-            model: 'gemini-2.0-flash',
-            contents,
-            config: {
-                systemInstruction,
-                temperature: 0.8,
-                responseMimeType: isStructured ? 'application/json' : undefined,
-                responseSchema: isStructured ? schema : undefined,
-            },
-        });
+    const models = ['gemini-3.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-lite'];
 
-        let fullResponse = '';
-        for await (const chunk of responseStream) {
-            const text = (chunk as GenerateContentResponse).text;
-            if (text) {
-                fullResponse += text;
-                if (!isStructured) params.onChunk(text);
+    for (const modelName of models) {
+        try {
+            const responseStream = await ai.models.generateContentStream({
+                model: modelName,
+                contents,
+                config: {
+                    systemInstruction,
+                    temperature: 0.8,
+                    responseMimeType: isStructured ? 'application/json' : undefined,
+                    responseSchema: isStructured ? schema : undefined,
+                },
+            });
+
+            let fullResponse = '';
+            for await (const chunk of responseStream) {
+                const text = (chunk as GenerateContentResponse).text;
+                if (text) {
+                    fullResponse += text;
+                    if (!isStructured) params.onChunk(text);
+                }
             }
+            return fullResponse;
+        } catch (e: any) {
+            if (modelName === models[models.length - 1]) {
+                throw new Error('API Gemini pa reponn: ' + (e?.message || 'modèl pa disponib'));
+            }
+            console.warn('Model ' + modelName + ' echwe, ap eseye pwochen an:', e?.message);
         }
-        return fullResponse;
-    } catch (e) {
-        throw e;
     }
+
+    throw new Error('API Gemini pa disponib');
 }
 
 // ---- OLLAMA ----

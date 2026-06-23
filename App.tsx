@@ -277,11 +277,14 @@ const App: React.FC = () => {
       pushProgressToFirebase();
       saveCurrentChat(finalMessages);
 
-    } catch (error) {
+    } catch (error: any) {
+      const errMsg = error?.message || '';
       setMessages([...newMessages, {
         id: botMsgId,
         sender: MessageSender.BOT,
-        text: "Mwen regrèt, mwen gen yon ti pwoblèm teknik. Tanpri eseye ankò!",
+        text: errMsg.includes('API') || errMsg.includes('modèl')
+          ? 'Mwen regrèt, sèvè AI a pa reponn kounye a. Tcheke API a epi eseye ankò.'
+          : "Mwen regrèt, mwen gen yon ti pwoblèm teknik. Tanpri eseye ankò!",
       }]);
     } finally {
       setIsLoading(false);
@@ -495,11 +498,14 @@ const App: React.FC = () => {
         return updatedHistory;
       });
 
-    } catch {
+    } catch (error: any) {
+      const errMsg = error?.message || '';
       setMessages([...newMessages, {
         id: (Date.now() + 1).toString(),
         sender: MessageSender.BOT,
-        text: "Mwen regrèt, mwen gen yon ti pwoblèm teknik. Tanpri eseye ankò!",
+        text: errMsg.includes('API') || errMsg.includes('modèl')
+          ? 'Mwen regrèt, sèvè AI a pa reponn. Tcheke API a epi eseye ankò.'
+          : "Mwen regrèt, mwen gen yon ti pwoblèm teknik. Tanpri eseye ankò!",
       }]);
     } finally {
       setIsLoading(false);

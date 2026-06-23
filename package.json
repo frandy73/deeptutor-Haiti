@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/genai": "^1.41.0",
+    "@google/genai": "^2.9.0",
     "@tailwindcss/postcss": "^4.2.0",
     "firebase": "^12.13.0",
     "kobara": "^1.0.0",
