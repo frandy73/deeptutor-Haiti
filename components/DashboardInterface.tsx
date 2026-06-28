@@ -3,6 +3,7 @@ import { StudentProgress, ChatHistoryItem, ModuleType } from '../types';
 import { loadProgress } from '../services/localStorageService';
 import { BADGE_DEFINITIONS } from '../constants';
 import { DashboardSkeleton } from './SkeletonLoader';
+import { getNextRecommendedSubject, calculatePriorities } from '../services/adaptiveLearningService';
 
 interface DashboardInterfaceProps {
   chatHistory: ChatHistoryItem[];
@@ -167,6 +168,21 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
           <StatPill icon="🏆" value={progress.totalQuizzes} label="Quiz" color="#0891b2" />
           </div>
         </div>
+
+        {/* ── Rekòmandasyon Adaptatif ───────────────────── */}
+        {(() => {
+          const reco = getNextRecommendedSubject(progress);
+          if (!reco) return null;
+          return (
+            <div className="rounded-2xl p-4 animate-slide-up flex items-center gap-3" style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', animationDelay: '0.1s' }}>
+              <span className="text-2xl">🧠</span>
+              <div>
+                <p className="text-white/60 text-[10px] font-bold uppercase tracking-wider m-0">Rekòmandasyon Pwof Ou</p>
+                <p className="text-white text-sm font-black m-0 mt-0.5">Travay sou <span className="uppercase">{reco.subject}</span> — {reco.reason}</p>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ── Next Badge CTA ──────────────────────────────── */}
         {nextBadge && (
