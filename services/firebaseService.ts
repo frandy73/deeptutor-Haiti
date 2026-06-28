@@ -25,6 +25,7 @@ export type UserProfile = {
   streak?: number;
   badges?: string[];
   masteredTopics?: string[];
+  conceptStrength?: { [concept: string]: number };
 };
 
 const firebaseConfig = {
@@ -72,6 +73,7 @@ export const registerWithEmail = async (email: string, password: string, display
     streak: 0,
     badges: ['first_step'],
     masteredTopics: [],
+    conceptStrength: {},
   };
 
   await setDoc(doc(db, 'users', userCredential.user.uid), userProfile);
@@ -143,7 +145,7 @@ export const updateUserProfile = async (uid: string, data: Partial<UserProfile>)
   }
 };
 
-export const updateUserProgress = async (uid: string, progress: { xp: number; streak: number; totalMessages: number; totalQuizzes: number; badges: string[]; masteredTopics: string[] }): Promise<void> => {
+export const updateUserProgress = async (uid: string, progress: { xp: number; streak: number; totalMessages: number; totalQuizzes: number; badges: string[]; masteredTopics: string[]; conceptStrength?: { [concept: string]: number } }): Promise<void> => {
   try {
     const docRef = doc(db, 'users', uid);
     await updateDoc(docRef, progress);

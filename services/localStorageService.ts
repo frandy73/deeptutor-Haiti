@@ -101,6 +101,7 @@ const DEFAULT_PROGRESS: StudentProgress = {
   subjectScores: {},
   masteredTopics: [],
   masteryXp: 0,
+  conceptStrength: {},
 };
 
 export const loadProgress = (): StudentProgress => {
@@ -111,6 +112,7 @@ export const loadProgress = (): StudentProgress => {
     masteredTopics: parsed.masteredTopics || [],
     masteryXp: parsed.masteryXp || 0,
     badges: parsed.badges || [],
+    conceptStrength: parsed.conceptStrength || {},
   };
 };
 

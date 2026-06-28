@@ -102,6 +102,7 @@ export interface StudentProgress {
   subjectScores: { [subject: string]: number }; // xp per subject area
   masteredTopics?: string[]; // list of topic IDs/names mastered
   masteryXp?: number; // total xp earned from mastery quests
+  conceptStrength?: { [concept: string]: number }; // [0-1] per concept
 }
 
 // ---- NEW: Flashcards ----
