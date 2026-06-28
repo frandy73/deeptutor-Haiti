@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { cn } from '../lib/utils';
 import ExamLibraryPanel from './ExamLibraryPanel';
 import { Language, AIProvider } from '../types';
 
@@ -87,22 +88,24 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
       <div className="shrink-0 px-4 pt-3 flex gap-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
         <button
           onClick={() => setActiveTab('menfp')}
-          className={`px-4 py-2.5 rounded-t-xl text-xs font-black transition-all border-b-2 -mb-px ${
+          className={cn(
+            'px-4 py-2.5 rounded-t-xl text-xs font-black transition-all border-b-2 -mb-px',
             activeTab === 'menfp'
               ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20'
               : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
-          }`}
+          )}
           style={{ color: activeTab === 'menfp' ? '' : 'var(--text-muted)' }}
         >
           🏛️ Quiz MENFP
         </button>
         <button
           onClick={() => setActiveTab('library')}
-          className={`px-4 py-2.5 rounded-t-xl text-xs font-black transition-all border-b-2 -mb-px flex items-center gap-1.5 ${
+          className={cn(
+            'px-4 py-2.5 rounded-t-xl text-xs font-black transition-all border-b-2 -mb-px flex items-center gap-1.5',
             activeTab === 'library'
               ? 'border-purple-500 text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20'
               : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
-          }`}
+          )}
           style={{ color: activeTab === 'library' ? '' : 'var(--text-muted)' }}
         >
           📚 Bibliyotèk PDF

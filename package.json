@@ -11,6 +11,7 @@
   "dependencies": {
     "@google/genai": "^2.9.0",
     "@tailwindcss/postcss": "^4.2.0",
+    "cnfast": "^0.0.8",
     "firebase": "^12.13.0",
     "kobara": "^1.0.0",
     "kobara-js": "^1.0.1",
