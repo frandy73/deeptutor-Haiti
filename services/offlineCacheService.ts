@@ -62,7 +62,6 @@ export const cacheAIResponse = async (
     });
   } catch {
     // Cache silently fails — not critical
-    console.warn('Offline cache: pa kapab sere repons AI a');
   }
 };
 
