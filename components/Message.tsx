@@ -78,9 +78,9 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
     li: ({ ...props }) => <li style={{ marginBottom: '4px', fontSize: '14px' }} {...props} />,
     strong: ({ ...props }) => <strong style={{ fontWeight: 700, color: isUser ? '#fff' : 'var(--primary)' }} {...props} />,
     code: ({ inline, ...props }: any) => inline
-      ? <code style={{ padding: '2px 6px', borderRadius: '6px', fontSize: '12px', fontFamily: 'monospace', background: 'rgba(0,0,0,0.1)' }} {...props} />
+      ? <code className="font-mono" style={{ padding: '2px 6px', borderRadius: '6px', fontSize: '12px', background: 'rgba(0,0,0,0.1)' }} {...props} />
       : (
-        <pre style={{ padding: '14px', borderRadius: '12px', overflowX: 'auto', marginBottom: '10px', fontSize: '12px', fontFamily: 'monospace', background: '#0f172a', color: '#e2e8f0' }}>
+        <pre className="font-mono" style={{ padding: '14px', borderRadius: '12px', overflowX: 'auto', marginBottom: '10px', fontSize: '12px', background: '#0f172a', color: '#e2e8f0' }}>
           <code {...props} />
         </pre>
       ),
