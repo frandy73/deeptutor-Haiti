@@ -7,7 +7,7 @@ interface LoadingSpinnerProps {
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message }) => {
   return (
     <div className="flex items-center justify-start gap-2">
-      <div className="flex items-center gap-1.5 px-3 py-2 rounded-full" style={{ background: 'rgba(79,70,229,0.15)' }}>
+      <div className="flex items-center gap-1.5 px-3 py-2 rounded-full" style={{ background: 'rgba(37, 99, 235,0.15)' }}>
         <div className="typing-dot-lg"></div>
         <div className="typing-dot-lg"></div>
         <div className="typing-dot-lg"></div>

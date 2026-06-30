@@ -16,13 +16,15 @@ interface GetAIResponseParams {
     isGlossaryRequest?: boolean;
     isMasteryRequest?: boolean;
     chatHistoryContext?: ChatMessage[];
-    knowledgeContext?: string; // Extracted PDF text
-    officialContextEnabled?: boolean; // NEW: Toggle for ministry data
+    knowledgeContext?: string;
+    officialContextEnabled?: boolean;
     aiProvider?: AIProvider;
     ollamaModel?: string;
     ollamaBaseUrl?: string;
     selectedSubject?: Subject;
-    imageData?: string[]; // Base64 encoded images for homework analysis
+    imageData?: string[];
+    previousInteractionId?: string;
+    onInteractionId?: (id: string) => void;
 }
 
 const quizResponseSchema = {
@@ -192,53 +194,120 @@ async function callGemini(params: GetAIResponseParams): Promise<string> {
         params.selectedSubject
     );
 
-const contents: Content[] = [];
-    for (const msg of (params.chatHistoryContext || [])) {
-        if (!msg.quizData) {
-            contents.push({ role: msg.sender === MessageSender.USER ? 'user' : 'model', parts: [{ text: msg.text }] });
-        }
-    }
-    
-    // Handle image upload for homework analysis
-    if (params.imageData && params.imageData.length > 0) {
-        const imageParts = params.imageData.map(img => {
-            const base64Data = img.includes(',') ? img.split(',')[1] : img;
-            return { inlineData: { data: base64Data, mimeType: 'image/jpeg' } };
-        });
-        contents.push({ role: 'user', parts: [{ text: params.prompt }, ...imageParts] as any });
-    } else {
-        contents.push({ role: 'user', parts: [{ text: params.prompt }] });
-    }
-
     const isStructured = params.isQuizRequest || params.isFlashcardRequest || params.isGlossaryRequest || params.isMasteryRequest;
-    let schema = undefined;
-    if (params.isFlashcardRequest) schema = flashcardResponseSchema;
-    else if (params.isQuizRequest) schema = quizResponseSchema;
-    else if (params.isGlossaryRequest) schema = glossaryResponseSchema;
-    else if (params.isMasteryRequest) schema = masteryLessonResponseSchema;
+    const hasImages = !!(params.imageData && params.imageData.length > 0);
+    const modelName = 'gemini-3.5-flash'; // PA JANM CHANJE — sèl model ki mache
 
-    const modelName = 'gemini-2.0-flash';
-
-    const responseStream = await ai.models.generateContentStream({
-        model: modelName,
-        contents,
-        config: {
-            systemInstruction,
-            temperature: 0.8,
-            responseMimeType: isStructured ? 'application/json' : undefined,
-            responseSchema: isStructured ? schema : undefined,
-        },
-    });
-
-    let fullResponse = '';
-    for await (const chunk of responseStream) {
-        const text = (chunk as GenerateContentResponse).text;
-        if (text) {
-            fullResponse += text;
-            if (!isStructured) params.onChunk(text);
+    // Old API path: structured responses (quiz/flashcard/glossary/mastery) or image uploads
+    if (isStructured || hasImages) {
+        const contents: Content[] = [];
+        for (const msg of (params.chatHistoryContext || [])) {
+            if (!msg.quizData) {
+                contents.push({ role: msg.sender === MessageSender.USER ? 'user' : 'model', parts: [{ text: msg.text }] });
+            }
         }
+
+        if (hasImages) {
+            const imageParts = params.imageData!.map(img => {
+                const base64Data = img.includes(',') ? img.split(',')[1] : img;
+                return { inlineData: { data: base64Data, mimeType: 'image/jpeg' } };
+            });
+            contents.push({ role: 'user', parts: [{ text: params.prompt }, ...imageParts] as any });
+        } else {
+            contents.push({ role: 'user', parts: [{ text: params.prompt }] });
+        }
+
+        let schema = undefined;
+        if (params.isFlashcardRequest) schema = flashcardResponseSchema;
+        else if (params.isQuizRequest) schema = quizResponseSchema;
+        else if (params.isGlossaryRequest) schema = glossaryResponseSchema;
+        else if (params.isMasteryRequest) schema = masteryLessonResponseSchema;
+
+        const responseStream = await ai.models.generateContentStream({
+            model: modelName,
+            contents,
+            config: {
+                systemInstruction,
+                temperature: 0.8,
+                responseMimeType: isStructured ? 'application/json' : undefined,
+                responseSchema: isStructured ? schema : undefined,
+            },
+        });
+
+        let fullResponse = '';
+        for await (const chunk of responseStream) {
+            const text = (chunk as GenerateContentResponse).text;
+            if (text) {
+                fullResponse += text;
+                if (!isStructured) params.onChunk(text);
+            }
+        }
+        return fullResponse;
     }
-    return fullResponse;
+
+    // New API path: use interactions.create() for streaming text chat
+    // Falls back to generateContentStream if the newer API isn't supported
+    try {
+        const stream = await ai.interactions.create({
+            model: 'gemini-3.5-flash', // PA JANM CHANJE
+            input: params.prompt,
+            system_instruction: systemInstruction,
+            previous_interaction_id: params.previousInteractionId,
+            stream: true,
+            generation_config: { temperature: 0.8 },
+        });
+
+        let fullResponse = '';
+        let interactionId: string | undefined;
+
+        for await (const event of stream) {
+            if (event.event_type === 'step.delta' && event.delta.type === 'text') {
+                const text = event.delta.text;
+                if (text) {
+                    fullResponse += text;
+                    params.onChunk(text);
+                }
+            } else if (event.event_type === 'interaction.completed') {
+                interactionId = event.interaction?.id;
+            } else if (event.event_type === 'error') {
+                throw new Error(event.error?.message || 'Unknown streaming error');
+            }
+        }
+
+        if (interactionId && params.onInteractionId) {
+            params.onInteractionId(interactionId);
+        }
+
+        return fullResponse;
+    } catch (interactionError) {
+        // Fallback: generateContentStream (works with free API key)
+        const contents: Content[] = [];
+        for (const msg of (params.chatHistoryContext || [])) {
+            if (!msg.quizData) {
+                contents.push({ role: msg.sender === MessageSender.USER ? 'user' : 'model', parts: [{ text: msg.text }] });
+            }
+        }
+        contents.push({ role: 'user', parts: [{ text: params.prompt }] });
+
+        const responseStream = await ai.models.generateContentStream({
+            model: modelName,
+            contents,
+            config: {
+                systemInstruction,
+                temperature: 0.8,
+            },
+        });
+
+        let fullResponse = '';
+        for await (const chunk of responseStream) {
+            const text = (chunk as GenerateContentResponse).text;
+            if (text) {
+                fullResponse += text;
+                params.onChunk(text);
+            }
+        }
+        return fullResponse;
+    }
 }
 
 // ---- OLLAMA ----

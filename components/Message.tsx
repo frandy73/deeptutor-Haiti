@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import { speakText, stopSpeaking, detectLanguage } from '../services/ttsService';
 import { Language } from '../types';
 import DiksyonèPopòv from './DiksyonèPopòv';
+import VisualSurface from './VisualSurface';
 
 interface MessageProps {
   message: {
@@ -15,6 +16,30 @@ interface MessageProps {
     isStreaming?: boolean;
   };
   onLookupWord?: (word: string) => Promise<GlossaryTerm | null>;
+}
+
+// ── Split text into segments: markdown vs diagram blocks ─────────────
+const DIAGRAM_LANGS = new Set(['mermaid', 'table']);
+
+function parseSegments(text: string): Array<{ type: 'md' | 'diagram'; language?: string; content: string }> {
+  const segments: Array<{ type: 'md' | 'diagram'; language?: string; content: string }> = [];
+  const regex = /```(mermaid|table)\s*\n([\s\S]*?)```/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      segments.push({ type: 'md', content: text.slice(lastIndex, match.index) });
+    }
+    segments.push({ type: 'diagram', language: match[1], content: match[2].trim() });
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    segments.push({ type: 'md', content: text.slice(lastIndex) });
+  }
+
+  return segments;
 }
 
 const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
@@ -44,9 +69,9 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mdComponents: any = {
-    h1: ({ ...props }) => <h1 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '10px' }} {...props} />,
-    h2: ({ ...props }) => <h2 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '8px' }} {...props} />,
-    h3: ({ ...props }) => <h3 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '6px' }} {...props} />,
+    h1: ({ ...props }) => <h1 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '10px', marginTop: '14px' }} {...props} />,
+    h2: ({ ...props }) => <h2 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '8px', marginTop: '12px' }} {...props} />,
+    h3: ({ ...props }) => <h3 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '6px', marginTop: '10px' }} {...props} />,
     p: ({ ...props }) => <p style={{ marginBottom: '10px', lineHeight: 1.7, fontSize: '14px' }} {...props} />,
     ul: ({ ...props }) => <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '10px' }} {...props} />,
     ol: ({ ...props }) => <ol style={{ listStyleType: 'decimal', paddingLeft: '20px', marginBottom: '10px' }} {...props} />,
@@ -62,6 +87,8 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
     a: ({ ...props }) => <a style={{ color: isUser ? 'rgba(255,255,255,0.9)' : 'var(--primary)', textDecoration: 'underline' }} target="_blank" rel="noopener noreferrer" {...props} />,
   };
 
+  const segments = !isUser ? parseSegments(message.text) : [];
+
   return (
     <div style={{
       display: 'flex',
@@ -72,14 +99,14 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
       <div style={{
         position: 'relative',
         maxWidth: '82%',
-        padding: '12px 16px',
+        padding: isUser ? '12px 16px' : '12px 16px',
         borderRadius: isUser ? '20px 20px 6px 20px' : '20px 20px 20px 6px',
-        background: isUser ? 'linear-gradient(135deg, #2563eb 0%, #34d399 100%)' : 'rgba(22, 29, 51, 0.85)',
+        background: isUser ? 'linear-gradient(135deg, #2563eb 0%, #34d399 100%)' : 'var(--surface-container)',
         color: isUser ? '#fff' : 'var(--on-surface)',
-        border: isUser ? 'none' : '1px solid rgba(255,255,255,0.1)',
+        border: isUser ? 'none' : '1px solid var(--border-color)',
         backdropFilter: isUser ? 'none' : 'blur(12px)',
         boxShadow: isUser
-          ? '0 8px 20px rgba(79,70,229,0.3)'
+          ? '0 8px 20px rgba(37, 99, 235,0.3)'
           : '0 4px 24px rgba(0,0,0,0.1)',
       }}>
         {message.isStreaming && message.text === '' ? (
@@ -90,9 +117,21 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
           </p>
         ) : (
           <DiksyonèPopòv onLookupWord={onLookupWord || (() => Promise.resolve(null))}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-              {message.text}
-            </ReactMarkdown>
+            {segments.length > 1 ? (
+              segments.map((seg, i) =>
+                seg.type === 'diagram' ? (
+                  <VisualSurface key={i} code={seg.content} language={seg.language!} />
+                ) : (
+                  <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={mdComponents}>
+                    {seg.content}
+                  </ReactMarkdown>
+                )
+              )
+            ) : (
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+                {message.text}
+              </ReactMarkdown>
+            )}
             {message.isStreaming && (
               <span style={{ display: 'inline-block', width: '8px', height: '16px', background: 'var(--primary)', borderRadius: '2px', animation: 'pulse 1s infinite', marginLeft: '4px' }} />
             )}
@@ -106,8 +145,8 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
                   gap: '6px',
                   padding: isSpeaking ? '5px 12px' : '5px 10px',
                   borderRadius: '10px',
-                  border: isSpeaking ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)',
-                  background: isSpeaking ? 'rgba(79,70,229,0.15)' : 'var(--surface-container-lowest)',
+                  border: isSpeaking ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: isSpeaking ? 'rgba(37, 99, 235,0.15)' : 'var(--surface-container-lowest)',
                   color: isSpeaking ? 'var(--primary)' : 'var(--text-muted)',
                   cursor: 'pointer',
                   fontSize: '11px',

@@ -182,7 +182,7 @@ export const PageErrorBoundary: React.FC<{ children: ReactNode; pageName?: strin
           onClick={() => window.location.reload()}
           className="px-4 py-2 rounded-xl text-sm font-bold"
           style={{
-            background: 'rgba(79,70,229,0.15)',
+            background: 'rgba(37, 99, 235,0.15)',
             color: 'var(--primary)',
           }}
         >

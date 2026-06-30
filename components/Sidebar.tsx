@@ -188,7 +188,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           ? {
                               background: 'linear-gradient(135deg, #2563eb 0%, #34d399 100%)',
                               color: '#fff',
-                              boxShadow: '0 8px 32px 0 rgba(124,58,237,0.25)',
+                              boxShadow: '0 8px 32px 0 rgba(8, 145, 178,0.25)',
                             }
                           : {
                               background: 'transparent',
@@ -199,7 +199,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         if (!active) {
                           (e.currentTarget as HTMLElement).style.background = isDark
                             ? 'rgba(255,255,255,0.06)'
-                            : 'rgba(79,70,229,0.07)';
+                            : 'rgba(37, 99, 235,0.07)';
                         }
                       }}
                       onMouseLeave={e => {
@@ -279,7 +279,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   type="checkbox"
                   checked={config.officialContextEnabled}
                   onChange={e => onConfigChange({ officialContextEnabled: e.target.checked })}
-                  className="w-5 h-5 cursor-pointer accent-indigo-600 rounded"
+                  className="w-5 h-5 cursor-pointer accent-blue-600 rounded"
                 />
               </div>
 
@@ -311,7 +311,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <select
                     value={val}
                     onChange={e => onChange(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl text-xs font-bold border outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all appearance-none"
+                    className="w-full px-3 py-2 rounded-xl text-xs font-bold border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none"
                     style={{ background: 'var(--surface-container)', borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)' }}
                   >
                     {opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
@@ -348,7 +348,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     value={config.ollamaModel}
                     onChange={e => onConfigChange({ ollamaModel: e.target.value })}
                     placeholder="Modèl Ollama (ex: llama3)"
-                    className="w-full mt-2 px-3 py-2 rounded-xl text-xs font-bold border outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                    className="w-full mt-2 px-3 py-2 rounded-xl text-xs font-bold border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
                     style={{ background: 'var(--surface-container)', borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)' }}
                   />
                 )}
@@ -412,7 +412,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 value={historySearch}
                 onChange={e => { setHistorySearch(e.target.value); setHistoryPage(1); }}
                 placeholder="Rechèch nan istwa..."
-                className="w-full px-3 py-2 rounded-xl text-[11px] font-bold border outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                className="w-full px-3 py-2 rounded-xl text-[11px] font-bold border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
                 style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)' }}
               />
               <div className="max-h-56 overflow-y-auto custom-scrollbar flex flex-col gap-1 pr-0.5">
@@ -460,7 +460,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       {showMore && (
                         <button
                           onClick={() => setHistoryPage(prev => prev + 1)}
-                          className="w-full py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-indigo-500/10 btn-lift"
+                          className="w-full py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-blue-500/10 btn-lift"
                           style={{ color: 'var(--accent-main)' }}
                         >
                           ↓ Wè plis ({filtered.length - pageItems.length} rete)

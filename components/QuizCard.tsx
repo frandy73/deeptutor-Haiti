@@ -62,7 +62,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quizData, onRegenerateQuiz }) => {
               ></textarea>
 
               {submitted && (
-                <div className="mt-3 p-3 rounded-xl border" style={{ background: 'rgba(79,70,229,0.15)', borderColor: 'var(--primary)' }}>
+                <div className="mt-3 p-3 rounded-xl border" style={{ background: 'rgba(37, 99, 235,0.15)', borderColor: 'var(--primary)' }}>
                   <p className="font-bold text-sm mb-1" style={{ color: 'var(--success-main)' }}>Repons Kòrèk:</p>
                   <p className="mb-2 whitespace-pre-wrap font-medium" style={{ color: 'var(--text-main)' }}>{q.correctAnswer}</p>
                   <p className="font-bold text-sm mb-1" style={{ color: 'var(--accent-main)' }}>Eksplikasyon:</p>

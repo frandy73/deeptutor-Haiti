@@ -90,9 +90,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         className="shrink-0 flex items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 z-10 relative glass-card"
         style={{
           backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          borderBottom: '1px solid var(--border-color)',
           borderRadius: 0,
-          boxShadow: '0 8px 32px 0 rgba(124,58,237,0.1)',
+          boxShadow: '0 8px 32px 0 rgba(8, 145, 178,0.1)',
         }}
       >
         <div className="flex items-center gap-2.5 min-w-0">
@@ -109,7 +109,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             </button>
           )}
 
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/10 flex items-center justify-center text-lg shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/20 border border-blue-500/10 flex items-center justify-center text-lg shrink-0">
             🤖
           </div>
 
@@ -134,9 +134,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               title={isDark ? 'Mode Klè' : 'Mode Nwa'}
               className="w-9 h-9 rounded-xl text-sm flex items-center justify-center transition-all duration-300 border-2 hover:scale-110 active:scale-95 shrink-0"
               style={{
-                borderColor: 'rgba(255,255,255,0.1)',
+                borderColor: 'var(--border-color)',
                 color: 'var(--text-muted)',
-                background: 'rgba(22, 29, 51, 0.85)',
+                background: 'var(--surface-container)',
               }}
             >
               {isDark ? '☀️' : '🌙'}
@@ -147,7 +147,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <button
               onClick={onClearMessages}
               className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-black transition-all border-2 hover:scale-[1.02] active:scale-[0.97]"
-              style={{ borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)', background: 'rgba(22, 29, 51, 0.85)' }}
+              style={{ borderColor: 'var(--border-color)', color: 'var(--text-main)', background: 'var(--surface-container)' }}
             >
               <span>✏️</span>
               <span className="hidden sm:inline uppercase tracking-widest">Nouvo</span>
@@ -158,7 +158,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
       {/* ── KB Context Banner ─────────────────────────────── */}
       {knowledgeFileName && (
-        <div className="shrink-0 flex items-center gap-2 px-4 py-2 text-xs font-bold border-b border-indigo-500/10 bg-indigo-500/5 text-indigo-600 dark:text-indigo-400">
+        <div className="shrink-0 flex items-center gap-2 px-4 py-2 text-xs font-bold border-b border-blue-500/10 bg-blue-500/5 text-blue-600 dark:text-blue-400">
           <span className="shrink-0">📚</span>
           <span className="hidden sm:inline shrink-0">Kontèks aktif:</span>
           <strong className="truncate">{knowledgeFileName}</strong>
@@ -174,7 +174,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-3 sm:p-5 pb-2">
         {showWelcome ? (
           <div className="flex flex-col items-center justify-center h-full text-center px-4 sm:px-6 animate-fade-in">
-            <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 flex items-center justify-center text-3xl sm:text-5xl mb-4 sm:mb-5 shadow-xl animate-float-medium animate-glow-pulse">
+            <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-500/10 to-emerald-500/10 border border-blue-500/20 flex items-center justify-center text-3xl sm:text-5xl mb-4 sm:mb-5 shadow-xl animate-float-medium animate-glow-pulse">
               👋
             </div>
             <h3 className="text-lg sm:text-2xl font-black mb-2" style={{ color: 'var(--text-main)' }}>
@@ -186,7 +186,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
             {/* Quick prompts */}
             <div className="flex flex-col gap-2 w-full max-w-sm">
-              <p className="m-0 text-[10px] font-black uppercase tracking-widest text-indigo-500 text-left">
+              <p className="m-0 text-[10px] font-black uppercase tracking-widest text-blue-500 text-left">
                 Kòmanse ak:
               </p>
               {[
@@ -197,8 +197,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 <button
                   key={prompt}
                   onClick={() => handleQuickPrompt(prompt)}
-                  className="text-left p-3 rounded-xl text-xs sm:text-sm font-medium shadow-sm border-2 transition-all hover:border-indigo-500/40 hover:bg-indigo-500/5 active:scale-[0.98] btn-lift btn-ripple"
-                  style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)' }}
+                  className="text-left p-3 rounded-xl text-xs sm:text-sm font-medium shadow-sm border-2 transition-all hover:border-blue-500/40 hover:bg-blue-500/5 active:scale-[0.98] btn-lift btn-ripple"
+                  style={{ background: 'var(--surface-container)', borderColor: 'var(--border-color)', color: 'var(--text-main)' }}
                 >
                   "{prompt}"
                 </button>
@@ -232,7 +232,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                     className="w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0"
                     style={{
                       background: 'linear-gradient(135deg, #2563eb, #0891b2, #059669)',
-                      boxShadow: '0 4px 12px rgba(79,70,229,0.3)',
+                      boxShadow: '0 4px 12px rgba(37, 99, 235,0.3)',
                       animation: 'glow-pulse 1.5s ease-in-out infinite',
                     }}
                   >
@@ -267,15 +267,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       <div
         className="shrink-0 z-10 relative px-4 sm:px-6 pt-4 sm:pt-5 pb-2"
         style={{
-          background: 'linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.95) 40%)',
-          borderTop: '1px solid rgba(255,255,255,0.08)',
+          background: 'linear-gradient(180deg, transparent 0%, var(--surface-container-lowest) 40%)',
+          borderTop: '1px solid var(--border-color)',
         }}
       >
         <form
           onSubmit={handleSubmit}
           className="max-w-4xl mx-auto"
         >
-          <div className="relative flex items-end gap-2 sm:gap-3 p-2 sm:p-3 rounded-3xl shadow-2xl transition-all duration-300 focus-within:shadow-indigo-500/20 bg-white/90 dark:bg-[rgba(22,29,51,0.95)] border-2 border-gray-200/80 dark:border-white/10 backdrop-blur-[16px]">
+          <div className="relative flex items-end gap-2 sm:gap-3 p-2 sm:p-3 rounded-3xl shadow-2xl transition-all duration-300 focus-within:shadow-blue-500/20 bg-white/90 dark:bg-[rgba(22,29,51,0.95)] border-2 border-gray-200/80 dark:border-white/10 backdrop-blur-[16px]">
             <textarea
               ref={textareaRef}
               value={input}
@@ -328,7 +328,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                     ? 'linear-gradient(135deg, #2563eb, #0891b2)'
                     : 'rgba(255,255,255,0.08)',
                   boxShadow: input.trim() && !isDisabled
-                    ? '0 4px 20px rgba(79,70,229,0.4)'
+                    ? '0 4px 20px rgba(37, 99, 235,0.4)'
                     : 'none',
                   transition: 'all 0.3s ease',
                 }}
@@ -344,11 +344,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           {/* Hint text — pi klè, pi pwofesyonèl */}
           <div className="flex items-center justify-between mt-2 px-2">
             <p className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>
-              <span style={{ opacity: 0.6 }}>Enter ↵ voye</span>
-              <span style={{ opacity: 0.3, margin: '0 6px' }}>·</span>
-              <span style={{ opacity: 0.6 }}>Shift+Enter ↩ liy nouvo</span>
+              Enter ↵ voye <span style={{ margin: '0 4px' }}>·</span> Shift+Enter ↩ liy nouvo
             </p>
-            <p className="text-[11px] font-medium" style={{ color: 'var(--text-muted)', opacity: 0.4 }}>
+            <p className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>
               Ctrl+K chèche
             </p>
           </div>

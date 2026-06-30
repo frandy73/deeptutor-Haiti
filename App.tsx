@@ -70,6 +70,7 @@ const App: React.FC = () => {
   const [selectedMasteryPDFText, setSelectedMasteryPDFText] = useState<string | undefined>(undefined);
   const [selectedMasteryPDFName, setSelectedMasteryPDFName] = useState<string | undefined>(undefined);
   const [showSplash, setShowSplash] = useState(true);
+  const [previousInteractionId, setPreviousInteractionId] = useState<string | null>(null);
 
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
@@ -208,45 +209,39 @@ const App: React.FC = () => {
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
 
+    // Show user message immediately for instant feedback
+    const userMessageId = Date.now().toString();
+    const userMessage: ChatMessage = { id: userMessageId, sender: MessageSender.USER, text };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
+
     // Check message limit for free users
     if (currentUser && userProfile) {
       const allowed = await checkAndIncrementMessageLimit(currentUser.uid, userProfile.isPremium);
       if (!allowed) {
         setSelectedModule(ModuleType.PREMIUM);
-        return; // Block message
+        return;
       }
     }
+
+    setIsLoading(true);
 
     // If offline, queue the message
     if (!navigator.onLine) {
       await enqueueMessage(text, selectedModule, config, knowledgeContext?.text);
       const queueLen = await getQueueLength();
       notifySuccess('📨 Mesaj an ke!', queueLen + ' mesaj ap tann rezo a.');
-      const userMessage: ChatMessage = {
-        id: Date.now().toString(),
-        sender: MessageSender.USER,
-        text,
-      };
       const queuedBotMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: MessageSender.BOT,
         text: '📨 Mesaj ou an ke. Lè entènèt la retounen, m ap reponn ou otomatikman!',
       };
-      const newMessages = [...messages, userMessage, queuedBotMsg];
-      setMessages(newMessages);
-      saveCurrentChat(newMessages);
+      const offlineMessages = [...newMessages, queuedBotMsg];
+      setMessages(offlineMessages);
+      saveCurrentChat(offlineMessages);
+      setIsLoading(false);
       return;
     }
-
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      sender: MessageSender.USER,
-      text,
-    };
-
-    const newMessages = [...messages, userMessage];
-    setMessages(newMessages);
-    setIsLoading(true);
 
     const botMsgId = (Date.now() + 1).toString();
     const placeholderBot: ChatMessage = { id: botMsgId, sender: MessageSender.BOT, text: '' };
@@ -264,6 +259,8 @@ const App: React.FC = () => {
           setMessages(prev => prev.map(m => m.id === botMsgId ? { ...m, text: streamedText } : m));
         },
         chatHistoryContext: newMessages,
+        previousInteractionId: previousInteractionId || undefined,
+        onInteractionId: setPreviousInteractionId,
         knowledgeContext: knowledgeContext?.text,
         officialContextEnabled: config.officialContextEnabled,
         aiProvider: config.aiProvider,
@@ -402,6 +399,7 @@ const App: React.FC = () => {
     setKnowledgeContext(null);
     setActiveChatIdState(null);
     setActiveChatId(null);
+    setPreviousInteractionId(null);
   };
 
   const handleConfigChange = (newConfig: Partial<DeepTutorConfig>) => {
@@ -416,6 +414,7 @@ const App: React.FC = () => {
       setActiveChatIdState(id);
       setActiveChatId(id);
       setIsSidebarOpen(false);
+      setPreviousInteractionId(null);
     }
   };
 

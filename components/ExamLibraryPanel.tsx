@@ -159,7 +159,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
   const trackColors: Record<string, string> = {
     'SES': 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
     'SMP-SVT': 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    'Philo A': 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+    'Philo A': 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
     'Philo C-D': 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300',
     'NS4': 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
     '9ème AF': 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300',
@@ -183,7 +183,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
             <h3 className="text-sm font-black truncate" style={{ color: 'var(--text-main)' }}>{generatedQuiz.title}</h3>
             <div className="flex items-center gap-2 mt-1">
               <div className="flex-1 h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+                <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 transition-all duration-500"
                   style={{ width: `${pct}%` }} />
               </div>
               <span className="text-xs font-bold" style={{ color: 'var(--text-muted)' }}>
@@ -191,7 +191,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
               </span>
             </div>
           </div>
-          <div className="px-3 py-1.5 rounded-xl font-black text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300">
+          <div className="px-3 py-1.5 rounded-xl font-black text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300">
             {score} pts
           </div>
         </div>
@@ -206,7 +206,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
               {score >= generatedQuiz.questions.length * 0.7 ? 'Ekselan! Ou prè pou Bac la!' : 'Kontinye pratike! Ou ap amelyore!'}
             </p>
             <button onClick={() => { setActionMode('none'); setSelectedExam(null); }}
-              className="px-6 py-3 rounded-2xl font-black text-white text-sm bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg">
+              className="px-6 py-3 rounded-2xl font-black text-white text-sm bg-gradient-to-r from-blue-500 to-emerald-600 shadow-lg">
               Chwazi yon lòt Egzamen
             </button>
           </div>
@@ -227,7 +227,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
                   </div>
                   {!isFinished && (
                     <button onClick={handleNextQuestion}
-                      className="w-full py-3 rounded-2xl font-black text-sm text-white bg-gradient-to-r from-indigo-500 to-purple-600 shadow-md hover:shadow-lg transition-all">
+                      className="w-full py-3 rounded-2xl font-black text-sm text-white bg-gradient-to-r from-blue-500 to-emerald-600 shadow-md hover:shadow-lg transition-all">
                       Pwochen Kesyon →
                     </button>
                   )}
@@ -275,14 +275,14 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
             <div className="whitespace-pre-wrap text-sm leading-relaxed">{lessonText}</div>
           ) : (
             <div className="text-center py-8">
-              <div className="animate-spin w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3" />
+              <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-3" />
               <p className="text-sm" style={{ color: 'var(--text-muted)' }}>AI ap prepare leson an...</p>
             </div>
           )}
         </div>
         {lessonText && (
           <button onClick={() => handleGenerateQuiz(selectedExam!)}
-            className="w-full py-3 rounded-2xl font-black text-sm text-white bg-gradient-to-r from-indigo-500 to-purple-600 shadow-md hover:shadow-lg transition-all">
+            className="w-full py-3 rounded-2xl font-black text-sm text-white bg-gradient-to-r from-blue-500 to-emerald-600 shadow-md hover:shadow-lg transition-all">
             🎯 Kounye a Teste Konesans ou avèk yon Quiz!
           </button>
         )}
@@ -295,8 +295,8 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
     return (
       <div className="flex flex-col items-center justify-center py-20 space-y-4">
         <div className="relative w-16 h-16">
-          <div className="absolute inset-0 rounded-full border-4 border-indigo-200 dark:border-indigo-900" />
-          <div className="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin" />
+          <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-900" />
+          <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
           <span className="absolute inset-0 flex items-center justify-center text-2xl">📄</span>
         </div>
         <p className="text-sm font-bold" style={{ color: 'var(--text-muted)' }}>{statusMsg}</p>
@@ -333,7 +333,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
             placeholder="Chèche egzamen (ex: induction, gravite, 2022...)"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 rounded-2xl border-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+            className="w-full pl-11 pr-4 py-3 rounded-2xl border-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30"
             style={{
               background: 'rgba(22, 29, 51, 0.85)',
               borderColor: 'rgba(255,255,255,0.1)',
@@ -349,7 +349,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
             {allYears.slice(0, 8).map(y => (
               <button key={y} onClick={() => setFilterYear(y)}
                 className={`px-3 py-1.5 rounded-xl border-2 text-xs font-black transition-all duration-200
-                  ${filterYear === y ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+                  ${filterYear === y ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
                 style={{ borderColor: filterYear === y ? '' : 'rgba(255,255,255,0.1)', color: filterYear === y ? '' : 'var(--text-muted)' }}>
                 {y === 'all' ? 'Tout Ane' : y}
               </button>
@@ -364,7 +364,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
             {allTracks.map(t => (
               <button key={t} onClick={() => setFilterTrack(t)}
                 className={`px-3 py-1.5 rounded-xl border-2 text-xs font-black transition-all duration-200
-                  ${filterTrack === t ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+                  ${filterTrack === t ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
                 style={{ borderColor: filterTrack === t ? '' : 'rgba(255,255,255,0.1)', color: filterTrack === t ? '' : 'var(--text-muted)' }}>
                 {t === 'all' ? 'Tout Pis' : t}
               </button>
@@ -380,7 +380,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
         </p>
         {(filterYear !== 'all' || filterTrack !== 'all' || searchQuery) && (
           <button onClick={() => { setFilterYear('all'); setFilterTrack('all'); setSearchQuery(''); }}
-            className="text-xs font-black text-indigo-500 hover:text-indigo-600 transition-colors">
+            className="text-xs font-black text-blue-500 hover:text-blue-600 transition-colors">
             ✕ Efase filtè yo
           </button>
         )}
@@ -429,7 +429,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
               </button>
               <button
                 onClick={() => handleGenerateQuiz(exam)}
-                className="flex-1 py-2 rounded-xl text-xs font-black text-white transition-all shadow-md hover:shadow-lg bg-gradient-to-r from-indigo-500 to-purple-600">
+                className="flex-1 py-2 rounded-xl text-xs font-black text-white transition-all shadow-md hover:shadow-lg bg-gradient-to-r from-blue-500 to-emerald-600">
                 🎯 Quiz AI
               </button>
               <a
@@ -451,7 +451,7 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
           <span className="text-5xl">🔍</span>
           <p className="font-bold" style={{ color: 'var(--text-muted)' }}>Pa gen egzamen ki koresponn ak filtè ou yo.</p>
           <button onClick={() => { setFilterYear('all'); setFilterTrack('all'); setSearchQuery(''); }}
-            className="text-sm font-black text-indigo-500 hover:underline">
+            className="text-sm font-black text-blue-500 hover:underline">
             Efase tout filtè
           </button>
         </div>

@@ -91,7 +91,7 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
           className={cn(
             'px-4 py-2.5 rounded-t-xl text-xs font-black transition-all border-b-2 -mb-px',
             activeTab === 'menfp'
-              ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20'
+              ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
               : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
           )}
           style={{ color: activeTab === 'menfp' ? '' : 'var(--text-muted)' }}
@@ -103,13 +103,13 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
           className={cn(
             'px-4 py-2.5 rounded-t-xl text-xs font-black transition-all border-b-2 -mb-px flex items-center gap-1.5',
             activeTab === 'library'
-              ? 'border-purple-500 text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20'
+              ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20'
               : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
           )}
           style={{ color: activeTab === 'library' ? '' : 'var(--text-muted)' }}
         >
           📚 Bibliyotèk PDF
-          <span className="px-1.5 py-0.5 rounded-full text-xs font-black bg-purple-500 text-white">62</span>
+          <span className="px-1.5 py-0.5 rounded-full text-xs font-black bg-emerald-500 text-white">62</span>
         </button>
       </div>
 
@@ -149,14 +149,14 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                 {/* Level */}
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">1</span>
+                    <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs font-black">1</span>
                     <label className="text-xs font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Chwazi Nivo a</label>
                   </div>
                   <div className="flex gap-3">
                     {levels.map(level => (
                       <button key={level} onClick={() => handleLevelChange(level)}
                         className={`flex-1 py-3 rounded-2xl border-2 text-sm font-black transition-all duration-200
-                          ${selectedLevel === level ? 'bg-indigo-500 text-white border-indigo-500 shadow-md shadow-indigo-500/20 scale-[1.02]' : 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                          ${selectedLevel === level ? 'bg-blue-500 text-white border-blue-500 shadow-md shadow-blue-500/20 scale-[1.02]' : 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
                         style={{ borderColor: selectedLevel === level ? '' : 'rgba(255,255,255,0.1)', color: selectedLevel === level ? '' : 'var(--text-main)' }}>
                         {level}
                       </button>
@@ -167,14 +167,14 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                 {/* Subject */}
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="w-6 h-6 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs font-black">2</span>
+                    <span className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-black">2</span>
                     <label className="text-xs font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Chwazi Matyè a</label>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     {currentSubjects.map((s) => (
                       <button key={s.id} onClick={() => setSelectedSubject(s.name)}
                         className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-200
-                          ${selectedSubject === s.name ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-inner scale-[1.02]' : 'border-transparent bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                          ${selectedSubject === s.name ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 shadow-inner scale-[1.02]' : 'border-transparent bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
                       >
                         <span className="text-3xl drop-shadow-sm">{s.icon}</span>
                         <span className="text-xs font-black text-center" style={{ color: 'var(--text-main)' }}>{s.name}</span>
@@ -228,7 +228,7 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                 <div className="pt-4 space-y-3">
                   <button onClick={handleStart} disabled={!selectedSubject || isOffline}
                     className={`w-full py-4 rounded-2xl font-black text-sm text-white transition-all duration-200 flex items-center justify-center gap-2
-                      ${(selectedSubject && !isOffline) ? 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-[1.01] active:scale-[0.98]' : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50'}`}
+                      ${(selectedSubject && !isOffline) ? 'bg-gradient-to-r from-blue-600 to-blue-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-[1.01] active:scale-[0.98]' : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50'}`}
                   >
                     🚀 Kòmanse Egzamen Modèl MENFP
                   </button>

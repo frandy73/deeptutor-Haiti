@@ -32,7 +32,7 @@ const pricingTiers = [
     priceNum: 500,
     period: '/ mwa',
     badge: '🔥 PI POPILÈ',
-    color: 'from-blue-600 to-indigo-600',
+    color: 'from-blue-600 to-blue-600',
     border: 'border-blue-500',
     features: [
       '✓ Tèks liv illimité',
@@ -43,7 +43,7 @@ const pricingTiers = [
     ],
     icon: '⚡',
     cta: 'Chwazi Plan sa a',
-    ctaStyle: 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40',
+    ctaStyle: 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40',
   },
   {
     name: 'Plan Inivèsite',
@@ -51,8 +51,8 @@ const pricingTiers = [
     priceNum: 4500,
     period: '/ ane',
     badge: '🎓 EKONOMIZE 25%',
-    color: 'from-purple-600 to-fuchsia-600',
-    border: 'border-purple-400 dark:border-purple-600',
+    color: 'from-emerald-600 to-cyan-600',
+    border: 'border-emerald-400 dark:border-emerald-600',
     features: [
       '✓ Tout sa ki nan Konpè',
       '✓ 2 mwa kado',
@@ -62,7 +62,7 @@ const pricingTiers = [
     ],
     icon: '🎓',
     cta: 'Chwazi Plan sa a',
-    ctaStyle: 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40',
+    ctaStyle: 'bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40',
   },
 ];
 
@@ -125,8 +125,8 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-20 w-96 h-96 rounded-full bg-blue-500/10 blur-[100px] animate-pulse" />
-        <div className="absolute -bottom-40 -right-20 w-96 h-96 rounded-full bg-purple-500/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-indigo-500/5 blur-[80px]" />
+        <div className="absolute -bottom-40 -right-20 w-96 h-96 rounded-full bg-emerald-500/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-blue-500/5 blur-[80px]" />
       </div>
 
       {/* Header */}
@@ -157,7 +157,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight" style={{ color: 'var(--text-main)' }}>
               Vise{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-600">
                 Premye Plas
               </span>{' '}
               nan Egzamen Leta!
@@ -254,7 +254,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
                   { n: '04', icon: '🚀', title: 'Ranpli Fòm nan', text: 'Nou debloke w nan mwens pase 30 minit!' },
                 ].map((s) => (
                   <div key={s.n} className="flex gap-4 p-4 rounded-2xl border border-transparent hover:border-blue-500/20 hover:bg-blue-500/5 transition-all duration-200 group cursor-default">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/15 to-purple-500/15 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/15 to-emerald-500/15 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
                       {s.icon}
                     </div>
                     <div>
@@ -291,7 +291,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
 
             {/* Payment Card */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-3xl opacity-10 blur-2xl" />
+              <div className="absolute -inset-4 bg-gradient-to-br from-blue-600 via-cyan-600 to-emerald-600 rounded-3xl opacity-10 blur-2xl" />
               <div className="relative p-6 lg:p-8 rounded-3xl shadow-xl border border-black/5 dark:border-white/5"
                 style={{ background: 'rgba(22, 29, 51, 0.85)' }}>
 
@@ -372,7 +372,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
                       </div>
                       <button
                         onClick={handleVerify}
-                        className="w-full py-4 rounded-2xl font-black text-sm bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 hover:scale-[1.01] active:scale-[0.98] transition-all"
+                        className="w-full py-4 rounded-2xl font-black text-sm bg-gradient-to-r from-blue-600 via-cyan-600 to-emerald-600 text-white shadow-lg shadow-blue-500/25 hover:scale-[1.01] active:scale-[0.98] transition-all"
                       >
                         Mwen fin peye — Verifye kounye a →
                       </button>

@@ -1,3 +1,5 @@
+// @deprecated Use services/aiService.ts instead. This file is kept for reference only.
+// All callers now use getAIResponse() from aiService.ts which wraps both gemini and ollama.
 import { GoogleGenAI, GenerateContentResponse, Type, Content, Part } from "@google/genai";
 import { PWOF_OU_SYSTEM_INSTRUCTION_BASE, MODULE_INSTRUCTIONS } from '../constants';
 import { Language, ModuleType, Quiz, ChatMessage, MessageSender } from '../types';
@@ -115,7 +117,7 @@ PA JENERE OKENN TÈKS DEYÒ FÒMA JSON AN.
 
   try {
     const responseStream = await ai.models.generateContentStream({
-      model: 'gemini-2.5-flash', // Mid-size multimodal model, stable in 2026
+      model: 'gemini-3.5-flash', // PA JANM CHANJE — sèl model ki mache
       contents: contents, // Use the constructed contents array
       config: {
         systemInstruction: systemInstruction,

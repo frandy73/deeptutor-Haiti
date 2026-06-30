@@ -57,7 +57,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
     }
   };
 
-  const inputClass = "w-full px-4 py-3.5 rounded-2xl text-sm font-medium border-2 outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700";
+  const inputClass = "w-full px-4 py-3.5 rounded-2xl text-sm font-medium border-2 outline-none transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700";
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
@@ -98,7 +98,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
 
         {/* Mobile logo */}
         <div className="lg:hidden text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-3xl mx-auto mb-3 shadow-xl shadow-indigo-500/25">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-emerald-600 flex items-center justify-center text-3xl mx-auto mb-3 shadow-xl shadow-blue-500/25">
             🎓
           </div>
           <h1 className="text-2xl font-black" style={{ color: 'var(--text-main)' }}>Pwof Ou Ayiti</h1>
@@ -116,7 +116,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
                 onClick={() => { setShowRegister(tab.value); setError(''); }}
                 className={`flex-1 py-2.5 rounded-xl text-sm font-black transition-all duration-200
                   ${showRegister === tab.value
-                    ? 'bg-white dark:bg-slate-800 shadow-md text-indigo-600 dark:text-indigo-400'
+                    ? 'bg-white dark:bg-slate-800 shadow-md text-blue-600 dark:text-blue-400'
                     : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
               >
                 {tab.label}
@@ -175,7 +175,7 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
               type="submit"
               disabled={isLoading}
               className="w-full py-4 rounded-2xl font-black text-sm text-white transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-              style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', boxShadow: '0 8px 25px -5px rgba(79,70,229,0.4)' }}
+              style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', boxShadow: '0 8px 25px -5px rgba(37, 99, 235,0.4)' }}
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">

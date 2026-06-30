@@ -50,7 +50,7 @@ const ExamTimerWidget: React.FC<ExamTimerWidgetProps> = ({ onTimeUp }) => {
                     {[5, 15, 30].map(m => (
                         <button key={m} onClick={() => startTimer(m)}
                             className="px-3 py-1 rounded-lg text-xs font-bold transition-all hover:opacity-80"
-                            style={{ background: 'rgba(79,70,229,0.15)', color: 'var(--primary)' }}>
+                            style={{ background: 'rgba(37, 99, 235,0.15)', color: 'var(--primary)' }}>
                             {m} min
                         </button>
                     ))}

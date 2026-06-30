@@ -22,7 +22,7 @@ const QuickCard: React.FC<{
     <button
       onClick={onClick}
       className="group relative text-left rounded-2xl p-4 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl btn-lift btn-ripple"
-      style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)' }}
+      style={{ background: 'var(--surface-container)', border: '1px solid var(--border-color)' }}
     >
     {/* hover glow */}
     <div
@@ -43,7 +43,7 @@ const QuickCard: React.FC<{
 const StatPill: React.FC<{ icon: string; value: number | string; label: string; color: string }> = ({ icon, value, label, color }) => (
   <div
     className="flex flex-col items-center justify-center rounded-2xl p-4 gap-1 transition-all duration-200 hover:scale-105 card-hover"
-    style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)' }}
+    style={{ background: 'var(--surface-container)', border: '1px solid var(--border-color)' }}
   >
     <div className={`text-2xl mb-1`}>{icon}</div>
     <div className="text-2xl font-black" style={{ color }}>{value}</div>
@@ -67,12 +67,12 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
   const greeting = hour < 12 ? 'Bonjou' : 'Bonswa';
 
   const quickActions = [
-    { icon: '🧠', title: 'Kòmanse Aprann', desc: 'Gid Aprantisaj pèsonalize', gradient: 'from-indigo-500 to-purple-600', module: ModuleType.GUIDED_LEARNING },
+    { icon: '🧠', title: 'Kòmanse Aprann', desc: 'Gid Aprantisaj pèsonalize', gradient: 'from-blue-500 to-emerald-600', module: ModuleType.GUIDED_LEARNING },
     { icon: '🧪', title: 'Rezoud Pwoblèm', desc: 'Entwodwi devwa ou pou solisyon', gradient: 'from-emerald-500 to-teal-600', module: ModuleType.SMART_SOLVER },
     { icon: '🎓', title: 'Egzamen Leta', desc: 'Pratike egzamen ofisyèl MENFP', gradient: 'from-orange-500 to-red-600', module: ModuleType.BAC_EXAMS },
-    { icon: '🃏', title: 'Flashcards', desc: 'Retann ak kat memwa rapide', gradient: 'from-pink-500 to-rose-600', module: ModuleType.FLASHCARDS },
+    { icon: '🃏', title: 'Flashcards', desc: 'Retann ak kat memwa rapide', gradient: 'from-blue-500 to-cyan-600', module: ModuleType.FLASHCARDS },
     { icon: '📚', title: 'Baz Konesans', desc: 'Chaje dokiman ak liv ou yo', gradient: 'from-blue-500 to-cyan-600', module: ModuleType.KNOWLEDGE_BASE },
-    { icon: '🗒️', title: 'Kaye Nòt', desc: 'Ekri epi organize nòt ou yo', gradient: 'from-violet-500 to-fuchsia-600', module: ModuleType.NOTEBOOK },
+    { icon: '🗒️', title: 'Kaye Nòt', desc: 'Ekri epi organize nòt ou yo', gradient: 'from-blue-600 to-cyan-600', module: ModuleType.NOTEBOOK },
   ];
 
   return (
@@ -88,7 +88,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         <div className="absolute -top-16 -right-16 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl pointer-events-none" />
         {/* extra glow for dark mode */}
-        <div className="absolute inset-0 pointer-events-none dark:block hidden" style={{ background: 'radial-gradient(ellipse at 70% 50%, rgba(99,102,241,0.2) 0%, transparent 60%)' }} />
+        <div className="absolute inset-0 pointer-events-none dark:block hidden" style={{ background: 'radial-gradient(ellipse at 70% 50%, rgba(37,99,235,0.2) 0%, transparent 60%)' }} />
 
         <div className="relative z-10 p-5 sm:p-6 max-w-5xl mx-auto w-full">
           {/* top row */}
@@ -159,13 +159,16 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {/* ── Quick Stats Grid ──────────────────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
-          <StatPill icon="⭐" value={progress.xp} label="Total XP" color="#2563eb" />
-
-          <StatPill icon="🔥" value={`${progress.streak}j`} label="Streak" color="#d97706" />
-
-          <StatPill icon="📝" value={progress.totalMessages} label="Mesaj" color="#059669" />
-
-          <StatPill icon="🏆" value={progress.totalQuizzes} label="Quiz" color="#0891b2" />
+            <StatPill icon="⭐" value={progress.xp} label="Total XP" color="#2563eb" />
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <StatPill icon="🔥" value={`${progress.streak}j`} label="Streak" color="#d97706" />
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
+            <StatPill icon="📝" value={progress.totalMessages} label="Mesaj" color="#059669" />
+          </div>
+          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <StatPill icon="🏆" value={progress.totalQuizzes} label="Quiz" color="#0891b2" />
           </div>
         </div>
 
@@ -188,7 +191,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {nextBadge && (
           <div
             className="flex items-center gap-4 p-4 rounded-2xl border-2 transition-all hover:shadow-md animate-slide-up"
-            style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'var(--primary)', borderStyle: 'dashed', animationDelay: '0.15s' }}
+            style={{ background: 'var(--surface-container)', borderColor: 'var(--primary)', borderStyle: 'dashed', animationDelay: '0.15s' }}
           >
             <div className="text-3xl shrink-0 opacity-40 grayscale">{nextBadge.icon}</div>
             <div className="min-w-0">
@@ -224,13 +227,13 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {/* ── Badges ────────────────────────────────────────── */}
         <div
           className="rounded-2xl p-5 shadow-sm animate-slide-up"
-          style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)', animationDelay: '0.2s' }}
+          style={{ background: 'var(--surface-container)', border: '1px solid var(--border-color)', animationDelay: '0.2s' }}
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="m-0 font-black text-base" style={{ color: 'var(--text-main)' }}>🏅 Meday ou yo</h3>
             <span
               className="text-xs font-black px-2.5 py-1 rounded-full"
-              style={{ background: 'rgba(79,70,229,0.15)', color: 'var(--primary)' }}
+              style={{ background: 'rgba(37, 99, 235,0.15)', color: 'var(--primary)' }}
             >
               {earnedBadges.length}/{BADGE_DEFINITIONS.length}
             </span>
@@ -245,7 +248,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
                   className={`flex flex-col items-center p-2.5 rounded-xl text-center transition-all duration-300 cursor-default
                     ${earned ? 'hover:scale-110 hover:shadow-lg animate-pop-in' : 'opacity-25 grayscale'}`}
                   style={{
-                    background: earned ? 'rgba(79,70,229,0.15)' : 'rgba(255,255,255,0.1)',
+                    background: earned ? 'rgba(37, 99, 235,0.15)' : 'rgba(255,255,255,0.1)',
                     border: earned ? '1px solid var(--primary)' : '1px solid transparent',
                   }}
                 >
@@ -263,7 +266,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {chatHistory.length > 0 && (
           <div
             className="rounded-2xl p-5 shadow-sm animate-slide-up"
-            style={{ background: 'rgba(22, 29, 51, 0.85)', border: '1px solid rgba(255,255,255,0.1)', animationDelay: '0.25s' }}
+            style={{ background: 'var(--surface-container)', border: '1px solid var(--border-color)', animationDelay: '0.25s' }}
           >
             <h3 className="m-0 font-black text-base mb-4" style={{ color: 'var(--text-main)' }}>🕐 Dènye Aktivite</h3>
             <div className="space-y-2">
@@ -271,9 +274,9 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
                 <div
                   key={item.id}
                   className="flex items-center gap-3 p-3 rounded-xl transition-all duration-150 hover:scale-[1.01] animate-fade-in"
-                  style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'var(--surface-container-lowest)', animationDelay: `${0.3 + idx * 0.05}s` }}
+                  style={{ border: '1px solid var(--border-color)', background: 'var(--surface-container-lowest)', animationDelay: `${0.3 + idx * 0.05}s` }}
                 >
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-sm shrink-0 font-black" style={{ color: 'var(--primary)' }}>
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/20 flex items-center justify-center text-sm shrink-0 font-black" style={{ color: 'var(--primary)' }}>
                     {idx + 1}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -295,7 +298,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
         {chatHistory.length === 0 && (
           <div
             className="rounded-2xl p-10 text-center"
-            style={{ background: 'rgba(22, 29, 51, 0.85)', border: '2px dashed rgba(255,255,255,0.1)' }}
+            style={{ background: 'var(--surface-container)', border: '2px dashed var(--border-color)' }}
           >
             <div className="text-5xl mb-4">🚀</div>
             <h3 className="font-black text-lg mb-2" style={{ color: 'var(--text-main)' }}>Kòmanse aprann jodi a!</h3>

@@ -197,7 +197,7 @@ const DiksyonèPopòv: React.FC<DiksyonèPopòvProps> = ({ children, onLookupWor
                   </p>
                 )}
                 {term.category && (
-                  <span style={{ display: 'inline-block', marginTop: '8px', padding: '2px 10px', borderRadius: '6px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', background: 'rgba(79,70,229,0.2)', color: 'var(--primary)' }}>
+                  <span style={{ display: 'inline-block', marginTop: '8px', padding: '2px 10px', borderRadius: '6px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', background: 'rgba(37, 99, 235,0.2)', color: 'var(--primary)' }}>
                     {term.category}
                   </span>
                 )}

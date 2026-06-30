@@ -178,11 +178,11 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
     html = html.replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold mt-4 mb-3">$1</h1>');
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 rounded text-sm text-pink-600">$1</code>');
-    html = html.replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-indigo-500 pl-4 italic opacity-80 my-2">$1</blockquote>');
+    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1 rounded text-sm text-cyan-600 dark:text-cyan-400">$1</code>');
+    html = html.replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-blue-500 pl-4 italic opacity-80 my-2">$1</blockquote>');
     html = html.replace(/^- (.*$)/gm, '<li class="ml-4 list-disc">$1</li>');
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-indigo-500 hover:underline font-medium">$1</a>');
-    html = html.replace(/#([a-zA-Z0-9_]+)/g, '<span class="text-indigo-500 font-medium">#$1</span>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-500 hover:underline font-medium">$1</a>');
+    html = html.replace(/#([a-zA-Z0-9_]+)/g, '<span class="text-blue-500 font-medium">#$1</span>');
     html = html.replace(/\n/g, '<br/>');
     return html;
   };
@@ -193,10 +193,10 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
       <div className={`
         ${selectedNoteId ? 'hidden md:flex' : 'flex'} 
         w-full md:w-80 flex-shrink-0 flex-col z-10 border-r
-      `} style={{ background: 'var(--surface)', borderColor: 'rgba(255,255,255,0.1)' }}>
+      `} style={{ background: 'var(--surface)', borderColor: 'var(--border-color)' }}>
         
         {/* Header (replaces standard header on desktop left side) */}
-        <div className="p-4 sm:p-6 pb-4 bg-gradient-to-br from-indigo-600 to-purple-700 text-white shrink-0 shadow-lg">
+        <div className="p-4 sm:p-6 pb-4 bg-gradient-to-br from-blue-600 to-emerald-700 text-white shrink-0 shadow-lg">
           <div className="flex items-center gap-3 mb-4">
             {onMenuClick && (
               <button onClick={onMenuClick} className="md:hidden p-2 -ml-2 rounded-xl bg-white/20 hover:bg-white/30 transition-all">
@@ -215,7 +215,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
         </div>
         
         {/* View Tabs */}
-        <div className="p-3 border-b flex gap-1.5" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+        <div className="p-3 border-b flex gap-1.5" style={{ borderColor: 'var(--border-color)' }}>
           {[
             { id: 'inbox', icon: '📥', label: 'Nòt' },
             { id: 'quick', icon: '⚡', label: 'Rapid' },
@@ -226,7 +226,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
               key={tab.id}
               onClick={() => setViewMode(tab.id as ViewMode)}
               className={`flex-1 p-2 rounded-xl text-xs font-bold transition-all border flex flex-col items-center gap-1 ${
-                viewMode === tab.id ? 'bg-indigo-50 border-indigo-200 text-indigo-600 dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-400 shadow-inner' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                viewMode === tab.id ? 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 shadow-inner' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
               }`}
               style={{ color: viewMode === tab.id ? '' : 'var(--text-muted)' }}
             >
@@ -237,7 +237,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
         </div>
 
         {/* Search */}
-        <div className="p-3 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+        <div className="p-3 border-b" style={{ borderColor: 'var(--border-color)' }}>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg opacity-50" style={{ color: 'var(--text-main)' }}>🔍</span>
             <input
@@ -245,8 +245,8 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Chèche nòt..."
-              className="w-full pl-10 pr-3 py-2.5 text-sm font-medium rounded-xl border-2 outline-none transition-all focus:border-indigo-500"
-              style={{ background: 'var(--surface-container)', borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)' }}
+              className="w-full pl-10 pr-3 py-2.5 text-sm font-medium rounded-xl border-2 outline-none transition-all focus:border-blue-500"
+              style={{ background: 'var(--surface-container)', borderColor: 'var(--border-color)', color: 'var(--text-main)' }}
             />
           </div>
         </div>
@@ -259,7 +259,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
               <div className="flex flex-wrap gap-2">
                 {allTags.map(tag => (
                   <button key={tag} onClick={() => setSearchQuery(tag)}
-                    className="px-3 py-1 text-xs font-bold rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-all dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-400">
+                    className="px-3 py-1 text-xs font-bold rounded-lg border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400">
                     #{tag}
                   </button>
                 ))}
@@ -268,7 +268,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
           )}
           
           {filteredNotes.length === 0 ? (
-            <div className="flex flex-col items-center justify-center text-center p-8 opacity-50 mt-10">
+            <div className="flex flex-col items-center justify-center text-center p-8 mt-10">
               <span className="text-4xl mb-3">📭</span>
               <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
                 {searchQuery ? 'Pa gen nòt pou rechèch sa.' : 'Pa gen nòt nan seksyon sa.'}
@@ -279,7 +279,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
               {filteredNotes.map(note => (
                 <div key={note.id} onClick={() => handleSelectNote(note)}
                   className={`p-3 sm:p-4 rounded-xl cursor-pointer transition-all group flex justify-between items-start border-2
-                    ${selectedNoteId === note.id ? 'bg-indigo-50 border-indigo-500/30 shadow-sm dark:bg-indigo-900/20 dark:border-indigo-500/50' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                    ${selectedNoteId === note.id ? 'bg-blue-50 border-blue-500/30 shadow-sm dark:bg-blue-900/20 dark:border-blue-500/50' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
                 >
                   <div className="min-w-0 pr-2 flex-1">
                     <div className="flex items-center gap-1.5 mb-1">
@@ -307,9 +307,9 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
       <div className={`
         ${!selectedNoteId ? 'hidden md:flex' : 'flex'} 
         flex-1 flex-col relative
-      `} style={{ background: 'rgba(22, 29, 51, 0.85)' }}>
+      `} style={{ background: 'var(--surface-container-lowest)' }}>
         {!selectedNoteId ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-center p-10 opacity-60">
+          <div className="flex-1 flex flex-col items-center justify-center text-center p-10">
             <div className="w-32 h-32 mb-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-6xl shadow-inner">
               📝
             </div>
@@ -338,7 +338,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
               <div className="flex gap-2">
                 <button onClick={() => setShowPreview(!showPreview)}
                   className={`px-3 py-2 rounded-xl text-xs font-bold border-2 transition-all flex items-center gap-2
-                    ${showPreview ? 'bg-indigo-50 border-indigo-200 text-indigo-600 dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-400 shadow-inner' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                    ${showPreview ? 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 shadow-inner' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
                   style={{ color: showPreview ? '' : 'var(--text-main)' }}>
                   {showPreview ? '✏️ Edit' : '👁️ Wè'}
                 </button>
@@ -350,7 +350,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
                 </button>
                 <button onClick={handleSave}
                   className={`px-4 py-2 text-white text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-95
-                    ${saveStatus === 'saved' ? 'bg-emerald-500' : saveStatus === 'error' ? 'bg-red-500' : 'bg-indigo-600 hover:bg-indigo-700'}`}>
+                    ${saveStatus === 'saved' ? 'bg-emerald-500' : saveStatus === 'error' ? 'bg-red-500' : 'bg-blue-600 hover:bg-blue-700'}`}>
                   {saveStatus === 'saving' ? <span className="animate-spin text-lg leading-none">⚙️</span> : saveStatus === 'saved' ? '✅' : '💾 Sove'}
                 </button>
               </div>
@@ -360,7 +360,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
             <div className="flex-1 overflow-hidden relative flex">
               {showPreview ? (
                 <div className="flex-1 overflow-y-auto custom-scrollbar p-6 sm:p-10">
-                  <div className="max-w-3xl mx-auto prose prose-indigo dark:prose-invert" dangerouslySetInnerHTML={{ __html: renderMarkdown(content) || '<p class="opacity-50 italic">Pa gen kontni...</p>' }} />
+                  <div className="max-w-3xl mx-auto prose prose-blue dark:prose-invert" dangerouslySetInnerHTML={{ __html: renderMarkdown(content) || '<p class="opacity-50 italic">Pa gen kontni...</p>' }} />
                 </div>
               ) : (
                 <textarea
@@ -378,22 +378,22 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
                       setTimeout(() => target.selectionStart = target.selectionEnd = start + 2, 0);
                     }
                   }}
-                  className="w-full h-full p-6 sm:p-10 bg-transparent outline-none resize-none leading-relaxed font-mono text-sm custom-scrollbar focus:ring-inset focus:ring-2 focus:ring-indigo-500/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                  className="w-full h-full p-6 sm:p-10 bg-transparent outline-none resize-none leading-relaxed font-mono text-sm custom-scrollbar focus:ring-inset focus:ring-2 focus:ring-blue-500/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="# Kòmanse ekri isit la...&#10;&#10;Ou ka itilize Markdown. Pou sove byen vit, peze Ctrl+S."
                 />
               )}
             </div>
 
             {/* Tags Display Footer */}
-            <div className="shrink-0 p-3 px-4 border-t flex flex-wrap items-center gap-2" style={{ borderColor: 'rgba(255,255,255,0.1)', background: 'var(--surface-container-lowest)' }}>
+            <div className="shrink-0 p-3 px-4 border-t flex flex-wrap items-center gap-2" style={{ borderColor: 'var(--border-color)', background: 'var(--surface-container-lowest)' }}>
               <span className="text-[10px] font-black uppercase tracking-widest mr-1" style={{ color: 'var(--text-muted)' }}>Tit yo:</span>
               {extractTags(content).map(tag => (
-                <span key={tag} className="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-400">
+                <span key={tag} className="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-blue-200 bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400">
                   #{tag}
                 </span>
               ))}
               {extractTags(content).length === 0 && (
-                <span className="text-xs font-medium italic opacity-60" style={{ color: 'var(--text-muted)' }}>Ekri #tit nan tèks la pou ajoute</span>
+                <span className="text-xs font-medium italic" style={{ color: 'var(--text-muted)' }}>Ekri #tit nan tèks la pou ajoute</span>
               )}
             </div>
           </>

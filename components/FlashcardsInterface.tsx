@@ -124,7 +124,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
 
         {/* Progress bar */}
         <div className="h-1 shrink-0" style={{ background: 'rgba(255,255,255,0.1)' }}>
-          <div className="h-full transition-all duration-500 rounded-r-full bg-gradient-to-r from-indigo-500 to-purple-500" style={{ width: `${progress}%` }} />
+          <div className="h-full transition-all duration-500 rounded-r-full bg-gradient-to-r from-blue-500 to-emerald-500" style={{ width: `${progress}%` }} />
         </div>
 
         {/* Study Area */}
@@ -134,7 +134,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
             {/* Card */}
             <div
               className={`relative rounded-[24px] sm:rounded-[32px] p-6 sm:p-12 shadow-2xl cursor-pointer transition-all duration-500 transform-gpu min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center text-center
-                ${showBack ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white scale-[1.02]' : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:scale-[1.01]'}`}
+                ${showBack ? 'bg-gradient-to-br from-blue-500 to-emerald-600 text-white scale-[1.02]' : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:scale-[1.01]'}`}
               style={{ border: showBack ? 'none' : '2px solid rgba(255,255,255,0.1)' }}
               onClick={() => setShowBack(b => !b)}
             >
@@ -224,7 +224,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
         
         {/* Generator */}
         <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl border-2 relative overflow-hidden" style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)' }}>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full" />
           
           <h3 className="text-lg font-black mb-1.5" style={{ color: 'var(--text-main)' }}>Kreye nouvo flashcards ak AI ✨</h3>
           <p className="text-xs font-medium mb-4 sm:mb-5" style={{ color: 'var(--text-muted)' }}>Ekri yon sijè (ex: "Revolisyon Ayisyen", "Selil Animal") epi kite AI a travay.</p>
@@ -233,7 +233,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
             <input
               type="text" value={topic} onChange={e => setTopic(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleGenerate()}
               placeholder="Sijè w vle etidye a..." disabled={isGenerating}
-              className="flex-1 px-4 sm:px-5 py-3 sm:py-4 rounded-2xl text-sm font-bold outline-none border-2 transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 disabled:opacity-50"
+              className="flex-1 px-4 sm:px-5 py-3 sm:py-4 rounded-2xl text-sm font-bold outline-none border-2 transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:opacity-50"
               style={{ background: 'var(--surface-container)', borderColor: 'rgba(255,255,255,0.1)', color: 'var(--text-main)' }}
             />
             <button onClick={handleGenerate} disabled={isGenerating || !topic.trim()}
@@ -268,7 +268,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
                     style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)' }}>
                     
                     <div className="flex justify-between items-start mb-3 sm:mb-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500 flex items-center justify-center text-lg sm:text-xl font-bold">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-500 flex items-center justify-center text-lg sm:text-xl font-bold">
                         {deck.title.charAt(0).toUpperCase()}
                       </div>
                       <button onClick={() => deleteDeck(deck.id)} className="w-8 h-8 rounded-full flex items-center justify-center text-red-500 bg-red-50 dark:bg-red-900/20 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110">
@@ -290,7 +290,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
                     </div>
 
                     <button onClick={() => handleStudy(deck)}
-                      className="w-full py-3 rounded-xl font-black text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 transition-all hover:bg-indigo-100 dark:hover:bg-indigo-900/40">
+                      className="w-full py-3 rounded-xl font-black text-xs uppercase tracking-widest text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 transition-all hover:bg-blue-100 dark:hover:bg-indigo-900/40">
                       📖 Etidye Pake a
                     </button>
                   </div>

@@ -91,16 +91,16 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
           <div className="max-w-3xl mx-auto w-full space-y-8 z-10">
              
             <div className="text-center mt-4 mb-8">
-              <h3 className="text-3xl sm:text-4xl font-black mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+              <h3 className="text-3xl sm:text-4xl font-black mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-600 dark:from-blue-400 dark:to-blue-400">
                 Tradiktè Syantifik
               </h3>
               <p className="text-sm sm:text-base font-medium max-w-lg mx-auto" style={{ color: 'var(--text-muted)' }}>
-                Dekouvri klète konsèp Fransè akademik yo an <span className="font-bold text-indigo-500">Kreyòl</span>.
+                Dekouvri klète konsèp Fransè akademik yo an <span className="font-bold text-blue-500">Kreyòl</span>.
               </p>
             </div>
 
             {/* Search Box */}
-            <form onSubmit={handleSearch} className="relative shadow-xl rounded-[2rem] overflow-hidden flex border-2 transition-all duration-300 hover:shadow-indigo-500/10 focus-within:ring-4 focus-within:ring-indigo-500/10 focus-within:border-indigo-500" 
+            <form onSubmit={handleSearch} className="relative shadow-xl rounded-[2rem] overflow-hidden flex border-2 transition-all duration-300 hover:shadow-blue-500/10 focus-within:ring-4 focus-within:ring-blue-500/10 focus-within:border-blue-500" 
                   style={{ borderColor: 'rgba(255,255,255,0.1)', background: 'rgba(22, 29, 51, 0.85)' }}>
               
               <div className="pl-6 flex items-center justify-center text-2xl opacity-50" style={{ color: 'var(--text-main)' }}>🔍</div>
@@ -113,7 +113,7 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
               />
               <button type="submit" disabled={isSearching || !searchTerm.trim()}
                 className={`px-8 sm:px-12 font-black text-sm sm:text-base text-white transition-all duration-300
-                  ${isSearching || !searchTerm.trim() ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 active:scale-95'}`}
+                  ${isSearching || !searchTerm.trim() ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50' : 'bg-gradient-to-r from-blue-600 to-blue-600 hover:opacity-90 active:scale-95'}`}
               >
                 {isSearching ? <span className="flex items-center gap-2"><span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Ap chèche</span> : 'Tradwi'}
               </button>
@@ -132,14 +132,14 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
                    style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)' }}>
                 
                 <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none transition-transform duration-1000 group-hover:scale-150" />
-                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none transition-transform duration-1000 group-hover:scale-150" />
+                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none transition-transform duration-1000 group-hover:scale-150" />
 
                 <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b pb-6" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
                   <div>
                     <h3 className="text-3xl sm:text-4xl font-black mb-2" style={{ color: 'var(--text-main)' }}>{currentResult.termFR}</h3>
                     <div className="flex items-center gap-2">
                       <span className="text-2xl">🇭🇹</span>
-                      <p className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500 tracking-tight">{currentResult.termHT}</p>
+                      <p className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-500 tracking-tight">{currentResult.termHT}</p>
                     </div>
                   </div>
                   {currentResult.category && (
@@ -152,7 +152,7 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
                 <div className="relative z-10 space-y-8" style={{ color: 'var(--text-main)' }}>
                   {/* Definition */}
                   <div>
-                    <strong className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-500 mb-3">
+                    <strong className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-500 mb-3">
                       <span>💡</span> Esplikasyon
                     </strong>
                     <p className="text-lg sm:text-xl font-medium leading-relaxed opacity-90">{currentResult.definitionHT}</p>
@@ -160,11 +160,11 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
 
                   {/* Example */}
                   {currentResult.example && (
-                    <div className="p-6 rounded-[1.5rem] bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-800/30">
-                      <strong className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-3">
+                    <div className="p-6 rounded-[1.5rem] bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30">
+                      <strong className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-3">
                         <span>📝</span> Egzanp Konkrè
                       </strong>
-                      <p className="text-base sm:text-lg italic font-medium leading-relaxed text-indigo-900 dark:text-indigo-200">
+                      <p className="text-base sm:text-lg italic font-medium leading-relaxed text-blue-900 dark:text-blue-200">
                         "{currentResult.example}"
                       </p>
                     </div>
@@ -205,11 +205,11 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
               savedTerms.map(term => (
                 <div key={term.id} onClick={() => handleTermClick(term)}
                   className={`group relative p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200
-                    ${currentResult?.id === term.id ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 shadow-md scale-[1.02]' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                    ${currentResult?.id === term.id ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-md scale-[1.02]' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
                 >
                   <div className="pr-6">
                     <div className="font-bold text-sm mb-0.5 truncate" style={{ color: 'var(--text-main)' }}>{term.termFR}</div>
-                    <div className="text-xs font-bold text-indigo-500 truncate">{term.termHT}</div>
+                    <div className="text-xs font-bold text-blue-500 truncate">{term.termHT}</div>
                   </div>
                   <button onClick={(e) => handleDeleteTerm(term.id, e)}
                     className="absolute top-1/2 -translate-y-1/2 right-3 w-8 h-8 flex items-center justify-center text-red-500 rounded-full hover:bg-red-50 dark:hover:bg-red-900/30 opacity-0 group-hover:opacity-100 transition-all">

@@ -200,7 +200,7 @@ const ProfileInterface: React.FC<ProfileInterfaceProps> = ({
             <span className="text-sm font-bold" style={{ color: 'var(--text-main)' }}>Mode fè nwa</span>
             <button
               onClick={onToggleTheme}
-              className={`relative w-12 h-6 rounded-full transition-all duration-300 ${isDark ? 'bg-indigo-500' : 'bg-gray-500'}`}
+              className={`relative w-12 h-6 rounded-full transition-all duration-300 ${isDark ? 'bg-blue-500' : 'bg-gray-500'}`}
             >
               <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all duration-300 ${isDark ? 'left-6.5' : 'left-0.5'}`} style={{ left: isDark ? '25px' : '2px' }} />
             </button>

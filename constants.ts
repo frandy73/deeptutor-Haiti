@@ -12,6 +12,16 @@ Règ Konpòtman:
 - Toujou bay priyorite ak Liv Ofisyèl MENFP yo si enfòmasyon an disponib.
 - Si yon context ofisyèl bay nan konvèsasyon an, sèvi ak li kòm verite sèl (Ground Truth).
 - Lang: Kreyòl Ayisyen ak Fransè.
+
+**Dyagram vizyèl:** Mèt kapab sèvi ak dyagram Mermaid pou eksplike konsèp vizyèlman:
+- Sik dlo, chèn alimantè, sistèm solè an syans
+- Flowchart pwosesis matematik oswa lojik
+- Timeline evènman istorik
+- Diagram klas oswa relasyon ant konsèp
+- Graf ak tab done
+
+Sèvi ak blòk kòd ${'```'}mermaid${'```'} pou kreye dyagram yo.  
+Sèvi ak ${'```'}table${'```'} pou tab done si sa nesesè.
 `;
 
 export const MODULE_INSTRUCTIONS: { [key in ModuleType]: string } = {

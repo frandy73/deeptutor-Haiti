@@ -130,7 +130,7 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
         {/* Ministry Program Banner */}
         <div className="relative overflow-hidden rounded-3xl p-5 sm:p-6 border-2 shadow-lg group"
           style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'var(--primary)' }}>
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-500/10 blur-3xl rounded-full group-hover:bg-indigo-500/20 transition-all duration-500" />
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/10 blur-3xl rounded-full group-hover:bg-blue-500/20 transition-all duration-500" />
           
           <div className="relative z-10 flex gap-4 sm:gap-6 items-center">
             <div className="text-5xl sm:text-6xl drop-shadow-md shrink-0">🇭🇹</div>
@@ -142,7 +142,7 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
                 Mwen deja genyen rezime ak pwogram ofisyèl Ministè a (1ère AF rive NS4). AI a ap itilize yo otomatikman si opsyon "Sipò MENFP" a aktif nan konfigirasyon an.
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-blue-500/10 text-blue-600 dark:text-blue-400">
                   Kourikoulòm 2025
                 </span>
                 <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -159,17 +159,17 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
             ${isDragging ? 'scale-[1.02] shadow-xl' : 'hover:scale-[1.01] hover:shadow-lg'}`}
           style={{ 
             borderColor: isDragging ? 'var(--primary)' : 'rgba(255,255,255,0.1)', 
-            background: isDragging ? 'rgba(79,70,229,0.15)' : 'rgba(22, 29, 51, 0.85)' 
+            background: isDragging ? 'rgba(37, 99, 235,0.15)' : 'rgba(22, 29, 51, 0.85)' 
           }}
           onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}
           onDragOver={handleDragOver} onDrop={handleDrop}
           onClick={() => document.getElementById('kb-file-input')?.click()}
         >
-          {isDragging && <div className="absolute inset-0 bg-indigo-500/5 animate-pulse" />}
+          {isDragging && <div className="absolute inset-0 bg-blue-500/5 animate-pulse" />}
           <input id="kb-file-input" type="file" multiple accept="application/pdf" className="hidden" onChange={e => handleFileChange(e.target.files)} />
           
           <div className={`w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 transition-transform duration-300 shadow-lg
-            ${isDragging ? 'bg-indigo-500 text-white scale-110' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/20'}`}>
+            ${isDragging ? 'bg-blue-500 text-white scale-110' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20'}`}>
             📄
           </div>
           <h3 className="text-xl font-black mb-2" style={{ color: 'var(--text-main)' }}>
@@ -202,7 +202,7 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
                       <div className="flex items-start gap-3 flex-1 min-w-0">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-sm
                           ${isProcessing ? 'bg-amber-100 dark:bg-amber-900/30 animate-pulse' : 
-                            hasText ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500' : 'bg-red-50 dark:bg-red-900/20 text-red-500'}`}>
+                            hasText ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-500' : 'bg-red-50 dark:bg-red-900/20 text-red-500'}`}>
                           {isProcessing ? '⏳' : hasText ? '✅' : '⚠️'}
                         </div>
                         <div className="min-w-0 flex-1">
@@ -258,7 +258,7 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
                       <div className="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
                         <div className="flex justify-between items-center mb-1.5">
                           <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Travay sou li</span>
-                          <span className="text-[10px] font-black text-indigo-500">
+                          <span className="text-[10px] font-black text-blue-500">
                             {(() => {
                               const prog = processingProgress[file.id];
                               return prog ? `${Math.round((prog.current / prog.total) * 100)}%` : 'Eskane...';
@@ -267,7 +267,7 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
                         </div>
                         <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300 ease-out"
+                            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 transition-all duration-300 ease-out"
                             style={{
                               width: (() => {
                                 const prog = processingProgress[file.id];

@@ -137,6 +137,7 @@
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
   /* Prevent elastic scroll bounce on iOS */
   overscroll-behavior: none;
 }
@@ -344,8 +345,8 @@ body {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 5px rgba(79, 70, 229, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.6); }
+  0%, 100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.6); }
 }
 
 .animate-fade-in       { animation: fade-in 0.4s ease both; }
@@ -383,9 +384,9 @@ body {
   border-radius: 50%;
   animation: bounce-subtle 0.6s ease-in-out infinite;
 }
-.typing-dot-lg:nth-child(1) { background: linear-gradient(135deg, #4f46e5, #7c3aed); animation-delay: 0.1s; }
-.typing-dot-lg:nth-child(2) { background: linear-gradient(135deg, #7c3aed, #db2777); animation-delay: 0.2s; }
-.typing-dot-lg:nth-child(3) { background: linear-gradient(135deg, #db2777, #ffb1c7); animation-delay: 0.3s; }
+.typing-dot-lg:nth-child(1) { background: linear-gradient(135deg, #2563eb, #0891b2); animation-delay: 0.1s; }
+.typing-dot-lg:nth-child(2) { background: linear-gradient(135deg, #0891b2, #059669); animation-delay: 0.2s; }
+.typing-dot-lg:nth-child(3) { background: linear-gradient(135deg, #059669, #d97706); animation-delay: 0.3s; }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
@@ -413,9 +414,9 @@ body {
   50% { transform: scaleY(1); }
 }
 
-/* Gradient button (Indigo → Pink) */
+/* Gradient button (Ayiti Blue → Teal) */
 .gradient-button {
-  background: linear-gradient(135deg, #4f46e5 0%, #ffb1c7 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #0d9488 100%);
 }
 
 /* Material Symbols default */
@@ -427,6 +428,11 @@ body {
 @keyframes bounce-subtle {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
+}
+
+/* Text balance utility */
+.text-balance {
+  text-wrap: balance;
 }
 
 /* ========================
@@ -451,7 +457,7 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(79, 70, 229, 0.12);
+  box-shadow: 0 12px 40px rgba(37, 99, 235, 0.12);
   border-color: var(--accent-main);
 }
 
@@ -496,18 +502,10 @@ body {
    ======================== */
 
 .glass-card {
-  background: rgba(22, 29, 51, 0.85);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.ambient-glow {
-  box-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.2);
-}
-
-[data-theme="dark"] .glass-card {
-  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3);
+  border: 1px solid var(--border-color);
 }
 
 [data-theme="dark"] .card-hover:hover {
@@ -545,7 +543,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(129,140,248,0.03) 0%, transparent 50%);
+  background: linear-gradient(135deg, rgba(37,99,235,0.03) 0%, transparent 50%);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -668,14 +666,14 @@ body {
 }
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(79,70,229,0.12);
+  box-shadow: 0 8px 25px rgba(37,99,235,0.12);
 }
 
 /* Pulse ring effect for notifications */
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(79,70,229,0.4); }
-  70% { box-shadow: 0 0 0 12px rgba(79,70,229,0); }
-  100% { box-shadow: 0 0 0 0 rgba(79,70,229,0); }
+  0% { box-shadow: 0 0 0 0 rgba(37,99,235,0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(37,99,235,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
 }
 .pulse-ring {
   animation: pulse-ring 2s ease infinite;

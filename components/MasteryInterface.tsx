@@ -282,7 +282,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
             {/* Stats row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="rounded-2xl p-5 border flex items-center gap-4" style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)' }}>
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-2xl font-black shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-2xl font-black shrink-0">
                   🏆
                 </div>
                 <div>
@@ -345,12 +345,12 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                       key={topic.id}
                       onClick={() => handleStartQuest(topic.title, null)}
                       className={`rounded-2xl p-5 border-2 text-left cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg flex justify-between items-start gap-4 group
-                        ${isMastered ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-indigo-500/50'}`}
+                        ${isMastered ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-blue-500/50'}`}
                       style={{ background: 'rgba(22, 29, 51, 0.85)' }}
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                          <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                             {SUBJECT_LABELS[topic.subject]}
                           </span>
                           {isMastered && (
@@ -367,7 +367,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                         </p>
                       </div>
                       
-                      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-500 group-hover:text-white flex items-center justify-center text-lg shadow-sm transition-all shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-blue-500 group-hover:text-white flex items-center justify-center text-lg shadow-sm transition-all shrink-0">
                         ⚡
                       </div>
                     </div>
@@ -390,7 +390,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                         key={file.id}
                         onClick={() => handleSelectPDF(file)}
                         className={`rounded-2xl p-5 border-2 text-left cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg flex justify-between items-center gap-4 group
-                          ${isMastered ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-indigo-500/50'}`}
+                          ${isMastered ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-blue-500/50'}`}
                         style={{ background: 'rgba(22, 29, 51, 0.85)' }}
                       >
                         <div className="min-w-0 flex-1 flex items-center gap-3">
@@ -409,7 +409,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                             Metrize ✅
                           </div>
                         ) : (
-                          <div className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-500 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                          <div className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-500 group-hover:bg-blue-500 group-hover:text-white transition-all">
                             Aprann
                           </div>
                         )}
@@ -426,7 +426,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
         {/* 2. LOADING SCREEN */}
         {questState === 'loading' && (
           <div className="max-w-2xl mx-auto w-full py-16 text-center space-y-6 animate-pulse">
-            <div className="w-20 h-20 mx-auto rounded-3xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-4xl shadow-md">
+            <div className="w-20 h-20 mx-auto rounded-3xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-4xl shadow-md">
               ⏳
             </div>
             <div className="space-y-2">
@@ -500,11 +500,11 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                 {/* LESSON CHUNK CARD */}
                 <div className="rounded-3xl p-6 sm:p-8 border shadow-lg relative overflow-hidden transition-all"
                      style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)' }}>
-                  <div className="absolute top-0 left-0 w-2 h-full bg-indigo-500" />
+                  <div className="absolute top-0 left-0 w-2 h-full bg-blue-500" />
                   
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-xl">📖</span>
-                    <span className="text-[11px] font-black uppercase tracking-widest text-indigo-500">Esplikasyon Senp</span>
+                    <span className="text-[11px] font-black uppercase tracking-widest text-blue-500">Esplikasyon Senp</span>
                   </div>
                   
                   <div className="text-base sm:text-lg font-medium leading-relaxed space-y-4" style={{ color: 'var(--text-main)' }}>
@@ -543,7 +543,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
 
                       if (isSelected) {
                         cardStyle = {
-                          background: 'rgba(79, 70, 229, 0.05)',
+                          background: 'rgba(37, 99, 235, 0.05)',
                           borderColor: '#2563eb',
                           color: '#2563eb',
                         };
@@ -592,7 +592,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                       onClick={handleSubmit}
                       disabled={!selectedOption}
                       className={`w-full mt-6 py-3.5 rounded-2xl font-black text-white shadow-md transition-all flex items-center justify-center gap-2
-                        ${selectedOption ? 'bg-indigo-600 hover:bg-indigo-700 active:scale-95' : 'bg-slate-300 dark:bg-slate-800 text-slate-500 cursor-not-allowed'}`}
+                        ${selectedOption ? 'bg-blue-600 hover:bg-blue-700 active:scale-95' : 'bg-slate-300 dark:bg-slate-800 text-slate-500 cursor-not-allowed'}`}
                     >
                       <span>🎯</span> Soumèt Repons
                     </button>
@@ -672,7 +672,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
               <p className="text-base font-bold" style={{ color: 'var(--text-main)' }}>
                 Felisitasyon! Ou metrize sijè a nèt:
               </p>
-              <p className="text-lg font-black text-indigo-500 bg-indigo-500/5 py-2 px-4 rounded-full max-w-md mx-auto truncate border border-indigo-500/10">
+              <p className="text-lg font-black text-blue-500 bg-blue-500/5 py-2 px-4 rounded-full max-w-md mx-auto truncate border border-blue-500/10">
                 {activeTopic}
               </p>
             </div>
@@ -691,7 +691,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                 <div className="w-px h-12 bg-slate-200 dark:bg-slate-800" />
                 <div className="text-center">
                   <div className="text-3xl">🎖️</div>
-                  <p className="text-lg font-black m-0 mt-1 text-indigo-500">Badge</p>
+                  <p className="text-lg font-black m-0 mt-1 text-blue-500">Badge</p>
                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Mèt Sijè</p>
                 </div>
               </div>
@@ -700,7 +700,7 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
             <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
               <button
                 onClick={() => setQuestState('overview')}
-                className="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm shadow-md transition-all hover:scale-105 active:scale-95"
+                className="px-6 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-sm shadow-md transition-all hover:scale-105 active:scale-95"
               >
                 🏠 Retounen nan Sijè yo
               </button>

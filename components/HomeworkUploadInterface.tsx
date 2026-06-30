@@ -163,21 +163,21 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
         {!hasContent ? (
           // ── Empty State ──────────────────────────────────────
           <div className="flex flex-col items-center justify-center text-center p-8 sm:p-12 max-w-lg mx-auto mt-4 sm:mt-10">
-            <div className="w-32 h-32 mb-6 sm:mb-8 rounded-[2rem] bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500 border-2 border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-6xl shadow-inner animate-float-medium">
+            <div className="w-32 h-32 mb-6 sm:mb-8 rounded-[2rem] bg-blue-50 dark:bg-blue-900/20 text-blue-500 border-2 border-blue-100 dark:border-blue-800 flex items-center justify-center text-6xl shadow-inner animate-float-medium">
               📸
             </div>
             <h3 className="text-2xl sm:text-3xl font-black mb-3" style={{ color: 'var(--text-main)' }}>Pran yon Foto Devwa Ou</h3>
             <p className="text-sm sm:text-base font-medium mb-6 leading-relaxed max-w-md" style={{ color: 'var(--text-muted)' }}>
               Pran yon foto devwa w ap travay sou li a. Pwof Ou ap li tèks la, ekwasyon yo, epi esplike w kòman pou rezoud li.
             </p>
-            <p className="text-xs font-bold mb-6 px-4 py-2 rounded-xl" style={{ background: 'rgba(79,70,229,0.1)', color: 'var(--primary)' }}>
+            <p className="text-xs font-bold mb-6 px-4 py-2 rounded-xl" style={{ background: 'rgba(37, 99, 235,0.1)', color: 'var(--primary)' }}>
               💡 Pi bon rezilta si foto a klè, byen ekleraj, san lonbray
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <button onClick={() => fileInputRef.current?.click()}
                 className="px-8 py-4 rounded-2xl font-black text-base text-white shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 flex-1 sm:flex-none"
-                style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', boxShadow: '0 10px 25px -5px rgba(79,70,229,0.4)' }}>
+                style={{ background: 'linear-gradient(135deg, #2563eb, #0891b2)', boxShadow: '0 10px 25px -5px rgba(37, 99, 235,0.4)' }}>
                 <span className="text-xl">📁</span> Chwazi Foto
               </button>
               <button onClick={() => cameraInputRef.current?.click()}
@@ -188,7 +188,7 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
             </div>
 
             <div className="mt-6 w-full px-6 py-4 rounded-2xl border-2 border-dashed animate-fade-in text-center transition-all"
-              style={{ borderColor: isDragOver ? 'var(--primary)' : 'rgba(255,255,255,0.1)', background: isDragOver ? 'rgba(79,70,229,0.05)' : 'transparent' }}
+              style={{ borderColor: isDragOver ? 'var(--primary)' : 'rgba(255,255,255,0.1)', background: isDragOver ? 'rgba(37, 99, 235,0.05)' : 'transparent' }}
               onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={handleDragLeave}>
               <p className="text-xs font-bold" style={{ color: 'var(--text-muted)' }}>
                 {isDragOver ? '🖐️ Lage foto a isit la!' : '🖱️ oswa glise deplase foto a isit'}
@@ -204,7 +204,7 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
             {/* Image Preview Area */}
             {hasImagesOnly && (
               <div className="p-6 sm:p-8 rounded-[2rem] border-2 shadow-xl animate-fade-in text-center relative overflow-hidden" style={{ background: 'rgba(22, 29, 51, 0.85)', borderColor: 'rgba(255,255,255,0.1)' }}>
-                <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/5 blur-3xl rounded-full" />
+                <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 blur-3xl rounded-full" />
 
                 <h3 className="text-lg font-black mb-6" style={{ color: 'var(--text-main)' }}>
                   Foto w chwazi yo ({uploadedImages.length})
@@ -265,7 +265,7 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
                 {isAnalyzing && (
                   <div className="flex justify-start animate-fade-in">
                     <div className="px-5 py-4 rounded-2xl rounded-tl-sm border shadow-md flex items-center gap-3 glass-card">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-sm shrink-0">🤖</div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-emerald-500/20 flex items-center justify-center text-sm shrink-0">🤖</div>
                       <LoadingSpinner message="Pwof Ou ap analize foto a..." />
                     </div>
                   </div>
