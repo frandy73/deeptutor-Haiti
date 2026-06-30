@@ -378,7 +378,7 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
                       setTimeout(() => target.selectionStart = target.selectionEnd = start + 2, 0);
                     }
                   }}
-                  className="w-full h-full p-6 sm:p-10 bg-transparent outline-none resize-none leading-relaxed font-mono text-sm custom-scrollbar focus:ring-inset focus:ring-2 focus:ring-blue-500/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                  className="w-full h-full p-6 sm:p-10 bg-transparent outline-none resize-none leading-relaxed font-mono text-sm custom-scrollbar focus:ring-inset focus:ring-2 focus:ring-blue-500/10 text-[var(--text-main)] placeholder-[var(--text-muted)] caret-[var(--text-main)]"
                   placeholder="# Kòmanse ekri isit la...&#10;&#10;Ou ka itilize Markdown. Pou sove byen vit, peze Ctrl+S."
                 />
               )}

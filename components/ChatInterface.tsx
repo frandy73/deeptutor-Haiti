@@ -287,7 +287,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 : 'Poze kesyon ou an isit la... Tape yon pwoblèm, mande yon eksplikasyon, oswa diskite yon sijè.'
               }
               disabled={isDisabled}
-              className="flex-1 resize-none px-4 sm:px-5 py-3 sm:py-4 rounded-2xl text-base font-medium outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed leading-relaxed bg-gray-100 dark:bg-black/30 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              className="flex-1 resize-none px-4 sm:px-5 py-3 sm:py-4 rounded-2xl text-base font-medium outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed leading-relaxed bg-gray-100 dark:bg-black/30 border border-gray-300 dark:border-white/10 text-[var(--text-main)] placeholder-[var(--text-muted)] caret-[var(--text-main)]"
               style={{
                 minHeight: '80px',
                 maxHeight: '200px',
