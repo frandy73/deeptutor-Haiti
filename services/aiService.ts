@@ -365,6 +365,33 @@ async function callOllama(params: GetAIResponseParams): Promise<string> {
     return fullResponse;
 }
 
+// ---- AI ERROR TYPE ----
+export type AIErrorType = 'quota' | 'unavailable' | 'api_key' | 'other';
+
+export class AIResponseError extends Error {
+  type: AIErrorType;
+  constructor(message: string, type: AIErrorType) {
+    super(message);
+    this.name = 'AIResponseError';
+    this.type = type;
+  }
+}
+
+function classifyAIError(error: unknown): AIResponseError {
+  const msg = error instanceof Error ? error.message : String(error);
+  const lower = msg.toLowerCase();
+  if (lower.includes('api key') || lower.includes('api_key') || lower.includes('clef')) {
+    return new AIResponseError(msg, 'api_key');
+  }
+  if (lower.includes('429') || lower.includes('quota') || lower.includes('resource_exhausted') || lower.includes('rate limit') || lower.includes('resous ekspoze')) {
+    return new AIResponseError(msg, 'quota');
+  }
+  if (lower.includes('503') || lower.includes('unavailable') || lower.includes('service') || lower.includes('sèvè pa disponib')) {
+    return new AIResponseError(msg, 'unavailable');
+  }
+  return new AIResponseError(msg, 'other');
+}
+
 // ---- MAIN EXPORT ----
 export async function getAIResponse(params: GetAIResponseParams): Promise<string> {
     const isOffline = typeof navigator !== 'undefined' && !navigator.onLine;
@@ -398,7 +425,7 @@ export async function getAIResponse(params: GetAIResponseParams): Promise<string
             }
             return cached;
         }
-        throw error;
+        throw classifyAIError(error);
     }
 }
 

@@ -7,6 +7,7 @@ import { speakText, stopSpeaking, detectLanguage } from '../services/ttsService'
 import { Language } from '../types';
 import DiksyonèPopòv from './DiksyonèPopòv';
 import VisualSurface from './VisualSurface';
+import LottiePlayer from './LottiePlayer';
 
 interface MessageProps {
   message: {
@@ -19,11 +20,11 @@ interface MessageProps {
 }
 
 // ── Split text into segments: markdown vs diagram blocks ─────────────
-const DIAGRAM_LANGS = new Set(['mermaid', 'table']);
+const DIAGRAM_LANGS = new Set(['mermaid', 'table', 'lottie']);
 
 function parseSegments(text: string): Array<{ type: 'md' | 'diagram'; language?: string; content: string }> {
   const segments: Array<{ type: 'md' | 'diagram'; language?: string; content: string }> = [];
-  const regex = /```(mermaid|table)\s*\n([\s\S]*?)```/g;
+  const regex = /```(mermaid|table|lottie)\s*\n([\s\S]*?)```/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
@@ -120,7 +121,11 @@ const Message: React.FC<MessageProps> = ({ message, onLookupWord }) => {
             {segments.length > 1 ? (
               segments.map((seg, i) =>
                 seg.type === 'diagram' ? (
-                  <VisualSurface key={i} code={seg.content} language={seg.language!} />
+                  seg.language === 'lottie' ? (
+                    <LottiePlayer key={i} animationData={JSON.parse(seg.content)} className="w-64 h-64 mx-auto my-4" />
+                  ) : (
+                    <VisualSurface key={i} code={seg.content} language={seg.language!} />
+                  )
                 ) : (
                   <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={mdComponents}>
                     {seg.content}

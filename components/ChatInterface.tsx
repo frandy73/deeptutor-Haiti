@@ -22,6 +22,8 @@ interface ChatInterfaceProps {
   isDark?: boolean;
   onToggleTheme?: () => void;
   onLookupWord?: (word: string) => Promise<GlossaryTerm | null>;
+  aiError?: { type: string; message: string } | null;
+  onRetry?: () => void;
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({
@@ -29,6 +31,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   selectedModuleName, onClearMessages, onGenerateQuiz,
   knowledgeFileName, onMenuClick, isOffline,
   isDark, onToggleTheme, onLookupWord,
+  aiError, onRetry,
 }) => {
   const [input, setInput] = React.useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -285,6 +288,45 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         </div>
       )}
 
+      {/* ── AI Error Banner ──────────────────────────────── */}
+      {aiError && onRetry && (
+        <div
+          className="shrink-0 mx-4 sm:mx-6 mt-3 p-4 rounded-2xl border-2 flex items-start gap-3 animate-slide-up"
+          style={{
+            background: aiError.type === 'quota' ? 'rgba(245, 158, 11, 0.08)' : 'rgba(239, 68, 68, 0.08)',
+            borderColor: aiError.type === 'quota' ? 'rgba(245, 158, 11, 0.3)' : 'rgba(239, 68, 68, 0.3)',
+          }}
+        >
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0"
+            style={{
+              background: aiError.type === 'quota' ? 'rgba(245, 158, 11, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+            }}
+          >
+            {aiError.type === 'quota' ? '⏳' : '⚠️'}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold mb-0.5" style={{ color: 'var(--text-main)' }}>
+              {aiError.type === 'quota' ? 'Limit API fini' : 'Erè AI'}
+            </p>
+            <p className="text-xs font-medium leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              {aiError.message}
+            </p>
+            <button
+              onClick={onRetry}
+              className="mt-2 px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: 'linear-gradient(135deg, #2563eb, #0891b2)',
+                color: '#fff',
+                boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+              }}
+            >
+              Eseye ankò
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ── Input Bar — Agrandi ak pwofesyonèl ────────────── */}
       <div
         className="shrink-0 z-10 relative px-4 sm:px-6 pt-4 sm:pt-5 pb-2"
@@ -315,6 +357,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 maxHeight: '200px',
                 overflowY: 'auto',
                 lineHeight: '1.6',
+                color: 'var(--text-main)',
               }}
             />
 

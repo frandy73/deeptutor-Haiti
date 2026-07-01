@@ -251,7 +251,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
               <div className="space-y-3">
                 {[
                   { n: '01', icon: '📱', title: 'Transfè MonCash', text: 'Dial *511* oswa sèvi ak App MonCash la.' },
-                  { n: '02', icon: '💸', title: 'Voye kòb la', text: 'Voye nan: 38 00 00 00 — Pwof Ou.' },
+                  { n: '02', icon: '💸', title: 'Voye kòb la', text: 'Voye nan: +509 37 94 46 51.' },
                   { n: '03', icon: '📸', title: 'Pran Screenshot', text: 'Pran foto sètifika tranzaksyon an.' },
                   { n: '04', icon: '🚀', title: 'Ranpli Fòm nan', text: 'Nou debloke w nan mwens pase 30 minit!' },
                 ].map((s) => (
@@ -281,7 +281,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
                   </div>
                 </div>
                 <a
-                  href="https://wa.me/50938000000"
+                  href="https://wa.me/50937944651"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative z-10 px-4 py-2 bg-white text-green-700 rounded-xl font-black text-sm shadow hover:opacity-90 transition-opacity"

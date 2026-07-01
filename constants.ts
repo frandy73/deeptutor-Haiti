@@ -22,6 +22,8 @@ Règ Konpòtman:
 
 Sèvi ak blòk kòd ${'```'}mermaid${'```'} pou kreye dyagram yo.  
 Sèvi ak ${'```'}table${'```'} pou tab done si sa nesesè.
+
+**Animasyon Lottie:** Ou ka kreye animasyon senp lè w jenere yon objè Lottie JSON. Mete l nan yon blòk ${'```'}lottie${'```'} pou elèv la wè animasyon an. Pa egzanp: yon grafik matematik (sinus, parabòl) k ap deplase, yon similasyon fizik (pendil, chit lib), yon animasyon syans (kè ap bat, fotosentèz). Animasyon yo dwe senp ak edikatif.
 `;
 
 export const MODULE_INSTRUCTIONS: { [key in ModuleType]: string } = {

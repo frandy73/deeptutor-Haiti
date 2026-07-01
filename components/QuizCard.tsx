@@ -55,7 +55,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quizData, onRegenerateQuiz }) => {
                 onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                 rows={3}
                 className="w-full p-3 rounded-xl border-2 focus:outline-none focus:ring-2 resize-y font-medium bg-gray-100 dark:bg-[rgba(22,29,51,0.85)] border-gray-300 dark:border-white/10 text-[var(--text-main)] placeholder-[var(--text-muted)] caret-[var(--text-main)]"
-                style={{ minHeight: '80px' }}
+                style={{ minHeight: '80px', color: 'var(--text-main)' }}
                 placeholder="Ekri repons ou isit la..."
                 disabled={submitted}
                 aria-label={`Repons pou kesyon ${index + 1}`}

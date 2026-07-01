@@ -44,6 +44,8 @@ export interface ChatMessage {
   text: string;
   isStreaming?: boolean;
   quizData?: Quiz;
+  _retryPrompt?: string;
+  _retryId?: string;
 }
 
 export interface KnowledgeFile {

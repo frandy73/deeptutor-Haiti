@@ -39,7 +39,7 @@ import {
   INITIAL_PWOF_OU_CONFIG,
   XP_REWARDS
 } from './constants';
-import { getAIResponse } from './services/aiService';
+import { getAIResponse, AIResponseError, AIErrorType } from './services/aiService';
 import { initFirebase, onAuthChange, logoutUser, getUserProfile, checkAndIncrementMessageLimit, updateUserProfile, UserProfile } from './services/firebaseService';
 import {
   loadChatHistory,
@@ -71,6 +71,7 @@ const App: React.FC = () => {
   const [selectedMasteryPDFName, setSelectedMasteryPDFName] = useState<string | undefined>(undefined);
   const [showSplash, setShowSplash] = useState(true);
   const [previousInteractionId, setPreviousInteractionId] = useState<string | null>(null);
+  const [aiError, setAiError] = useState<{ type: AIErrorType; message: string } | null>(null);
 
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
@@ -275,18 +276,37 @@ const App: React.FC = () => {
       saveCurrentChat(finalMessages);
 
     } catch (error: any) {
-      const errMsg = error?.message || '';
+      const errType = error instanceof AIResponseError ? error.type : 'other';
+      const aiErrorMsgs: Record<AIErrorType, string> = {
+        quota: '❌ Kontenjan API a fini. Edezyèm nan, ou rive nan limit mesaj gratis yo. Retounen apre yon ti moman oswa aktive abònman Premium ou a.',
+        unavailable: '⚠️ Sèvè AI a pa disponib kounye a. Gen yon ti pwoblèm ak Gemini. Tanpri eseye ankò nan kèk minit.',
+        api_key: '🔑 Kle API a pa valid oswa li manke. Kontakte administratè a pou verifye konfigirasyon an.',
+        other: "😓 Mwen regrèt, yon erè netwaye pann. Tanpri eseye ankò!",
+      };
+      setAiError({ type: errType, message: aiErrorMsgs[errType] });
+      const lastUserText = newMessages.filter(m => m.sender === MessageSender.USER).pop()?.text || text;
+      const pendingId = (Date.now() + 2).toString();
       setMessages([...newMessages, {
         id: botMsgId,
         sender: MessageSender.BOT,
-        text: errMsg.includes('API') || errMsg.includes('modèl')
-          ? 'Mwen regrèt, sèvè AI a pa reponn kounye a. Tcheke API a epi eseye ankò.'
-          : "Mwen regrèt, mwen gen yon ti pwoblèm teknik. Tanpri eseye ankò!",
+        text: aiErrorMsgs[errType],
+        _retryPrompt: lastUserText,
+        _retryId: pendingId,
       }]);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const handleRetryAI = useCallback(async () => {
+    if (!aiError) return;
+    const lastBotMsg = messages.filter(m => m.sender === MessageSender.BOT).pop();
+    if (!lastBotMsg?._retryPrompt) return;
+    setAiError(null);
+    // Clean the error message from the chat
+    setMessages(prev => prev.filter(m => m.id !== lastBotMsg.id));
+    await handleSendMessage(lastBotMsg._retryPrompt);
+  }, [aiError, messages, handleSendMessage]);
 
   const saveCurrentChat = useCallback((updatedMessages: ChatMessage[]) => {
     const chatId = activeChatId || Date.now().toString();
@@ -396,6 +416,7 @@ const App: React.FC = () => {
 
   const handleClearMessages = () => {
     setMessages([]);
+    setAiError(null);
     setKnowledgeContext(null);
     setActiveChatIdState(null);
     setActiveChatId(null);
@@ -410,6 +431,7 @@ const App: React.FC = () => {
     const item = chatHistory.find(h => h.id === id);
     if (item) {
       setMessages(item.messages);
+      setAiError(null);
       setSelectedModule(item.moduleType);
       setActiveChatIdState(id);
       setActiveChatId(id);
@@ -776,6 +798,8 @@ const App: React.FC = () => {
             isDark={isDark}
             onToggleTheme={toggleTheme}
             onLookupWord={handleSearchGlossary}
+            aiError={aiError}
+            onRetry={handleRetryAI}
           />
         )}
         </div>
