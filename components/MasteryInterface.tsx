@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ModuleType, Language, Subject, StudentProgress, KnowledgeFile } from '../types';
 import { getAIResponse } from '../services/aiService';
 import { loadProgress, markTopicAsMastered, loadKnowledgeFiles } from '../services/localStorageService';
 import { getFileText } from '../services/dbService';
 import { XP_REWARDS, SUBJECT_LABELS } from '../constants';
+import { calculatePriorities } from '../services/adaptiveLearningService';
+import { cn } from '../lib/utils';
 
 interface MasteryInterfaceProps {
   onMenuClick?: () => void;
@@ -65,6 +67,20 @@ const MasteryInterface: React.FC<MasteryInterfaceProps> = ({
   
   // Confetti particles for success
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
+
+  // Adaptive topic ordering: weakest subjects first
+  const orderedTopics = useMemo(() => {
+    if (!progress) return PRESET_TOPICS;
+    const priorities = calculatePriorities(progress);
+    const scoreMap: Record<string, number> = {};
+    priorities.forEach(p => { scoreMap[p.subject] = p.score; });
+
+    return [...PRESET_TOPICS].sort((a, b) => {
+      const scoreA = scoreMap[a.subject.toLowerCase()] ?? 0;
+      const scoreB = scoreMap[b.subject.toLowerCase()] ?? 0;
+      return scoreB - scoreA;
+    });
+  }, [progress]);
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -338,21 +354,30 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                 📚 Sijè Ofisyèl MENFP
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {PRESET_TOPICS.map(topic => {
+                {orderedTopics.map((topic, index) => {
                   const isMastered = progress?.masteredTopics?.includes(topic.title);
+                  const isRecommended = index < 2 && orderedTopics.length > 2 && !isMastered;
                   return (
                     <div
                       key={topic.id}
                       onClick={() => handleStartQuest(topic.title, null)}
-                      className={`rounded-2xl p-5 border-2 text-left cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg flex justify-between items-start gap-4 group
-                        ${isMastered ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-blue-500/50'}`}
+                      className={cn(
+                        "rounded-2xl p-5 border-2 text-left cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg flex justify-between items-start gap-4 group",
+                        isMastered && 'border-emerald-500/30 bg-emerald-500/5',
+                        !isMastered && 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-blue-500/50'
+                      )}
                       style={{ background: 'rgba(22, 29, 51, 0.85)' }}
                     >
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 mb-2">
+                          <div className="flex items-center gap-2 mb-2">
                           <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                             {SUBJECT_LABELS[topic.subject]}
                           </span>
+                          {isRecommended && (
+                            <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                              <span>🔥</span> Rekòmande
+                            </span>
+                          )}
                           {isMastered && (
                             <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                               <span>✅</span> Metrize
@@ -389,8 +414,11 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                       <div
                         key={file.id}
                         onClick={() => handleSelectPDF(file)}
-                        className={`rounded-2xl p-5 border-2 text-left cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg flex justify-between items-center gap-4 group
-                          ${isMastered ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-blue-500/50'}`}
+                          className={cn(
+                            "rounded-2xl p-5 border-2 text-left cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg flex justify-between items-center gap-4 group",
+                            isMastered && 'border-emerald-500/30 bg-emerald-500/5',
+                            !isMastered && 'border-slate-200 dark:border-slate-800 bg-rgba(22,29,51,0.85) hover:border-blue-500/50'
+                          )}
                         style={{ background: 'rgba(22, 29, 51, 0.85)' }}
                       >
                         <div className="min-w-0 flex-1 flex items-center gap-3">
@@ -468,13 +496,16 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                   return (
                     <div key={step} className="flex items-center">
                       <div
-                        className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black border transition-all duration-300
-                          ${active ? 'bg-emerald-500 border-emerald-500 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'}`}
+                          className={cn(
+                            "w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black border transition-all duration-300",
+                            active && 'bg-emerald-500 border-emerald-500 text-white shadow-md',
+                            !active && 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'
+                          )}
                       >
                         {active ? '✅' : step}
                       </div>
                       {step < 3 && (
-                        <div className={`w-6 h-1 rounded-full transition-all duration-300 ${step < streak ? 'bg-emerald-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                        <div className={cn("w-6 h-1 rounded-full transition-all duration-300", step < streak && 'bg-emerald-500', step >= streak && 'bg-slate-200 dark:bg-slate-700')} />
                       )}
                     </div>
                   );
@@ -591,8 +622,11 @@ Bay repons lan sèlman an fòma JSON ki genyen kle sa yo: lessonChunk (nouvo esp
                     <button
                       onClick={handleSubmit}
                       disabled={!selectedOption}
-                      className={`w-full mt-6 py-3.5 rounded-2xl font-black text-white shadow-md transition-all flex items-center justify-center gap-2
-                        ${selectedOption ? 'bg-blue-600 hover:bg-blue-700 active:scale-95' : 'bg-slate-300 dark:bg-slate-800 text-slate-500 cursor-not-allowed'}`}
+                      className={cn(
+                        "w-full mt-6 py-3.5 rounded-2xl font-black text-white shadow-md transition-all flex items-center justify-center gap-2",
+                        selectedOption && 'bg-blue-600 hover:bg-blue-700 active:scale-95',
+                        !selectedOption && 'bg-slate-300 dark:bg-slate-800 text-slate-500 cursor-not-allowed'
+                      )}
                     >
                       <span>🎯</span> Soumèt Repons
                     </button>

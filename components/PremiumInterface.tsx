@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createKobaraPayment, verifyKobaraPayment, savePremiumRequest } from '../services/paymentService';
+import { cn } from '../lib/utils';
 
 interface PremiumInterfaceProps {
   onMenuClick?: () => void;
@@ -187,11 +188,12 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
                 <div
                   key={tier.name}
                   onClick={() => handleSelectTier(tier.name)}
-                  className={`relative flex flex-col p-6 rounded-3xl border-2 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl
-                    ${tier.border}
-                    ${isSelected ? 'ring-2 ring-blue-500/40 ring-offset-2 dark:ring-offset-slate-900' : ''}
-                    ${isPopular ? 'shadow-xl shadow-blue-500/20' : 'shadow-md'}
-                  `}
+                  className={cn(
+                    "relative flex flex-col p-6 rounded-3xl border-2 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl",
+                    tier.border,
+                    isSelected && 'ring-2 ring-blue-500/40 ring-offset-2 dark:ring-offset-slate-900',
+                    isPopular ? 'shadow-xl shadow-blue-500/20' : 'shadow-md'
+                  )}
                   style={{ background: isSelected ? 'linear-gradient(135deg,rgba(59,130,246,0.07),rgba(139,92,246,0.07))' : 'rgba(22, 29, 51, 0.85)' }}
                 >
                   {/* Badge */}
@@ -214,7 +216,7 @@ const PremiumInterface: React.FC<PremiumInterfaceProps> = ({ onMenuClick, onPaym
                   <div className="flex-grow space-y-2.5 mb-6">
                     {tier.features.map(f => (
                       <div key={f} className="flex items-start gap-2">
-                        <span className={`text-xs font-medium mt-0.5 ${f.startsWith('✓') ? 'text-green-500' : 'text-slate-300 dark:text-slate-600'}`} style={{ color: 'var(--text-main)' }}>
+                        <span className={cn("text-xs font-medium mt-0.5", f.startsWith('✓') ? 'text-green-500' : 'text-slate-300 dark:text-slate-600')} style={{ color: 'var(--text-main)' }}>
                           {f}
                         </span>
                       </div>

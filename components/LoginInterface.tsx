@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { User } from '../services/firebaseService';
 import { initFirebase, loginWithEmail, registerWithEmail, onAuthChange } from '../services/firebaseService';
+import { cn } from '../lib/utils';
 
 interface LoginInterfaceProps {
   onLoginSuccess?: (user: User) => void;
@@ -114,10 +115,11 @@ const LoginInterface: React.FC<LoginInterfaceProps> = ({ onLoginSuccess, onMenuC
               <button
                 key={String(tab.value)}
                 onClick={() => { setShowRegister(tab.value); setError(''); }}
-                className={`flex-1 py-2.5 rounded-xl text-sm font-black transition-all duration-200
-                  ${showRegister === tab.value
-                    ? 'bg-white dark:bg-slate-800 shadow-md text-blue-600 dark:text-blue-400'
-                    : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                className={cn(
+                  "flex-1 py-2.5 rounded-xl text-sm font-black transition-all duration-200",
+                  showRegister === tab.value && 'bg-white dark:bg-slate-800 shadow-md text-blue-600 dark:text-blue-400',
+                  showRegister !== tab.value && 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                )}
               >
                 {tab.label}
               </button>

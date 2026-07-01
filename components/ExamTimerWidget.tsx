@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { cn } from '../lib/utils';
 
 interface ExamTimerWidgetProps {
     onTimeUp: () => void;
@@ -64,7 +65,7 @@ const ExamTimerWidget: React.FC<ExamTimerWidgetProps> = ({ onTimeUp }) => {
         <div className="p-3 rounded-xl shadow-md border mt-2 flex items-center justify-between"
             style={{ background: isActive && timeLeft < 60 ? '#fef2f2' : 'rgba(22, 29, 51, 0.85)', borderColor: isActive && timeLeft < 60 ? '#fee2e2' : 'rgba(255,255,255,0.1)' }}>
             <div className="flex items-center gap-3">
-                <span className={`text-xl ${isActive && timeLeft < 60 ? 'animate-pulse' : ''}`}>
+                <span                 className={cn("text-xl", isActive && timeLeft < 60 && 'animate-pulse')}>
                     {timeLeft < 60 ? '⚠️' : '⏲️'}
                 </span>
                 <span className="text-lg font-mono font-bold" style={{ color: timeLeft < 60 ? '#ef4444' : 'var(--text-main)' }}>

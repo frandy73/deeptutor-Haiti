@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { Note } from '../types';
 import { loadNotes, saveNotes, updateStreakAndXP } from '../services/localStorageService';
 import { XP_REWARDS } from '../constants';
+import { cn } from '../lib/utils';
 
 interface NotebookInterfaceProps {
   onUseInChat: (text: string, title: string) => void;
@@ -190,10 +191,11 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
   return (
     <div className="flex flex-col md:flex-row h-full overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
       {/* Sidebar List */}
-      <div className={`
-        ${selectedNoteId ? 'hidden md:flex' : 'flex'} 
-        w-full md:w-80 flex-shrink-0 flex-col z-10 border-r
-      `} style={{ background: 'var(--surface)', borderColor: 'var(--border-color)' }}>
+      <div className={cn(
+        "w-full md:w-80 flex-shrink-0 flex-col z-10 border-r",
+        selectedNoteId && 'hidden md:flex',
+        !selectedNoteId && 'flex'
+      )} style={{ background: 'var(--surface)', borderColor: 'var(--border-color)' }}>
         
         {/* Header (replaces standard header on desktop left side) */}
         <div className="p-4 sm:p-6 pb-4 bg-gradient-to-br from-blue-600 to-emerald-700 text-white shrink-0 shadow-lg">
@@ -225,9 +227,11 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
             <button
               key={tab.id}
               onClick={() => setViewMode(tab.id as ViewMode)}
-              className={`flex-1 p-2 rounded-xl text-xs font-bold transition-all border flex flex-col items-center gap-1 ${
-                viewMode === tab.id ? 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 shadow-inner' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
-              }`}
+              className={cn(
+                "flex-1 p-2 rounded-xl text-xs font-bold transition-all border flex flex-col items-center gap-1",
+                viewMode === tab.id && 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 shadow-inner',
+                viewMode !== tab.id && 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
+              )}
               style={{ color: viewMode === tab.id ? '' : 'var(--text-muted)' }}
             >
               <span className="text-base">{tab.icon}</span>
@@ -278,8 +282,11 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
             <div className="space-y-1">
               {filteredNotes.map(note => (
                 <div key={note.id} onClick={() => handleSelectNote(note)}
-                  className={`p-3 sm:p-4 rounded-xl cursor-pointer transition-all group flex justify-between items-start border-2
-                    ${selectedNoteId === note.id ? 'bg-blue-50 border-blue-500/30 shadow-sm dark:bg-blue-900/20 dark:border-blue-500/50' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                  className={cn(
+                    "p-3 sm:p-4 rounded-xl cursor-pointer transition-all group flex justify-between items-start border-2",
+                    selectedNoteId === note.id && 'bg-blue-50 border-blue-500/30 shadow-sm dark:bg-blue-900/20 dark:border-blue-500/50',
+                    selectedNoteId !== note.id && 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                  )}
                 >
                   <div className="min-w-0 pr-2 flex-1">
                     <div className="flex items-center gap-1.5 mb-1">
@@ -304,10 +311,11 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
       </div>
 
       {/* Editor Area */}
-      <div className={`
-        ${!selectedNoteId ? 'hidden md:flex' : 'flex'} 
-        flex-1 flex-col relative
-      `} style={{ background: 'var(--surface-container-lowest)' }}>
+      <div className={cn(
+        "flex-1 flex-col relative",
+        !selectedNoteId && 'hidden md:flex',
+        selectedNoteId && 'flex'
+      )} style={{ background: 'var(--surface-container-lowest)' }}>
         {!selectedNoteId ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-10">
             <div className="w-32 h-32 mb-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-6xl shadow-inner">
@@ -337,8 +345,11 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
               {/* Action Buttons */}
               <div className="flex gap-2">
                 <button onClick={() => setShowPreview(!showPreview)}
-                  className={`px-3 py-2 rounded-xl text-xs font-bold border-2 transition-all flex items-center gap-2
-                    ${showPreview ? 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 shadow-inner' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                  className={cn(
+                    "px-3 py-2 rounded-xl text-xs font-bold border-2 transition-all flex items-center gap-2",
+                    showPreview && 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 shadow-inner',
+                    !showPreview && 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                  )}
                   style={{ color: showPreview ? '' : 'var(--text-main)' }}>
                   {showPreview ? '✏️ Edit' : '👁️ Wè'}
                 </button>
@@ -349,8 +360,12 @@ const NotebookInterface: React.FC<NotebookInterfaceProps> = ({ onUseInChat, onMe
                   🤖 <span className="hidden sm:inline">Voye nan AI</span>
                 </button>
                 <button onClick={handleSave}
-                  className={`px-4 py-2 text-white text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-95
-                    ${saveStatus === 'saved' ? 'bg-emerald-500' : saveStatus === 'error' ? 'bg-red-500' : 'bg-blue-600 hover:bg-blue-700'}`}>
+                  className={cn(
+                    "px-4 py-2 text-white text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-95",
+                    saveStatus === 'saved' && 'bg-emerald-500',
+                    saveStatus === 'error' && 'bg-red-500',
+                    saveStatus !== 'saved' && saveStatus !== 'error' && 'bg-blue-600 hover:bg-blue-700'
+                  )}>
                   {saveStatus === 'saving' ? <span className="animate-spin text-lg leading-none">⚙️</span> : saveStatus === 'saved' ? '✅' : '💾 Sove'}
                 </button>
               </div>

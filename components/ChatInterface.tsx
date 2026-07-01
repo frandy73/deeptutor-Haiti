@@ -1,10 +1,12 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { ChatMessage, MessageSender, GlossaryTerm } from '../types';
 import Message from './Message';
 import LoadingSpinner from './LoadingSpinner';
 import QuizCard from './QuizCard';
 import ExamTimerWidget from './ExamTimerWidget';
 import SkeletonLoader from './SkeletonLoader';
+import { loadProgress } from '../services/localStorageService';
+import { calculatePriorities } from '../services/adaptiveLearningService';
 
 interface ChatInterfaceProps {
   messages: ChatMessage[];
@@ -81,6 +83,30 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   const showWelcome = messages.length === 0 && !isLoading;
   const isDisabled = isLoading || isGeneratingQuiz || !!isOffline;
+
+  // Adaptive suggestion pills based on weakest subjects
+  const suggestionPills = useMemo(() => {
+    try {
+      const progress = loadProgress();
+      const priorities = calculatePriorities(progress);
+      if (priorities.length === 0) throw new Error('no priorities');
+      const subjectLabel: Record<string, string> = {
+        'matematik': 'Matematik', 'fizik': 'Fizik', 'chimi': 'Chimi',
+        'biyoloji': 'Biyoloji', 'angle': 'Angle', 'kreyòl': 'Kreyòl',
+        'istwa': 'Istwa', 'jewografi': 'Jewografi',
+      };
+      return priorities.slice(0, 3).map(p => {
+        const label = subjectLabel[p.subject] || p.subject;
+        return `Eksplike mwen yon konsèp nan ${label}`;
+      });
+    } catch {
+      return [
+        'Rezoud pwoblèm sa a pou mwen...',
+        'Eksplike mwen kisa ki...',
+        'Bay mwen yon rezime sou...',
+      ];
+    }
+  }, []);
 
   return (
     <div className="flex flex-col h-full overflow-hidden" style={{ background: 'var(--surface-container-lowest)' }}>
@@ -189,11 +215,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               <p className="m-0 text-[10px] font-black uppercase tracking-widest text-blue-500 text-left">
                 Kòmanse ak:
               </p>
-              {[
-                'Rezoud pwoblèm sa a pou mwen...',
-                'Eksplike mwen kisa ki...',
-                'Bay mwen yon rezime sou...',
-              ].map(prompt => (
+              {suggestionPills.map(prompt => (
                 <button
                   key={prompt}
                   onClick={() => handleQuickPrompt(prompt)}

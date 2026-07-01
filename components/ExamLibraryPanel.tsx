@@ -3,6 +3,7 @@ import { ExamEntry, EXAM_LIBRARY, getAvailableYears, getAvailableTracks } from '
 import { extractTextFromPDFUrl } from '../services/pdfService';
 import { getAIResponse } from '../services/aiService';
 import { Language, ModuleType, Quiz, AIProvider } from '../types';
+import { cn } from '../lib/utils';
 
 interface ExamLibraryPanelProps {
   studentLevel: string;
@@ -348,8 +349,11 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
           <div className="flex flex-wrap gap-2">
             {allYears.slice(0, 8).map(y => (
               <button key={y} onClick={() => setFilterYear(y)}
-                className={`px-3 py-1.5 rounded-xl border-2 text-xs font-black transition-all duration-200
-                  ${filterYear === y ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+                className={cn(
+                  "px-3 py-1.5 rounded-xl border-2 text-xs font-black transition-all duration-200",
+                  filterYear === y && 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+                  filterYear !== y && 'hover:bg-black/5 dark:hover:bg-white/5'
+                )}
                 style={{ borderColor: filterYear === y ? '' : 'rgba(255,255,255,0.1)', color: filterYear === y ? '' : 'var(--text-muted)' }}>
                 {y === 'all' ? 'Tout Ane' : y}
               </button>
@@ -363,8 +367,11 @@ Fè yon leson pou yon elèv NS4 oswa 9è AF. Itilize:
           <div className="flex flex-wrap gap-2">
             {allTracks.map(t => (
               <button key={t} onClick={() => setFilterTrack(t)}
-                className={`px-3 py-1.5 rounded-xl border-2 text-xs font-black transition-all duration-200
-                  ${filterTrack === t ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+                className={cn(
+                  "px-3 py-1.5 rounded-xl border-2 text-xs font-black transition-all duration-200",
+                  filterTrack === t && 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',
+                  filterTrack !== t && 'hover:bg-black/5 dark:hover:bg-white/5'
+                )}
                 style={{ borderColor: filterTrack === t ? '' : 'rgba(255,255,255,0.1)', color: filterTrack === t ? '' : 'var(--text-muted)' }}>
                 {t === 'all' ? 'Tout Pis' : t}
               </button>

@@ -5,6 +5,7 @@ import { updateStreakAndXP } from '../services/localStorageService';
 import { XP_REWARDS } from '../constants';
 import Message from './Message';
 import LoadingSpinner from './LoadingSpinner';
+import { cn } from '../lib/utils';
 
 interface HomeworkUploadInterfaceProps {
   config: DeepTutorConfig;
@@ -240,8 +241,11 @@ const HomeworkUploadInterface: React.FC<HomeworkUploadInterfaceProps> = ({ confi
                 </div>
 
                 <button onClick={analyzeHomework} disabled={isAnalyzing}
-                  className={`px-8 py-4 rounded-2xl font-black text-base transition-all flex items-center justify-center gap-3 w-full sm:w-auto mx-auto shadow-lg
-                    ${isAnalyzing ? 'bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed opacity-70' : 'text-white hover:scale-[1.02] active:scale-95'}`}
+                  className={cn(
+                    "px-8 py-4 rounded-2xl font-black text-base transition-all flex items-center justify-center gap-3 w-full sm:w-auto mx-auto shadow-lg",
+                    isAnalyzing && 'bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed opacity-70',
+                    !isAnalyzing && 'text-white hover:scale-[1.02] active:scale-95'
+                  )}
                   style={{ background: isAnalyzing ? '' : 'linear-gradient(135deg, #2563eb, #0891b2)' }}>
                   {isAnalyzing ? (
                     <><span className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" /> Ap analize devwa w la...</>

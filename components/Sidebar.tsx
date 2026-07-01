@@ -3,6 +3,7 @@ import { ChatHistoryItem, DeepTutorConfig, Language, ModuleType, AIProvider, Sub
 import { STUDENT_LEVEL_OPTIONS, SUBJECT_OPTIONS } from '../constants';
 import { loadProgress } from '../services/localStorageService';
 import { downloadBackup, downloadNotesAsText, downloadChatHistoryAsText } from '../services/backupService';
+import { cn } from '../lib/utils';
 
 // ── Grouped Navigation ──────────────────────────────────────────────────────
 const NAV_GROUPS = [
@@ -178,11 +179,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <li key={label}>
                     <button
                       onClick={() => handleSelect(label)}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-[13px] font-bold transition-all duration-300 group btn-lift
-                        ${active
-                          ? 'shadow-lg scale-[1.01]'
-                          : 'hover:scale-[1.02]'
-                        }`}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-[13px] font-bold transition-all duration-300 group btn-lift",
+                        active && 'shadow-lg scale-[1.01]',
+                        !active && 'hover:scale-[1.02]'
+                      )}
                       style={
                         active
                           ? {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GlossaryTerm } from '../types';
 import { loadGlossaryTerms, saveGlossaryTerms } from '../services/localStorageService';
+import { cn } from '../lib/utils';
 
 interface GlossaryInterfaceProps {
   onSearchTerm: (term: string) => Promise<GlossaryTerm | null>;
@@ -112,8 +113,10 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
                 style={{ color: 'var(--text-main)' }}
               />
               <button type="submit" disabled={isSearching || !searchTerm.trim()}
-                className={`px-8 sm:px-12 font-black text-sm sm:text-base text-white transition-all duration-300
-                  ${isSearching || !searchTerm.trim() ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50' : 'bg-gradient-to-r from-blue-600 to-blue-600 hover:opacity-90 active:scale-95'}`}
+                className={cn(
+                  "px-8 sm:px-12 font-black text-sm sm:text-base text-white transition-all duration-300",
+                  isSearching || !searchTerm.trim() ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50' : 'bg-gradient-to-r from-blue-600 to-blue-600 hover:opacity-90 active:scale-95'
+                )}
               >
                 {isSearching ? <span className="flex items-center gap-2"><span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Ap chèche</span> : 'Tradwi'}
               </button>
@@ -204,8 +207,11 @@ const GlossaryInterface: React.FC<GlossaryInterfaceProps> = ({ onSearchTerm, onM
             ) : (
               savedTerms.map(term => (
                 <div key={term.id} onClick={() => handleTermClick(term)}
-                  className={`group relative p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200
-                    ${currentResult?.id === term.id ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-md scale-[1.02]' : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                  className={cn(
+                    "group relative p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200",
+                    currentResult?.id === term.id && 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-md scale-[1.02]',
+                    currentResult?.id !== term.id && 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                  )}
                 >
                   <div className="pr-6">
                     <div className="font-bold text-sm mb-0.5 truncate" style={{ color: 'var(--text-main)' }}>{term.termFR}</div>

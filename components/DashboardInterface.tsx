@@ -4,6 +4,7 @@ import { loadProgress } from '../services/localStorageService';
 import { BADGE_DEFINITIONS } from '../constants';
 import { DashboardSkeleton } from './SkeletonLoader';
 import { getNextRecommendedSubject, calculatePriorities } from '../services/adaptiveLearningService';
+import { cn } from '../lib/utils';
 
 interface DashboardInterfaceProps {
   chatHistory: ChatHistoryItem[];
@@ -245,8 +246,11 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({ chatHistory, on
                 <div
                   key={badge.id}
                   title={`${badge.name}: ${badge.description}`}
-                  className={`flex flex-col items-center p-2.5 rounded-xl text-center transition-all duration-300 cursor-default
-                    ${earned ? 'hover:scale-110 hover:shadow-lg animate-pop-in' : 'opacity-25 grayscale'}`}
+                  className={cn(
+                    "flex flex-col items-center p-2.5 rounded-xl text-center transition-all duration-300 cursor-default",
+                    earned && 'hover:scale-110 hover:shadow-lg animate-pop-in',
+                    !earned && 'opacity-25 grayscale'
+                  )}
                   style={{
                     background: earned ? 'rgba(37, 99, 235,0.15)' : 'rgba(255,255,255,0.1)',
                     border: earned ? '1px solid var(--primary)' : '1px solid transparent',

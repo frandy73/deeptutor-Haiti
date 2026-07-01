@@ -5,9 +5,10 @@
  */
 
 const OFFLINE_DB_NAME = 'PwofOuOfflineDB';
-const OFFLINE_DB_VERSION = 1;
+const OFFLINE_DB_VERSION = 2;
 const AI_RESPONSES_STORE = 'ai_responses';
 const CACHED_QUIZZES_STORE = 'cached_quizzes';
+const MESSAGE_QUEUE_STORE = 'message_queue';
 
 // ── Initialize offline database ──────────────────────────────────────────────
 const initOfflineDB = (): Promise<IDBDatabase> => {
@@ -26,6 +27,11 @@ const initOfflineDB = (): Promise<IDBDatabase> => {
       // Store for cached quiz data
       if (!db.objectStoreNames.contains(CACHED_QUIZZES_STORE)) {
         db.createObjectStore(CACHED_QUIZZES_STORE, { keyPath: 'id' });
+      }
+
+      // Store for offline message queue (shared with offlineQueueService)
+      if (!db.objectStoreNames.contains(MESSAGE_QUEUE_STORE)) {
+        db.createObjectStore(MESSAGE_QUEUE_STORE, { keyPath: 'id' });
       }
     };
 

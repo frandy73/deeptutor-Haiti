@@ -6,6 +6,7 @@ import { extractTextFromPDF } from '../services/pdfService';
 import { XP_REWARDS } from '../constants';
 import { KnowledgeBaseSkeleton } from './SkeletonLoader';
 import { notifySuccess, notifyError } from '../services/notificationService';
+import { cn } from '../lib/utils';
 
 interface KnowledgeBaseInterfaceProps {
   onUseInChat: (text: string, fileName: string) => void;
@@ -155,8 +156,11 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
 
         {/* Drop Zone */}
         <div
-          className={`relative overflow-hidden border-2 border-dashed rounded-3xl p-8 sm:p-12 text-center transition-all duration-300 cursor-pointer group
-            ${isDragging ? 'scale-[1.02] shadow-xl' : 'hover:scale-[1.01] hover:shadow-lg'}`}
+          className={cn(
+            "relative overflow-hidden border-2 border-dashed rounded-3xl p-8 sm:p-12 text-center transition-all duration-300 cursor-pointer group",
+            isDragging && 'scale-[1.02] shadow-xl',
+            !isDragging && 'hover:scale-[1.01] hover:shadow-lg'
+          )}
           style={{ 
             borderColor: isDragging ? 'var(--primary)' : 'rgba(255,255,255,0.1)', 
             background: isDragging ? 'rgba(37, 99, 235,0.15)' : 'rgba(22, 29, 51, 0.85)' 
@@ -168,8 +172,11 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
           {isDragging && <div className="absolute inset-0 bg-blue-500/5 animate-pulse" />}
           <input id="kb-file-input" type="file" multiple accept="application/pdf" className="hidden" onChange={e => handleFileChange(e.target.files)} />
           
-          <div className={`w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 transition-transform duration-300 shadow-lg
-            ${isDragging ? 'bg-blue-500 text-white scale-110' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20'}`}>
+          <div           className={cn(
+            "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 transition-transform duration-300 shadow-lg",
+            isDragging && 'bg-blue-500 text-white scale-110',
+            !isDragging && 'bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20'
+          )}>
             📄
           </div>
           <h3 className="text-xl font-black mb-2" style={{ color: 'var(--text-main)' }}>
@@ -200,9 +207,12 @@ const KnowledgeBaseInterface: React.FC<KnowledgeBaseInterfaceProps> = ({ onUseIn
                     <div className="flex items-start justify-between gap-4">
                       
                       <div className="flex items-start gap-3 flex-1 min-w-0">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-sm
-                          ${isProcessing ? 'bg-amber-100 dark:bg-amber-900/30 animate-pulse' : 
-                            hasText ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-500' : 'bg-red-50 dark:bg-red-900/20 text-red-500'}`}>
+                        <div                         className={cn(
+                          "w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-sm",
+                          isProcessing && 'bg-amber-100 dark:bg-amber-900/30 animate-pulse',
+                          !isProcessing && hasText && 'bg-blue-50 dark:bg-blue-900/20 text-blue-500',
+                          !isProcessing && !hasText && 'bg-red-50 dark:bg-red-900/20 text-red-500'
+                        )}>
                           {isProcessing ? '⏳' : hasText ? '✅' : '⚠️'}
                         </div>
                         <div className="min-w-0 flex-1">

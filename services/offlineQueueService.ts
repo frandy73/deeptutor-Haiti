@@ -27,6 +27,14 @@ const openDB = (): Promise<IDBDatabase> => {
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME, { keyPath: 'id' });
       }
+      // Shared stores with offlineCacheService — create if not present
+      if (!db.objectStoreNames.contains('ai_responses')) {
+        const store = db.createObjectStore('ai_responses', { keyPath: 'id' });
+        store.createIndex('timestamp', 'timestamp', { unique: false });
+      }
+      if (!db.objectStoreNames.contains('cached_quizzes')) {
+        db.createObjectStore('cached_quizzes', { keyPath: 'id' });
+      }
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);

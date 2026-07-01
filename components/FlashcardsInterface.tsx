@@ -4,6 +4,7 @@ import { loadFlashcardDecks, saveFlashcardDecks, updateStreakAndXP } from '../se
 import { XP_REWARDS } from '../constants';
 import { FlashcardsSkeleton } from './SkeletonLoader';
 import { notifySuccess, notifyInfo } from '../services/notificationService';
+import { cn } from '../lib/utils';
 
 interface FlashcardsInterfaceProps {
   onGenerateFromAI: (topic: string) => Promise<string>;
@@ -133,8 +134,11 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
             
             {/* Card */}
             <div
-              className={`relative rounded-[24px] sm:rounded-[32px] p-6 sm:p-12 shadow-2xl cursor-pointer transition-all duration-500 transform-gpu min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center text-center
-                ${showBack ? 'bg-gradient-to-br from-blue-500 to-emerald-600 text-white scale-[1.02]' : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:scale-[1.01]'}`}
+              className={cn(
+                "relative rounded-[24px] sm:rounded-[32px] p-6 sm:p-12 shadow-2xl cursor-pointer transition-all duration-500 transform-gpu min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center text-center",
+                showBack && 'bg-gradient-to-br from-blue-500 to-emerald-600 text-white scale-[1.02]',
+                !showBack && 'bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:scale-[1.01]'
+              )}
               style={{ border: showBack ? 'none' : '2px solid rgba(255,255,255,0.1)' }}
               onClick={() => setShowBack(b => !b)}
             >
@@ -142,7 +146,7 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
               <div className="absolute top-4 sm:top-6 left-4 sm:left-6 text-xl sm:text-2xl opacity-20">{showBack ? '💡' : '❓'}</div>
               <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 text-xl sm:text-2xl opacity-20">{showBack ? '💡' : '❓'}</div>
 
-              <p className={`text-[10px] font-black uppercase tracking-[3px] mb-4 sm:mb-6 ${showBack ? 'text-white/60' : 'text-slate-400'}`}>
+              <p               className={cn("text-[10px] font-black uppercase tracking-[3px] mb-4 sm:mb-6", showBack && 'text-white/60', !showBack && 'text-slate-400')}>
                 {showBack ? 'Repons' : 'Kesyon'}
               </p>
               
@@ -150,8 +154,11 @@ const FlashcardsInterface: React.FC<FlashcardsInterfaceProps> = ({ onGenerateFro
                 {showBack ? card.back : card.front}
               </h2>
               
-              <div className={`absolute bottom-4 sm:bottom-6 left-0 right-0 flex justify-center text-xs font-bold transition-opacity duration-300
-                ${showBack ? 'opacity-0' : 'opacity-50 text-slate-400'}`}>
+              <div               className={cn(
+                "absolute bottom-4 sm:bottom-6 left-0 right-0 flex justify-center text-xs font-bold transition-opacity duration-300",
+                showBack && 'opacity-0',
+                !showBack && 'opacity-50 text-slate-400'
+              )}>
                 Tap pou wè repons lan
               </div>
             </div>

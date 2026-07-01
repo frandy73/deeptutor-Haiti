@@ -155,8 +155,11 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                   <div className="flex gap-3">
                     {levels.map(level => (
                       <button key={level} onClick={() => handleLevelChange(level)}
-                        className={`flex-1 py-3 rounded-2xl border-2 text-sm font-black transition-all duration-200
-                          ${selectedLevel === level ? 'bg-blue-500 text-white border-blue-500 shadow-md shadow-blue-500/20 scale-[1.02]' : 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                        className={cn(
+                          "flex-1 py-3 rounded-2xl border-2 text-sm font-black transition-all duration-200",
+                          selectedLevel === level && 'bg-blue-500 text-white border-blue-500 shadow-md shadow-blue-500/20 scale-[1.02]',
+                          selectedLevel !== level && 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                        )}
                         style={{ borderColor: selectedLevel === level ? '' : 'rgba(255,255,255,0.1)', color: selectedLevel === level ? '' : 'var(--text-main)' }}>
                         {level}
                       </button>
@@ -173,8 +176,11 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                   <div className="grid grid-cols-2 gap-3">
                     {currentSubjects.map((s) => (
                       <button key={s.id} onClick={() => setSelectedSubject(s.name)}
-                        className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-200
-                          ${selectedSubject === s.name ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 shadow-inner scale-[1.02]' : 'border-transparent bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                        className={cn(
+                          "flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-200",
+                          selectedSubject === s.name && 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 shadow-inner scale-[1.02]',
+                          selectedSubject !== s.name && 'border-transparent bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        )}
                       >
                         <span className="text-3xl drop-shadow-sm">{s.icon}</span>
                         <span className="text-xs font-black text-center" style={{ color: 'var(--text-main)' }}>{s.name}</span>
@@ -195,8 +201,11 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                   <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                     {years.map((y) => (
                       <button key={y} onClick={() => setSelectedYear(y)}
-                        className={`py-2.5 rounded-xl border-2 text-xs font-black transition-all duration-200
-                          ${selectedYear === y ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 shadow-inner scale-105' : 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                        className={cn(
+                          "py-2.5 rounded-xl border-2 text-xs font-black transition-all duration-200",
+                          selectedYear === y && 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 shadow-inner scale-105',
+                          selectedYear !== y && 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                        )}
                         style={{ borderColor: selectedYear === y ? '' : 'rgba(255,255,255,0.1)', color: selectedYear === y ? '' : 'var(--text-muted)' }}>
                         {y}
                       </button>
@@ -214,8 +223,11 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                     <div className="flex flex-wrap gap-2">
                       {availableTopics.map(topic => (
                         <button key={topic} onClick={() => setSelectedTopic(topic)}
-                          className={`px-4 py-2 rounded-xl border-2 text-xs font-black transition-all duration-200
-                            ${selectedTopic === topic ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 shadow-inner' : 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'}`}
+                          className={cn(
+                            "px-4 py-2 rounded-xl border-2 text-xs font-black transition-all duration-200",
+                            selectedTopic === topic && 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 shadow-inner',
+                            selectedTopic !== topic && 'bg-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                          )}
                           style={{ borderColor: selectedTopic === topic ? '' : 'rgba(255,255,255,0.1)', color: selectedTopic === topic ? '' : 'var(--text-muted)' }}>
                           {topic}
                         </button>
@@ -227,14 +239,20 @@ const BacExamsInterface: React.FC<BacExamsInterfaceProps> = ({
                 {/* Actions */}
                 <div className="pt-4 space-y-3">
                   <button onClick={handleStart} disabled={!selectedSubject || isOffline}
-                    className={`w-full py-4 rounded-2xl font-black text-sm text-white transition-all duration-200 flex items-center justify-center gap-2
-                      ${(selectedSubject && !isOffline) ? 'bg-gradient-to-r from-blue-600 to-blue-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-[1.01] active:scale-[0.98]' : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50'}`}
+                    className={cn(
+                      "w-full py-4 rounded-2xl font-black text-sm text-white transition-all duration-200 flex items-center justify-center gap-2",
+                      selectedSubject && !isOffline && 'bg-gradient-to-r from-blue-600 to-blue-600 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-[1.01] active:scale-[0.98]',
+                      (!selectedSubject || isOffline) && 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-50'
+                    )}
                   >
                     🚀 Kòmanse Egzamen Modèl MENFP
                   </button>
                   <button onClick={handleGenerate} disabled={!selectedSubject}
-                    className={`w-full py-3.5 rounded-2xl font-black text-xs transition-all duration-200 border-2 flex items-center justify-center gap-2
-                      ${selectedSubject ? 'hover:bg-black/5 dark:hover:bg-white/5 hover:scale-[1.01] active:scale-[0.98]' : 'bg-slate-100 dark:bg-slate-800 cursor-not-allowed opacity-50 border-transparent'}`}
+                    className={cn(
+                      "w-full py-3.5 rounded-2xl font-black text-xs transition-all duration-200 border-2 flex items-center justify-center gap-2",
+                      selectedSubject && 'hover:bg-black/5 dark:hover:bg-white/5 hover:scale-[1.01] active:scale-[0.98]',
+                      !selectedSubject && 'bg-slate-100 dark:bg-slate-800 cursor-not-allowed opacity-50 border-transparent'
+                    )}
                     style={{ borderColor: selectedSubject ? 'rgba(255,255,255,0.1)' : '', color: selectedSubject ? 'var(--text-main)' : '' }}
                   >
                     📝 Chaje yon sèl Quiz: {selectedSubject || '...'}

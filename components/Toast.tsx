@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export type ToastType = 'success' | 'error' | 'info' | 'achievement' | 'warning';
 
@@ -62,9 +63,11 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
 
   return (
     <div
-      className={`pointer-events-auto transition-all duration-300 ${
-        isExiting ? 'opacity-0 translate-x-full' : 'opacity-100 translate-x-0'
-      }`}
+      className={cn(
+        "pointer-events-auto transition-all duration-300",
+        isExiting && 'opacity-0 translate-x-full',
+        !isExiting && 'opacity-100 translate-x-0'
+      )}
       style={{
         maxWidth: '380px',
         width: '100%',
