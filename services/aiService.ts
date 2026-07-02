@@ -196,7 +196,7 @@ async function callGemini(params: GetAIResponseParams): Promise<string> {
 
     const isStructured = params.isQuizRequest || params.isFlashcardRequest || params.isGlossaryRequest || params.isMasteryRequest;
     const hasImages = !!(params.imageData && params.imageData.length > 0);
-    const modelName = 'gemini-3.5-flash'; // PA JANM CHANJE — sèl model ki mache
+    const modelName = 'gemma-4-26b-a4b-it';
 
     // Old API path: structured responses (quiz/flashcard/glossary/mastery) or image uploads
     if (isStructured || hasImages) {
@@ -249,7 +249,7 @@ async function callGemini(params: GetAIResponseParams): Promise<string> {
     // Falls back to generateContentStream if the newer API isn't supported
     try {
         const stream = await ai.interactions.create({
-            model: 'gemini-3.5-flash', // PA JANM CHANJE
+            model: 'gemma-4-26b-a4b-it',
             input: params.prompt,
             system_instruction: systemInstruction,
             previous_interaction_id: params.previousInteractionId,
